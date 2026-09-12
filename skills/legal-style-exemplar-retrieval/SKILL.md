@@ -5,7 +5,7 @@ description: Read selected Chinese legal examples to extract usable structure, s
 
 # Legal Style Exemplar Retrieval
 
-Follow [material access and learning](../../shared/policies/material-access-and-learning.md). The user may select an uploaded/local document for immediate task use without permanent registration. Authorized `law_library` discovery and reading are available when needed under [network degradation](../../shared/policies/network-degradation.md); sufficient selected sources do not require a database search.
+Follow [material access and learning](../../shared/policies/material-access-and-learning.md). The user may select an uploaded/local document for immediate task use without permanent registration. Authorized knowledge-base discovery and reading are available when needed under [network degradation](../../shared/policies/network-degradation.md); sufficient selected sources do not require a database search.
 
 For an existing named personal asset, resolve its exact catalog/profile version and source hash. Use the approved WritingProfile when current, and read only the source passages needed for the task. For a newly selected file, make a task-local source record and inspect the relevant original passages. Do not scan the whole library or silently register/upgrade a profile.
 

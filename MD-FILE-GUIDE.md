@@ -22,9 +22,9 @@
 | 文件 | 用途 |
 |---|---|
 | [library/README.md](./library/README.md) | 解释模板与案例为什么分库，以及为什么二者都不能自动成为当前案事实或法源。 |
-| [library/模板库/README.md](./library/模板库/README.md) | 公共版空库起步说明：目录用途、未登记时的行为、如何在本机登记自己的模板。 |
+| [library/模板库/README.md](./library/模板库/README.md) | 模板资料目录说明：资料目录结构、相对路径如何解析、如何登记与迁移，以及为什么不能用发行包覆盖已登记的登记表。 |
 
-`library/模板库/00-待登记/` 与 `library/模板库/_profiles/` 由使用者在自己的机器上建立，默认被版本控制忽略；`library/模板库/_registry/template-catalog.json` 初始为空表。`library/案例库/` 保持空目录。
+程序目录内的模板库默认为空：`_registry/template-catalog.json` 只是全新安装的空表起点。**推荐把原件 `00-待登记/`、画像 `_profiles/` 和登记表整体放在程序目录之外的自建资料目录**，模板命令用 `--catalog` 指向该登记表（`validate` 用 `--personal-catalog`）；`library/案例库/` 保持空目录。
 
 ## 共享状态、政策、风格与目录
 

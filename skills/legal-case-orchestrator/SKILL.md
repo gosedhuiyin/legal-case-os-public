@@ -5,7 +5,7 @@ description: Route and complete Chinese legal document and analysis tasks from s
 
 # Legal Case Orchestrator
 
-Apply [material access and learning](../../shared/policies/material-access-and-learning.md) first: one task flow accepts authorized `law_library` MCP results, selected local files, uploads and permitted task snapshots. A supplied template and sufficient facts can be used immediately. Database access and permanent template registration are not prerequisites for drafting.
+Apply [material access and learning](../../shared/policies/material-access-and-learning.md) first: one task flow accepts results from an authorized user-configured read-only knowledge base, selected local files, uploads and permitted task snapshots. A supplied template and sufficient facts can be used immediately. Database access and permanent template registration are not prerequisites for drafting.
 
 Freeze the requested output and minimum inputs. Ordinary “生成文书” defaults to an editable `internal_review` draft plus necessary source/gap notes. Do not require a complete case-state, G1/G2/G4, whole-matter intake or a full CompositionSpec for that outcome. Explicit `court_candidate`, substantive strategy/evidence decisions and package creation use [human approval](../../shared/policies/human-approval.md); G4 belongs to the exact package.
 

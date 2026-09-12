@@ -227,9 +227,11 @@ python scripts/legal_case_os.py template-fill `
 
 个人库位于 [../library/模板库/README.md](../library/模板库/README.md)，与空的 `library/案例库/` 分开。本发行包不携带任何个人模板：目录表 `_registry/template-catalog.json` 初始为空，`00-待登记/` 与 `_profiles/` 由使用者在自己的机器上建立和保存，并且默认被版本控制忽略。
 
+模板资料可以整体放在程序目录之外的自建资料目录；此时模板命令用 `--catalog` 指向资料目录中的登记表（`validate` 用 `--personal-catalog`），程序目录内的空表不会被读写。资料目录的建立、登记与迁移见 [../library/模板库/README.md](../library/模板库/README.md)。
+
 ```powershell
-python scripts/legal_case_os.py template-ref-validate --json
-python scripts/legal_case_os.py template-ref-resolve --template-id "简模001号" --json
+python scripts/legal_case_os.py template-ref-validate --catalog "D:\办案资料\模板库\_registry\template-catalog.json" --json
+python scripts/legal_case_os.py template-ref-resolve --catalog "D:\办案资料\模板库\_registry\template-catalog.json" --template-id "简模001号" --json
 ```
 
 解析成功只返回一个精确文件或一个套件的已登记组件；不会读取全库、不会生成文件，也不会执行外部动作。目录表为空时，任何编号或别名都必须如实返回未找到；登记并批准自己的模板后才能按编号调用。不能把待登记文件当成已经学会。

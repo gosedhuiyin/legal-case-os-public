@@ -12,7 +12,7 @@ Define:
 
 ## Search, read, and reflect
 
-Use the configured read-only law_library, selected local files or uploads within current authorization; public internet permission is separate. With sufficient supplied sources, direct reading can replace discovery. Backend failure limits coverage, not the ability to compare the actual supplied material. Follow [network degradation](../../../shared/policies/network-degradation.md).
+Use a user-configured read-only knowledge base, selected local files or uploads within current authorization; public internet permission is separate. With sufficient supplied sources, direct reading can replace discovery. Backend failure limits coverage, not the ability to compare the actual supplied material. Follow [network degradation](../../../shared/policies/network-degradation.md).
 
 1. Prefer current official legislation, judicial interpretations, court rules, and full-text judgments or authoritative publications.
 2. Read the relevant full text and surrounding context; a search result or AI summary is not verification.

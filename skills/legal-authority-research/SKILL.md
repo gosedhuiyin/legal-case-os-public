@@ -5,7 +5,7 @@ description: Find, read and compare Chinese legal rules and cases for a defined 
 
 # Legal Authority Research
 
-Start with the issue, material factual conditions and proposition to test; identify jurisdiction, stage and relevant time as needed. Use [material access and learning](../../shared/policies/material-access-and-learning.md) for common source records and [network degradation](../../shared/policies/network-degradation.md) for access. The configured `law_library` read-only MCP is authorized independently of public internet access. Sufficient selected sources may be read directly.
+Start with the issue, material factual conditions and proposition to test; identify jurisdiction, stage and relevant time as needed. Use [material access and learning](../../shared/policies/material-access-and-learning.md) for common source records and [network degradation](../../shared/policies/network-degradation.md) for access. A knowledge-base connection is provided by the current client or user configuration, authorized independently of public internet access; reading this skill does not create that authorization. Sufficient selected sources may be read directly.
 
 When library research is needed, retain the user's original question and precise conditions, start with text search, then read full relevant units and context. Add keyword groups or an independent semantic supplement only when it helps resolve a defined gap. Retrieve supporting and materially adverse material; distinguish same-topic grouping from identical holdings.
 

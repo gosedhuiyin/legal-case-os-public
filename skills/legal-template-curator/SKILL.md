@@ -13,7 +13,7 @@ Keep source files immutable and follow [material access and learning](../../shar
 - **Reusable library asset:** resolve an exact active catalog/profile version or separately distill and register a new version after the specific reusable content is approved. A file sitting in `00-待登记` is not automatically a permanent asset.
 - **Complex composition:** assign primary/auxiliary roles and source bindings when multiple substantive inputs need coordination. A formal court candidate using the production composition commands must satisfy their current state, source and gate contracts.
 
-The configured read-only `law_library` may locate templates through `find_template`, source information and original-file reading. Match old SOP profiles by source hash and their own approved version, not by filename. A new knowledge-library version never inherits old profile approval automatically. With sufficient supplied files, skip discovery; backend failures follow [network degradation](../../shared/policies/network-degradation.md).
+An authorized user-configured read-only knowledge base may locate templates through `find_template`, source information and original-file reading. Match old SOP profiles by source hash and their own approved version, not by filename. A new knowledge-library version never inherits old profile approval automatically. With sufficient supplied files, skip discovery; backend failures follow [network degradation](../../shared/policies/network-degradation.md).
 
 ## Apply the source
 

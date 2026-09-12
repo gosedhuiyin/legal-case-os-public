@@ -22,7 +22,7 @@ Record:
 - `write_memory_mode`: `none | candidate | commit`;
 - `scope_lock` for the exact issue IDs an analysis may cover, and `analysis_lens` (`neutral` or `strongest_adverse_path`).
 
-Keep public `network_mode` separate from `knowledge_policy`. Intake/preprocessing need not start public searches; an authorized research task may use `public_web_if_available` unless prohibited. The configured read-only `law_library` remains available within its existing scope without asking again. New proprietary services or credentials require their own authorization. Follow [network degradation](../../../shared/policies/network-degradation.md) and distinguish inaccessible backend from no results.
+Keep public `network_mode` separate from `knowledge_policy`. Intake/preprocessing need not start public searches; an authorized research task may use `public_web_if_available` unless prohibited. An authorized user-configured read-only knowledge base remains available within its existing scope without asking again. New proprietary services or credentials require their own authorization. Follow [network degradation](../../../shared/policies/network-degradation.md) and distinguish inaccessible backend from no results.
 
 Default `memory_mode=relevant` only for an identified existing matter. For a detached document or expressly memory-free request, use `off`. Default inferred associations and reflections to `write_memory_mode=candidate`; never interpret `commit` as permission to bypass a verification or approval gate.
 
