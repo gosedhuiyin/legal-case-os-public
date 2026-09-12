@@ -23,7 +23,7 @@ python scripts/legal_case_os.py template-ref-validate --catalog "D:\办案资料
 python scripts/legal_case_os.py template-ref-resolve --catalog "D:\办案资料\模板库\_registry\template-catalog.json" --template-id "你的模板编号" --json
 ```
 
-使用资料目录时，模板相关命令都带同一个 `--catalog` 参数指向资料目录中的登记表；`validate` 命令用 `--personal-catalog` 指向同一份登记表。不带该参数时，相关命令会使用程序目录内的默认登记表。
+需要使用个人模板登记表时，按该命令的 `--help` 指定外部登记表。例如，`template-register`、`template-ref-validate`、`template-ref-resolve` 均支持 `--catalog`；`validate` 使用 `--personal-catalog`。这些命令未指定该参数时，会使用程序目录内的默认登记表。不同模板命令的参数并不相同，不要给不支持该参数的命令统一添加 `--catalog`。
 
 ## 如何登记自己的模板
 
