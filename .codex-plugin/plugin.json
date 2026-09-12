@@ -1,6 +1,6 @@
 {
   "name": "legal-case-os",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Offline-first Chinese litigation workflow skills: material intake, case-state memory, evidence gates, personal-template learning, fidelity-preserving form filling, and filing-package candidates. No external actions are executed.",
   "author": {
     "name": "Personal Legal Workflow Project"
