@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律提交包组卷"
+  short_description: "以已审文书和已批证据生成待打印、但未提交的候选文件包"
+  default_prompt: "Use $legal-filing-packager to build a new reviewable package directory and print sheet without performing any external action."
+policy:
+  allow_implicit_invocation: true

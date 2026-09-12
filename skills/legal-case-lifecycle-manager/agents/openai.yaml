@@ -1,0 +1,6 @@
+interface:
+  display_name: "案件生命周期工单"
+  short_description: "管理撤诉、补证、保全、调取报告等跨会话可恢复法律程序工单"
+  default_prompt: "Use $legal-case-lifecycle-manager to resume this matter's procedural workflow from its saved state and stop at the next gate."
+policy:
+  allow_implicit_invocation: true

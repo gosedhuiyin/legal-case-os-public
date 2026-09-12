@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律案情分析"
+  short_description: "生成简明案情图谱并对单一复杂争点展开双方攻防深析结论"
+  default_prompt: "Use $legal-case-analysis to identify the main issue concisely while preserving any necessary deep analysis."
+policy:
+  allow_implicit_invocation: true

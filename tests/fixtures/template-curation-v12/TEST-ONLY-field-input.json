@@ -1,0 +1,28 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY fictional data; never use in production or cite to a court",
+  "data": {
+    "client_name": "测试甲公司",
+    "fee_amount": "10000元"
+  },
+  "provenance": {
+    "client_name": {
+      "source_refs": [
+        {
+          "id": "TEST-SRC-001",
+          "kind": "original_material",
+          "verified": true,
+          "file": "TEST-ONLY-client-material.md",
+          "page": 1
+        }
+      ]
+    },
+    "fee_amount": {
+      "confirmation": {
+        "status": "approved",
+        "actor_role": "lawyer",
+        "decision_id": "TEST-DECISION-FEE-001"
+      }
+    }
+  }
+}

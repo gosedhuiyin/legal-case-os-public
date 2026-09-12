@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律案件总控"
+  short_description: "把自然口语编译成可审计任务契约，再编排案件工位并严守门禁"
+  default_prompt: "Use $legal-case-orchestrator to compile the current utterance into a sourced TaskFrame and RunSpec, ask at most one route-changing question, then run exactly one bounded legal Skill and stop at the next gate."
+policy:
+  allow_implicit_invocation: true

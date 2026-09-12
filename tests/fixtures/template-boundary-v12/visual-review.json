@@ -1,0 +1,44 @@
+{
+  "test_only": true,
+  "findings": [],
+  "lawyer_approval": false,
+  "lawyer_approval_substituted": false,
+  "pages": [
+    {
+      "page_number": 1,
+      "result": "pass",
+      "scenario_id": "normal-values",
+      "sha256": "f6e434d000a5f6d81a666977d44e80bd2df19eedf2fa4fdaf7e0348d11c7acc0"
+    },
+    {
+      "page_number": 1,
+      "result": "pass",
+      "scenario_id": "explicit-empty",
+      "sha256": "2f3fe225096cba165f284ab377618d77d3f0980e8f6afdbfaf7614c09c20c9ca"
+    },
+    {
+      "page_number": 1,
+      "result": "pass",
+      "scenario_id": "max-party-name",
+      "sha256": "2eeef6c5c9524a3c5139ec287a38abc2b420c392d443511799f39e3b6856c445"
+    },
+    {
+      "page_number": 1,
+      "result": "pass",
+      "scenario_id": "max-court-name",
+      "sha256": "ddfa8ea807f3299a7ef795fd3d19184f45dfd6bc8ccee4e47f0e338d613babed"
+    },
+    {
+      "page_number": 1,
+      "result": "pass",
+      "scenario_id": "large-amount",
+      "sha256": "40d578215fae514c0e956603847cc0ac08841a1f95886ca7a339a49b88aac84e"
+    }
+  ],
+  "review_method": "All five 144-DPI PNG pages inspected at original resolution for clipping, overlap, missing glyphs, blank pages, wrapping, table borders and row expansion.",
+  "reviewed_at": "2026-08-25",
+  "reviewer": "Codex independent AI visual QA",
+  "reviewer_type": "ai",
+  "status": "ai_visual_review_complete_pending_lawyer_approval",
+  "suite_id": "TEST-ONLY-template-boundary-v12"
+}

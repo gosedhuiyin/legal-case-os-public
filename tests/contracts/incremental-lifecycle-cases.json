@@ -1,0 +1,134 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：全部材料、案件事件、期限、工单和新案线索均为虚构。",
+  "contract_version": "1.1.0-test",
+  "batch_cases": [
+    {
+      "case_id": "BATCH-IDEMPOTENT",
+      "input": {"batch_id": "MB-TEST-ORDINARY-001", "manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "base_cursor": 7},
+      "repeat": {"batch_id": "MB-TEST-ORDINARY-001", "manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+      "expected": {
+        "first_new_batch_count": 1,
+        "repeat_new_batch_count": 0,
+        "repeat_status": "duplicate_noop",
+        "source_duplicates_created": 0,
+        "cursor_after_first": 8,
+        "cursor_after_repeat": 8
+      }
+    },
+    {
+      "case_id": "BATCH-FAILURE-CURSOR",
+      "input": {"batch_id": "MB-TEST-FAIL-001", "manifest_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "base_cursor": 8},
+      "failure": {"code": "TEST_ONLY_SIMULATED_PARSE_FAILURE", "at_source_id": "S-TEST-FAIL-001"},
+      "expected": {
+        "batch_status": "failed",
+        "cursor_after_failure": 8,
+        "canonical_semantic_mutations": 0,
+        "retry_processes_same_batch": true
+      }
+    }
+  ],
+  "triage_cases": [
+    {
+      "case_id": "TRIAGE-ORDINARY-NO-DEEP",
+      "source_path": "materials/TEST-ONLY-01-ordinary-email.md",
+      "expected": {
+        "relevance": "none",
+        "route": "archive_only",
+        "deep_analysis_runs": 0,
+        "new_evidence_count": 0,
+        "new_deadline_count": 0,
+        "new_seed_count": 0
+      }
+    },
+    {
+      "case_id": "TRIAGE-DATE-CANDIDATE",
+      "source_path": "materials/TEST-ONLY-02-court-notice.md",
+      "expected": {
+        "relevance": "procedural_date_only",
+        "deadline_id": "DL-TEST-001",
+        "deadline_status": "candidate",
+        "due_at": "2026-09-18T23:59:59Z",
+        "must_preserve": ["original_text", "source_locator", "received_at", "timezone", "verification_status"],
+        "must_not": ["treat_as_verified_deadline", "trigger_full_merits_analysis"]
+      }
+    },
+    {
+      "case_id": "TRIAGE-CLIENT-INSISTS",
+      "source_path": "materials/TEST-ONLY-03-client-insists.md",
+      "expected": {
+        "case_event_type": "client_instruction",
+        "relevance": "low",
+        "ai_recommendation": "do_not_submit",
+        "lawyer_decision": "undecided",
+        "current_submission_before_G2": false,
+        "package_evidence_count_before_G2": 0
+      }
+    }
+  ],
+  "impact_cases": [
+    {
+      "case_id": "IMPACT-DECLARED-DEPENDENCIES-ONLY",
+      "source_path": "materials/TEST-ONLY-07-impacting-supplement.md",
+      "assessment_id": "IA-TEST-001",
+      "declared_dependency_ids": ["F-TEST-DELIVERY-001", "I-TEST-PERFORMANCE-001", "R-TEST-DELIVERY-DRAFT-001"],
+      "unrelated_ids": ["F-TEST-IDENTITY-001", "I-TEST-JURISDICTION-001", "R-TEST-IDENTITY-DRAFT-001"],
+      "expected": {
+        "invalidate_exactly": ["F-TEST-DELIVERY-001", "I-TEST-PERFORMANCE-001", "R-TEST-DELIVERY-DRAFT-001"],
+        "preserve_current": ["F-TEST-IDENTITY-001", "I-TEST-JURISDICTION-001", "R-TEST-IDENTITY-DRAFT-001"],
+        "whole_matter_rerun": false
+      }
+    }
+  ],
+  "emergence_cases": [
+    {
+      "case_id": "SEED-THREE-BATCH-THRESHOLD",
+      "signal_key": "TEST-ONLY:北辰平台:中国境内通知行为",
+      "batches": [
+        {"batch_id": "MB-TEST-WEAK-001", "source_path": "materials/TEST-ONLY-04-weak-signal-1.md", "expected_seed_count": 0, "signal_state": "dormant"},
+        {"batch_id": "MB-TEST-WEAK-002", "source_path": "materials/TEST-ONLY-05-weak-signal-2.md", "expected_seed_count": 0, "signal_state": "dormant"},
+        {"batch_id": "MB-TEST-WEAK-003", "source_path": "materials/TEST-ONLY-06-weak-signal-3.md", "expected_seed_count": 1, "signal_state": "candidate"}
+      ],
+      "expected": {
+        "seed_id": "SEED-TEST-001",
+        "seed_status": "candidate",
+        "new_matter_count_before_lawyer_approval": 0,
+        "maximum_candidate_insights": 3,
+        "sources_required": true,
+        "counterevidence_required": true
+      }
+    }
+  ],
+  "workflow_cases": [
+    {
+      "case_id": "WORKFLOW-PROCEDURAL-CAPSULE-ONLY",
+      "source_path": "materials/TEST-ONLY-08-procedural-request.md",
+      "workflow_kind": "withdrawal",
+      "expected": {
+        "context_kind": "ProceduralCapsule",
+        "required_fields": ["matter_id", "court", "case_number", "parties", "proceeding_stage", "instruction_event_id", "source_locator", "date", "authority_status"],
+        "entity_evidence_loaded": 0,
+        "deep_analysis_runs": 0,
+        "external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "RUN-FAILURE-DOES-NOT-COMPLETE-WORKFLOW",
+      "workflow_id": "WF-TEST-WITHDRAWAL-001",
+      "run_attempt": {"run_id": "RUN-TEST-001", "result": "failed", "failure_code": "TEST_ONLY_RENDER_FAILURE"},
+      "expected": {
+        "run_status": "failed",
+        "workflow_status": "in_progress",
+        "completed_at": null,
+        "retry_allowed": true,
+        "failed_output_is_filing_candidate": false
+      }
+    }
+  ],
+  "global_invariants": {
+    "external_actions_created": 0,
+    "external_actions_executed": 0,
+    "automatic_print_send_upload_submit": false,
+    "original_material_hashes_unchanged": true
+  }
+}

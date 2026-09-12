@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.invalid/legal-case-os/audit-event.schema.json",
+  "title": "Legal Case OS append-only audit event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["sequence", "event_id", "matter_id", "timestamp", "actor", "command", "event_type", "object_ids", "before_state_hash", "after_state_hash", "previous_event_hash", "details", "event_hash"],
+  "properties": {
+    "sequence": { "type": "integer", "minimum": 1 },
+    "event_id": { "type": "string", "pattern": "^EV-[A-Za-z0-9._-]+$" },
+    "matter_id": { "type": "string", "pattern": "^M-[A-Za-z0-9._-]+$" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "actor": { "type": "string", "minLength": 1 },
+    "command": { "type": "string", "minLength": 1 },
+    "event_type": { "type": "string", "minLength": 1 },
+    "object_ids": { "type": "array", "items": { "type": "string" } },
+    "before_state_hash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "after_state_hash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+    "previous_event_hash": { "type": ["string", "null"], "pattern": "^[a-fA-F0-9]{64}$" },
+    "details": { "type": "object" },
+    "event_hash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" }
+  }
+}

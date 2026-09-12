@@ -1,0 +1,90 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：这是文本化清洁契约，不含二进制 DOCX；根任务将另行提供文书夹具。",
+  "pipeline": [
+    "independent_review",
+    "lawyer_approve_exact_items",
+    "derive_copy",
+    "write_sanitization_report",
+    "independent_rereview"
+  ],
+  "source": {
+    "artifact_id": "R-TEST-SANITIZE-SOURCE-001",
+    "ownership": "self_generated",
+    "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+    "read_only_during_sanitization": true
+  },
+  "items": [
+    {
+      "item_id": "SAN-TEST-001",
+      "kind": "internal_comment",
+      "location": "虚构第1页批注1",
+      "authorization": "explicit_test_allowlist",
+      "expected_result": "removed"
+    },
+    {
+      "item_id": "SAN-TEST-002",
+      "kind": "review_marker",
+      "location": "虚构第2页审稿标记",
+      "authorization": "explicit_test_allowlist",
+      "expected_result": "removed"
+    },
+    {
+      "item_id": "SAN-TEST-003",
+      "kind": "draft_watermark",
+      "location": "虚构页眉：TEST DRAFT",
+      "authorization": "self_generated_authorized_watermark",
+      "expected_result": "removed"
+    },
+    {
+      "item_id": "SAN-TEST-004",
+      "kind": "internal_id",
+      "location": "虚构文档属性 TEST-INTERNAL-ID",
+      "authorization": "approved_internal_id",
+      "expected_result": "removed"
+    },
+    {
+      "item_id": "SAN-TEST-005",
+      "kind": "unresolved_placeholder",
+      "location": "虚构正文：[待核验法院]",
+      "authorization": "none",
+      "expected_result": "blocked",
+      "reason": "substantive_resolution_required"
+    },
+    {
+      "item_id": "SAN-TEST-006",
+      "kind": "third_party_evidence_watermark",
+      "location": "虚构附件：第三方平台水印",
+      "authorization": "none",
+      "expected_result": "blocked",
+      "reason": "authenticity_marker"
+    },
+    {
+      "item_id": "SAN-TEST-007",
+      "kind": "substantive_adverse_content",
+      "location": "虚构正文：包装破损异议段落",
+      "authorization": "not_sanitizable",
+      "expected_result": "blocked",
+      "reason": "route_to_evidence_gate_or_drafting"
+    },
+    {
+      "item_id": "SAN-TEST-008",
+      "kind": "third_party_authenticity_metadata",
+      "location": "虚构附件：签名时间戳",
+      "authorization": "none",
+      "expected_result": "blocked",
+      "reason": "authenticity_marker"
+    }
+  ],
+  "expected": {
+    "approved_item_ids": ["SAN-TEST-001", "SAN-TEST-002", "SAN-TEST-003", "SAN-TEST-004"],
+    "removed_item_ids": ["SAN-TEST-001", "SAN-TEST-002", "SAN-TEST-003", "SAN-TEST-004"],
+    "blocked_item_ids": ["SAN-TEST-005", "SAN-TEST-006", "SAN-TEST-007", "SAN-TEST-008"],
+    "source_hash_after": "7777777777777777777777777777777777777777777777777777777777777777",
+    "derived_copy_required": true,
+    "sanitization_report_required": true,
+    "rereview_status_after_tool": "required",
+    "court_candidate_eligible_before_rereview": false
+  }
+}
+

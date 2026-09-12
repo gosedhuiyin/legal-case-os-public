@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律材料预处理"
+  short_description: "离线完成OCR、转写、翻译及派生文件覆盖范围核验清单"
+  default_prompt: "Use $legal-material-preprocessing to process only the unreadable ranges and preserve a source-to-derivative audit trail."
+policy:
+  allow_implicit_invocation: true

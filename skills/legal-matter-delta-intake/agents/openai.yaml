@@ -1,0 +1,6 @@
+interface:
+  display_name: "案件增量材料分诊"
+  short_description: "按限定案件记忆范围分诊新增材料、期限、影响和潜在新案线索"
+  default_prompt: "Use $legal-matter-delta-intake to process this new material batch against only the permitted case-memory scope."
+policy:
+  allow_implicit_invocation: true

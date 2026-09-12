@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/artifact-claim-map.schema.json",
+  "title": "Legal Case OS ArtifactClaimMap",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "artifact_id", "artifact_version", "artifact_sha256", "composition_spec_id", "document_sha256", "segments", "visual_text_manifest"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "artifact_id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*-[A-Za-z0-9._-]+$" },
+    "artifact_version": { "type": "integer", "minimum": 1 },
+    "artifact_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "composition_spec_id": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*-[A-Za-z0-9._-]+$" },
+    "document_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "segments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["locator", "text_sha256", "claim_ids", "substantive", "non_substantive_reason"],
+        "properties": {
+          "locator": { "type": "string", "pattern": "^segment:[1-9][0-9]*$" },
+          "text_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "claim_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*-[A-Za-z0-9._-]+$" } },
+          "substantive": { "type": "boolean" },
+          "non_substantive_reason": {
+            "oneOf": [
+              { "enum": ["heading", "caption", "signature_block", "court_identifier", "party_identity_block", "procedural_metadata", "page_header_footer", "table_label", "separator", "decorative_visual"] },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "visual_text_manifest": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_sha256", "render_method", "page_count", "pages"],
+          "properties": {
+            "document_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+            "render_method": { "enum": ["pymupdf_144dpi_rgb", "external_verified_page_png"] },
+            "page_count": { "type": "integer", "minimum": 1 },
+            "pages": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["page_number", "render_path", "render_sha256", "visual_text", "visual_text_sha256", "verification_status", "claim_ids"],
+                "properties": {
+                  "page_number": { "type": "integer", "minimum": 1 },
+                  "render_path": { "type": ["string", "null"] },
+                  "render_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                  "visual_text": { "type": "string", "minLength": 1 },
+                  "visual_text_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+                  "verification_status": { "enum": ["verified_ocr", "verified_visual_transcription"] },
+                  "claim_ids": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9]*-[A-Za-z0-9._-]+$" } }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律证据门禁"
+  short_description: "严格区分AI建议和律师决定，控制各诉讼阶段提交证据"
+  default_prompt: "Use $legal-evidence-gate to assess this item and keep any filing decision pending lawyer approval."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,6 @@
+interface:
+  display_name: "个人文风范例检索"
+  short_description: "从律师认可旧稿提取结构文风，并严格隔离全部旧案事实"
+  default_prompt: "Use $legal-style-exemplar-retrieval to find an approved style pattern without transferring prior-case facts."
+policy:
+  allow_implicit_invocation: true

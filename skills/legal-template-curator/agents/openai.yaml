@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律模板学习与编排"
+  short_description: "安全蒸馏、登记、逐格填充并组合个人法律文书与手续模板"
+  default_prompt: "Use $legal-template-curator to distill and register this approved legal template without transferring old-case facts."
+policy:
+  allow_implicit_invocation: true

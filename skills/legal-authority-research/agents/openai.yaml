@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律法源检索"
+  short_description: "核验支持与重大不利法源，并如实记录检索边界与能力降级"
+  default_prompt: "Use $legal-authority-research to verify supporting and materially adverse authorities for this defined issue."
+policy:
+  allow_implicit_invocation: true

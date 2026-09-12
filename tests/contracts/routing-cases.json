@@ -1,0 +1,584 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：自然语言均为虚构办案场景，不含真实案件信息。",
+  "contract_version": "1.0.0-test",
+  "cases": [
+    {
+      "case_id": "ROUTE-001",
+      "text": "看一下这个材料",
+      "context": {
+        "unique_current_material": "S-TEST-001"
+      },
+      "expected": {
+        "action": "view",
+        "target": "material",
+        "primary_skill": "legal-material-intake",
+        "reasoning_depth": "standard",
+        "presentation_length": "brief",
+        "audience": "discussion",
+        "network_policy": "deny",
+        "must_not": [
+          "draft_filing_document",
+          "approve_evidence"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-002",
+      "text": "你觉得大致内容是什么",
+      "context": {
+        "unique_current_material": "S-TEST-001"
+      },
+      "expected": {
+        "action": "summarize",
+        "target": "material",
+        "primary_skill": "legal-material-intake",
+        "reasoning_depth": "standard",
+        "presentation_length": "brief",
+        "audience": "discussion",
+        "network_policy": "deny"
+      }
+    },
+    {
+      "case_id": "ROUTE-003",
+      "text": "不要那么复杂，告诉我主要问题在哪",
+      "context": {
+        "identified_major_issue": "I-LIMITATION-001",
+        "current_reasoning_depth": "deep"
+      },
+      "expected": {
+        "action": "analyze",
+        "target": "issue",
+        "primary_skill": "legal-case-analysis",
+        "reasoning_depth": "deep",
+        "presentation_length": "brief",
+        "audience": "discussion",
+        "network_policy": "inherit",
+        "must_preserve": [
+          "major_risks",
+          "adverse_path",
+          "deep_analysis_state"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-004",
+      "text": "帮我找一下支持的案例",
+      "context": {
+        "current_issue": "I-TEST-001",
+        "network_prohibition": false
+      },
+      "expected": {
+        "action": "research",
+        "target": "authority",
+        "primary_skill": "legal-authority-research",
+        "reasoning_depth": "deep",
+        "presentation_length": "brief",
+        "audience": "internal_review",
+        "network_policy": "public_web_allowed",
+        "must_preserve": [
+          "major_adverse_authorities",
+          "verification_status"
+        ],
+        "must_not": [
+          "hide_adverse_result",
+          "cite_unverified_summary"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-005",
+      "text": "按照测试起诉状套件生成起诉状Word文件",
+      "context": {
+        "template_alias": "测试起诉状套件"
+      },
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "reasoning_depth": "standard",
+        "presentation_length": "template_controlled",
+        "audience": "internal_review",
+        "output_format": "docx",
+        "template_alias": "测试起诉状套件",
+        "required_gates": [
+          "independent_draft_review",
+          "source_and_assumption_labels"
+        ],
+        "must_not": [
+          "pretend_missing_template_applied"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-006",
+      "text": "去掉不能给法院看的内容、内部备注、审稿词和有权移除的水印",
+      "context": {
+        "unique_current_document": "R-TEST-DRAFT-001",
+        "ownership": "self_generated"
+      },
+      "expected": {
+        "action": "sanitize",
+        "target": "document",
+        "primary_skill": "legal-document-review",
+        "pipeline": [
+          "legal-document-review",
+          "deterministic_sanitizer",
+          "legal-document-review"
+        ],
+        "audience": "court_candidate",
+        "required_gate": "lawyer_approved_sanitization_items",
+        "must_preserve": [
+          "original_file",
+          "source_hash",
+          "substantive_adverse_content"
+        ],
+        "must_block": [
+          "third_party_evidence_watermark_removal",
+          "truth_altering_deletion"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-007",
+      "text": "这个事你了解得怎么样",
+      "context": {
+        "current_matter": "M-TEST-SIMPLE-001"
+      },
+      "expected": {
+        "action": "summarize",
+        "target": "matter_status",
+        "primary_skill": "legal-case-orchestrator",
+        "presentation_length": "brief",
+        "audience": "discussion",
+        "must_include": [
+          "processed_scope",
+          "main_issue",
+          "missing_items",
+          "current_gate"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-008",
+      "text": "ok，很简单，直接生成文书吧，按测试起诉状套件模板",
+      "context": {
+        "complexity_hint": "simple",
+        "unique_current_template": "TPL-TEST-COMPLAINT-VALID"
+      },
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "reasoning_depth": "standard",
+        "presentation_length": "brief",
+        "audience": "internal_review",
+        "required_gates": [
+          "independent_draft_review",
+          "source_and_assumption_labels"
+        ],
+        "must_not": [
+          "approve_ambiguous_object",
+          "skip_known_major_risk"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-009",
+      "text": "顺便生成下手续，整理下文件夹内容",
+      "context": {
+        "current_matter": "M-TEST-SIMPLE-001"
+      },
+      "expected": {
+        "action": "package",
+        "target": "filing_package",
+        "primary_skill": "legal-filing-packager",
+        "audience": "internal_review",
+        "external_action": "forbidden_without_G5",
+        "folder_operation": "copy_to_new_candidate_directory",
+        "must_not": [
+          "move_original",
+          "delete_original",
+          "submit",
+          "print"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-010",
+      "text": "只分析时效起算这个争点，其他先不展开",
+      "context": {
+        "current_issue": "I-LIMITATION-001"
+      },
+      "expected": {
+        "action": "analyze",
+        "target": "issue",
+        "primary_skill": "legal-case-analysis",
+        "reasoning_depth": "deep",
+        "presentation_length": "brief",
+        "scope_lock": [
+          "I-LIMITATION-001"
+        ],
+        "must_not": [
+          "expand_all_issues"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-011",
+      "text": "站在对方角度看，最能打我的点是什么",
+      "context": {
+        "current_matter": "M-TEST-COMPLEX-001"
+      },
+      "expected": {
+        "action": "analyze",
+        "target": "issue",
+        "primary_skill": "legal-case-analysis",
+        "reasoning_depth": "deep",
+        "presentation_length": "brief",
+        "analysis_lens": "strongest_adverse_path",
+        "must_include": [
+          "adverse_fact",
+          "evidence_gap",
+          "fact_that_changes_outcome"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-012",
+      "text": "这份证据先不要提交，放到后续备用",
+      "context": {
+        "unique_current_evidence": "E-TEST-004"
+      },
+      "expected": {
+        "action": "modify",
+        "target": "evidence_decision",
+        "primary_skill": "legal-evidence-gate",
+        "lawyer_decision": "reserve_later",
+        "current_submission": false,
+        "must_not": [
+          "include_in_current_package"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-013",
+      "text": "给我做一个简版提交稿，再做一个详细储备稿",
+      "context": {
+        "current_document_type": "agency_opinion"
+      },
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "artifact_tracks": [
+          "concise_filing_candidate",
+          "detailed_internal_reserve"
+        ],
+        "must_preserve": [
+          "same_approved_fact_source_snapshot"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-014",
+      "text": "把代理词压缩到3000字，别加新观点",
+      "context": {
+        "unique_current_document": "R-TEST-DRAFT-001"
+      },
+      "expected": {
+        "action": "modify",
+        "target": "document",
+        "primary_skill": "legal-draft-compressor",
+        "max_length_chinese_characters": 3000,
+        "next_skill": "legal-document-review",
+        "must_not": [
+          "add_substantive_content"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-015",
+      "text": "只修改第二项诉讼请求，其他地方一个字不要动",
+      "context": {
+        "unique_current_document": "R-TEST-DRAFT-001"
+      },
+      "expected": {
+        "action": "modify",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "allowed_modify_scope": [
+          "claim_item_2"
+        ],
+        "required_check": "minimal_change_diff",
+        "must_not": [
+          "modify_outside_scope"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-016",
+      "text": "整理成待打印包，但不要打印、不要提交",
+      "context": {
+        "current_matter": "M-TEST-SIMPLE-001"
+      },
+      "expected": {
+        "action": "package",
+        "target": "filing_package",
+        "primary_skill": "legal-filing-packager",
+        "maximum_gate": "G4_final_candidate",
+        "external_action": "forbidden",
+        "must_not": [
+          "print",
+          "upload",
+          "send",
+          "submit"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-017",
+      "text": "材料更新了，按新版本重新跑",
+      "context": {
+        "changed_source_id": "S-TEST-002",
+        "new_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "expected": {
+        "action": "view",
+        "target": "material",
+        "primary_skill": "legal-material-intake",
+        "pipeline": [
+          "index_changed_source",
+          "invalidate_dependents",
+          "rerun_from_earliest_affected_stage"
+        ],
+        "must_invalidate": [
+          "dependent_approvals",
+          "dependent_artifacts",
+          "dependent_package_manifests"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-018",
+      "text": "不要联网，只看我给的材料分析",
+      "context": {
+        "current_matter": "M-TEST-COMPLEX-001"
+      },
+      "expected": {
+        "action": "analyze",
+        "target": "matter",
+        "primary_skill": "legal-case-analysis",
+        "network_policy": "deny",
+        "must_mark": [
+          "unresolved_authority_questions"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-019",
+      "text": "帮我做工资和存款的个人理财规划",
+      "context": {},
+      "expected": {
+        "action": "out_of_scope",
+        "target": "financial_planning",
+        "primary_skill": null,
+        "must_not": [
+          "trigger_legal_case_os"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-020",
+      "text": "按照不存在的某某套件模板生成答辩状",
+      "context": {},
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "template_alias": "不存在的某某套件",
+        "must_stop": "template_not_found",
+        "must_not": [
+          "pretend_template_applied"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-021",
+      "text": "依照简模001号，给我生成一下手续、诉状",
+      "context": {
+        "personal_template_alias": "简模001"
+      },
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "template_alias": "简模001号",
+        "next_skill": "legal-filing-packager",
+        "audience": "internal_review",
+        "must_not": [
+          "load_entire_template_library",
+          "copy_prior_case_facts"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-022",
+      "text": "依照标准买卖合同起诉状模板，给我生成一下手续、诉状",
+      "context": {
+        "personal_template_name": "标准买卖合同起诉状"
+      },
+      "expected": {
+        "action": "generate",
+        "target": "document",
+        "primary_skill": "legal-document-drafting",
+        "template_alias": "标准买卖合同起诉状",
+        "next_skill": "legal-filing-packager",
+        "audience": "internal_review",
+        "must_not": [
+          "load_entire_template_library",
+          "copy_prior_case_facts"
+        ]
+      }
+    },
+    {
+      "case_id": "ROUTE-023",
+      "text": "调用下记忆模块，看下有没关联或启发，下一步怎么做？",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "recall",
+        "target": "matter_memory",
+        "primary_skill": "legal-matter-delta-intake",
+        "reasoning_depth": "deep",
+        "presentation_length": "brief",
+        "memory_read_mode": "reflect",
+        "memory_write_mode": "candidate",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-024",
+      "text": "这段不用关联记忆了，直接写撤诉申请，本轮不要写入记忆",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "manage",
+        "target": "workflow",
+        "primary_skill": "legal-case-lifecycle-manager",
+        "memory_read_mode": "off",
+        "memory_write_mode": "none",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-025",
+      "text": "不要管其他记忆，只看和“materials/TEST-ONLY-02-court-notice.md”有关的记忆，然后分析",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "analyze",
+        "target": "issue",
+        "primary_skill": "legal-case-analysis",
+        "memory_read_mode": "file_scoped",
+        "memory_read_scope": [
+          "materials/TEST-ONLY-02-court-notice.md"
+        ],
+        "memory_write_mode": "candidate",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-026",
+      "text": "熊熊宝宝又来了一批材料，处理一下",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "triage",
+        "target": "material_batch",
+        "primary_skill": "legal-matter-delta-intake",
+        "memory_read_mode": "relevant",
+        "memory_write_mode": "candidate",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-027",
+      "text": "本轮可以读记忆，但不要写入记忆，看看这个材料",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "view",
+        "target": "material",
+        "primary_skill": "legal-material-intake",
+        "memory_read_mode": "relevant",
+        "memory_write_mode": "none",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-028",
+      "text": "把这个结论记成候选，先不要改变案件状态",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "record",
+        "target": "matter_memory",
+        "primary_skill": "legal-matter-delta-intake",
+        "memory_read_mode": "relevant",
+        "memory_write_mode": "candidate",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-029",
+      "text": "把这条法院要求正式记入案件",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001"
+      },
+      "expected": {
+        "action": "record",
+        "target": "matter_memory",
+        "primary_skill": "legal-matter-delta-intake",
+        "memory_read_mode": "relevant",
+        "memory_write_mode": "commit",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-030",
+      "text": "审计报告还没拿到，继续上次的工单",
+      "context": {
+        "current_matter": "M-TEST-INCREMENTAL-001",
+        "workflow_id": "WF-TEST-AUDIT-001"
+      },
+      "expected": {
+        "action": "resume",
+        "target": "workflow",
+        "primary_skill": "legal-case-lifecycle-manager",
+        "memory_read_mode": "relevant",
+        "memory_write_mode": "candidate",
+        "external_action": "forbidden"
+      }
+    },
+    {
+      "case_id": "ROUTE-031",
+      "text": "帮我规划工资和存款投资",
+      "context": {},
+      "expected": {
+        "action": "out_of_scope",
+        "target": "financial_planning",
+        "primary_skill": null,
+        "must_not": [
+          "trigger_legal_case_os"
+        ]
+      }
+    }
+  ]
+}

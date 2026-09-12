@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/fill-plan.schema.json",
+  "title": "Legal Case OS FillPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "plan_id", "profile_id", "profile_path", "template_id",
+    "template_sha256", "usage_mode", "created_at", "status", "slots", "conflicts",
+    "provenance_snapshot"
+  ],
+  "properties": {
+    "test_only": { "type": "boolean" },
+    "notice": { "type": "string" },
+    "schema_version": { "const": "1.0.0" },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "profile_id": { "type": "string", "minLength": 1 },
+    "profile_path": { "type": "string", "minLength": 1 },
+    "template_id": { "type": "string", "minLength": 1 },
+    "template_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "usage_mode": { "enum": ["fillable_clone", "hybrid"] },
+    "created_at": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["draft", "ready", "blocked"] },
+    "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } },
+    "repeat_groups": { "type": "array", "items": { "$ref": "#/$defs/repeatGroup" } },
+    "conflicts": { "type": "array", "items": { "$ref": "#/$defs/conflict" } },
+    "provenance_snapshot": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "case_state_path", "case_state_sha256", "state_version", "sources",
+            "facts", "decisions", "snapshot_sha256"
+          ],
+          "properties": {
+            "case_state_path": { "type": "string", "minLength": 1 },
+            "case_state_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "state_version": { "type": "integer", "minimum": 0 },
+            "template_catalog": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "catalog_path", "catalog_sha256", "template_id", "entry_sha256",
+                "template_version", "source_path", "source_sha256", "profile_path",
+                "profile_sha256", "binding_sha256"
+              ],
+              "properties": {
+                "catalog_path": { "type": "string", "minLength": 1 },
+                "catalog_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                "template_id": { "type": "string", "minLength": 1 },
+                "entry_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                "template_version": { "type": ["string", "integer"] },
+                "source_path": { "type": "string", "minLength": 1 },
+                "source_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                "profile_path": { "type": "string", "minLength": 1 },
+                "profile_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                "binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+              }
+            },
+            "sources": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } },
+            "facts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": [
+                  "id", "status", "source_locators", "normalized_value_sha256",
+                  "field_key", "object_sha256"
+                ],
+                "properties": {
+                  "id": { "type": "string", "minLength": 1 },
+                  "status": { "const": "confirmed" },
+                  "source_locators": { "type": "array", "minItems": 1 },
+                  "normalized_value_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                  "field_key": { "type": "string", "minLength": 1 },
+                  "object_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+                }
+              }
+            },
+            "decisions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": true,
+                "required": ["decision_id", "status", "actor_role", "object_sha256"],
+                "properties": {
+                  "decision_id": { "type": "string", "minLength": 1 },
+                  "status": { "enum": ["pending", "approved", "rejected"] },
+                  "actor_role": { "enum": ["lawyer", "assistant", "system"] },
+                  "object_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+                }
+              }
+            },
+            "snapshot_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          }
+        },
+        { "type": "null" }
+      ]
+    }
+  },
+  "$defs": {
+    "locator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["part", "path", "text_node_index", "expected_text_sha256"],
+      "properties": {
+        "part": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "text_node_index": { "type": "integer", "minimum": 1 },
+        "expected_text_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "kind", "verified", "object_sha256"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": {
+          "enum": ["original_material", "verified_authority", "user_statement", "model_inference"]
+        },
+        "verified": { "type": "boolean" },
+        "object_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "fact_id": { "type": "string", "minLength": 1 },
+        "fact_object_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "locator": { "type": "string", "minLength": 1 },
+        "extracted_value_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "binding": { "$ref": "#/$defs/fillBinding" }
+      }
+    },
+    "fillBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "template_id", "profile_id", "slot_id", "field_key", "action",
+        "value_sha256", "binding_sha256"
+      ],
+      "properties": {
+        "template_id": { "type": "string", "minLength": 1 },
+        "profile_id": { "type": "string", "minLength": 1 },
+        "slot_id": { "type": "string", "minLength": 1 },
+        "field_key": { "type": "string", "minLength": 1 },
+        "action": { "enum": ["preserve", "replace", "clear_to_blank"] },
+        "value_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "confirmation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": ["status", "actor_role", "decision_id", "object_sha256"],
+          "properties": {
+            "status": { "enum": ["pending", "approved", "rejected"] },
+            "actor_role": { "enum": ["lawyer", "assistant", "system"] },
+            "decision_id": { "type": "string", "minLength": 1 },
+            "object_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "approval_id": { "type": "string", "minLength": 1 },
+            "fill_binding": { "$ref": "#/$defs/fillBinding" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "slot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot_id", "field_key", "policy", "locator", "action", "value", "applies",
+        "blank_reason", "source_refs", "derivation_basis", "confirmation", "binding"
+      ],
+      "properties": {
+        "slot_id": { "type": "string", "minLength": 1 },
+        "field_key": { "type": "string", "minLength": 1 },
+        "policy": {
+          "enum": [
+            "fixed_locked", "required_verified", "conditional_verified", "optional_verified",
+            "derived_needs_confirmation", "lawyer_decision_required", "manual_blank", "repeatable"
+          ]
+        },
+        "locator": { "$ref": "#/$defs/locator" },
+        "action": { "enum": ["preserve", "replace", "clear_to_blank"] },
+        "value": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "applies": { "oneOf": [{ "type": "boolean" }, { "type": "null" }] },
+        "blank_reason": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "source_refs": { "type": "array", "items": { "$ref": "#/$defs/sourceRef" } },
+        "derivation_basis": { "oneOf": [{ "type": "string" }, { "type": "null" }] },
+        "confirmation": { "$ref": "#/$defs/confirmation" },
+        "binding": { "$ref": "#/$defs/fillBinding" }
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["id", "slot_ids", "status", "reason"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "slot_ids": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1 },
+        "status": { "enum": ["unresolved", "resolved"] },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "repeatGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["block_id", "items", "group_binding_sha256"],
+      "properties": {
+        "block_id": { "type": "string", "minLength": 1 },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["item_id", "index", "values", "binding_sha256"],
+            "properties": {
+              "item_id": { "type": "string", "minLength": 1 },
+              "index": { "type": "integer", "minimum": 1 },
+              "values": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+              "binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+            }
+          }
+        },
+        "group_binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    }
+  }
+}

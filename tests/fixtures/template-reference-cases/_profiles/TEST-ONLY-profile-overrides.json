@@ -1,0 +1,38 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：虚构引用模板画像的人工校准夹具。",
+  "visual_baseline": {
+    "status": "verified",
+    "source_sha256": "cb946dda8f0c862d61a0b178a0c73dd146ce92afcbd59d87fd8ebc626bbeafbd",
+    "renderer": "LibreOffice 26.2.5.1 + pypdfium2 TEST-ONLY",
+    "page_count": 1,
+    "pages": [
+      {
+        "page_number": 1,
+        "path": "render/TPL-P-S-001/page_p01.png",
+        "sha256": "e9de07bc1983a51d5de032ddb33a4678f27f6ad277afabc95bd9128f74874b83"
+      }
+    ],
+    "reviewed_by": "TEST-ONLY-fixture-reviewer",
+    "reviewed_at": "2026-08-25T00:00:00Z"
+  },
+  "curated_features": {
+    "section_functions": ["标题后依次设置当事人、诉讼请求、事实与理由三个测试章节。"],
+    "argument_pattern": ["测试画像只登记章节功能，不迁移任何旧案主张或事实。"],
+    "voice_rules": ["使用简短、直接、无内部备注的对外语气。"],
+    "annotation_rules": ["测试模板不使用批注、修订或内部标记。"],
+    "length_rules": ["每个测试章节使用一个短段落。"]
+  },
+  "reusable_aspects": ["structure", "layout", "tone", "paragraph_function", "length"],
+  "forbidden_transfer": [
+    "client_facts",
+    "names",
+    "dates",
+    "amounts",
+    "claims",
+    "evidence",
+    "authorities",
+    "conclusions"
+  ],
+  "unresolved_items": []
+}

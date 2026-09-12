@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/template-approval-receipt.schema.json",
+  "title": "Legal Case OS TemplateApprovalReceipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_version", "confirmed", "decision_id", "approved_by", "decided_at",
+    "operation", "template_id", "target_version", "source_sha256", "profile_sha256",
+    "catalog_before_sha256", "receipt_sha256"
+  ],
+  "properties": {
+    "receipt_version": { "const": "1.0.0" },
+    "confirmed": { "const": true },
+    "decision_id": { "type": "string", "minLength": 1 },
+    "approved_by": { "type": "string", "minLength": 1 },
+    "decided_at": { "type": "string", "format": "date-time" },
+    "operation": { "enum": ["create", "upgrade", "retire"] },
+    "template_id": { "type": "string", "minLength": 1 },
+    "target_version": { "type": "string", "minLength": 1 },
+    "source_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "profile_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "catalog_before_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "receipt_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  }
+}

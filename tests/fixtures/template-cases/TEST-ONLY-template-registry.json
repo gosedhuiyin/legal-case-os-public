@@ -1,0 +1,51 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：模板内容和套件名称均为虚构，仅用于路由及门禁测试。",
+  "registry_version": "1.0.0-test",
+  "templates": [
+    {
+      "template_id": "TPL-TEST-COMPLAINT-VALID",
+      "aliases": ["测试起诉状套件", "普通买卖起诉状测试模板"],
+      "document_type": "civil_complaint",
+      "source": "locally_authored_test_fixture",
+      "license": "CC0-1.0",
+      "version": "1.0.0-test",
+      "status": "current",
+      "path": "templates/TEST-ONLY-起诉状模板.md",
+      "required_fields": ["court_candidate", "plaintiff_label", "defendant_label", "claims", "facts_and_reasons"],
+      "fixed_fields": ["test_only_banner", "document_type"],
+      "editable_fields": ["court_candidate", "plaintiff_label", "defendant_label", "claims", "facts_and_reasons"],
+      "test_only": true
+    },
+    {
+      "template_id": "TPL-TEST-LICENSE-UNKNOWN",
+      "aliases": ["许可不明测试套件"],
+      "document_type": "civil_complaint",
+      "source": "unknown_test_source",
+      "license": null,
+      "version": "0.1.0-test",
+      "status": "blocked_license_unknown",
+      "path": "templates/TEST-ONLY-许可不明模板.md",
+      "required_fields": ["claims"],
+      "fixed_fields": [],
+      "editable_fields": ["claims"],
+      "test_only": true
+    },
+    {
+      "template_id": "TPL-TEST-STALE",
+      "aliases": ["过期手续测试套件"],
+      "document_type": "authorization_form",
+      "source": "locally_authored_test_fixture",
+      "license": "CC0-1.0",
+      "version": "0.0.1-test",
+      "status": "stale",
+      "superseded_by": "TPL-TEST-COMPLAINT-VALID",
+      "path": "templates/TEST-ONLY-过期模板.md",
+      "required_fields": ["principal_label"],
+      "fixed_fields": [],
+      "editable_fields": ["principal_label"],
+      "test_only": true
+    }
+  ]
+}
+

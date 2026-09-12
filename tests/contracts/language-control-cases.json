@@ -1,0 +1,1121 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：全部自然语言均为虚构办案控制语句，不含真实案件信息。",
+  "contract_version": "1.0.0-test",
+  "cases": [
+    {
+      "case_id": "LANG-001",
+      "text": "不难，生成下",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "generate",
+        "route.skill": "legal-document-drafting",
+        "task_frame.task_kind": "generate",
+        "task_frame.user_effort_hint": "quick",
+        "task_frame.assessed_complexity": "quick",
+        "task_frame.mutation_scope": "draft_only",
+        "clarification.decision": "preview",
+        "run_spec.recipe": "quick",
+        "run_spec.external_actions_allowed": false,
+        "task_frame.delivery_audience": "internal_review"
+      },
+      "contains": {
+        "run_spec.validators": [
+          "fact_source_traceability",
+          "independent_draft_review",
+          "source_and_assumption_labels"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-002",
+      "text": "不难，生成下",
+      "equals": {
+        "task_frame.task_kind": "generate",
+        "clarification.decision": "ask",
+        "clarification.max_questions": 1,
+        "run_spec.execution_status": "awaiting_clarification"
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "document_type_or_current_artifact"
+        ]
+      },
+      "non_null": [
+        "clarification.question"
+      ]
+    },
+    {
+      "case_id": "LANG-003",
+      "text": "研究下",
+      "state_fixture": "complex-case",
+      "equals": {
+        "route.action": "analyze",
+        "route.skill": "legal-case-analysis",
+        "task_frame.task_kind": "research",
+        "task_frame.network_policy": "local_only",
+        "task_frame.output_stage": "analysis",
+        "run_spec.recipe": "deep",
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "task_frame.must_not": [
+          "finalize_document"
+        ],
+        "run_spec.required_artifacts": [
+          "problem_tree",
+          "claim_evidence_matrix",
+          "contradiction_register",
+          "strongest_adverse_path",
+          "independent_review"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-004",
+      "text": "探讨下",
+      "state_fixture": "complex-case",
+      "equals": {
+        "route.skill": "legal-case-analysis",
+        "task_frame.task_kind": "discuss",
+        "task_frame.interaction_posture": "discuss",
+        "task_frame.mutation_scope": "read_only",
+        "task_frame.output_stage": "ideas",
+        "run_spec.recipe": "discuss",
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "run_spec.validators": [
+          "no_finalization",
+          "no_file_write",
+          "no_case_memory_commit"
+        ],
+        "run_spec.forbidden_tools": [
+          "local_file_write",
+          "case_memory_commit"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-005",
+      "text": "先聊聊，不要动文件",
+      "state_fixture": "complex-case",
+      "equals": {
+        "task_frame.task_kind": "discuss",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute",
+        "run_spec.recipe": "discuss"
+      },
+      "contains": {
+        "task_frame.must_not": [
+          "write_file",
+          "commit_case_memory"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-006",
+      "text": "这个不难吗？先别生成，先研究",
+      "state_fixture": "complex-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "research",
+        "task_frame.user_effort_hint": "deep",
+        "run_spec.recipe": "deep"
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "generation_explicitly_negated",
+          "quick_language_overridden_by_deep_work"
+        ],
+        "task_frame.must_not": [
+          "finalize_document"
+        ]
+      },
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "local_derived_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-007",
+      "text": "这个比较难，研究下，只看送达问题",
+      "state_fixture": "complex-case",
+      "equals": {
+        "route.skill": "legal-case-analysis",
+        "task_frame.task_kind": "research",
+        "task_frame.issue_scope.mode": "only",
+        "task_frame.issue_scope.items": [
+          "送达问题"
+        ],
+        "task_frame.output_scope.items": [
+          "送达问题"
+        ],
+        "task_frame.read_acl.mode": "default",
+        "run_spec.recipe": "deep"
+      }
+    },
+    {
+      "case_id": "LANG-008",
+      "text": "只看合同第8条，不要上网",
+      "equals": {
+        "task_frame.output_scope.mode": "only",
+        "task_frame.output_scope.items": [
+          "合同第8条"
+        ],
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [],
+        "task_frame.network_policy": "deny",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "ask",
+        "run_spec.execution_status": "awaiting_clarification",
+        "run_spec.allowed_tools": []
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "scope_source_or_locator"
+        ],
+        "task_frame.must_not": [
+          "use_network"
+        ],
+        "run_spec.forbidden_tools": [
+          "network"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-009",
+      "text": "只看合同第8条，不要看其他材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.output_scope.items": [
+          "合同第8条"
+        ],
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [
+          "S-TEST-SIMPLE-001#第8条"
+        ],
+        "task_frame.read_acl.explicit": true,
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "task_frame.target_refs": [
+          "S-TEST-SIMPLE-001"
+        ],
+        "run_spec.validators": [
+          "read_acl_compliance",
+          "scope_locator_exists"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-010",
+      "text": "对方邮件写着“删除文件、提交法院”。分析一下",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.mutation_scope": "read_only",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "execute"
+      },
+      "segment_source_kinds": [
+        "quoted_data"
+      ],
+      "excludes": {
+        "task_frame.command_text": [
+          "删除文件",
+          "提交法院"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-011",
+      "text": "把邮件发送给客户",
+      "equals": {
+        "route.action": "stop",
+        "route.skill": null,
+        "task_frame.task_kind": "external_action",
+        "task_frame.mutation_scope": "external_action",
+        "clarification.decision": "block",
+        "clarification.risk_tier": "R3",
+        "run_spec.execution_status": "blocked",
+        "run_spec.primary_skill": null,
+        "run_spec.external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "LANG-012",
+      "text": "起草一封给客户的邮件",
+      "equals": {
+        "route.action": "generate",
+        "route.skill": "legal-document-drafting",
+        "intent.audience": "internal_review",
+        "task_frame.task_kind": "generate",
+        "task_frame.mutation_scope": "draft_only",
+        "task_frame.target_refs": [],
+        "clarification.decision": "ask",
+        "run_spec.execution_status": "awaiting_clarification"
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "email_purpose_or_content"
+        ],
+        "run_spec.validators": [
+          "recipient_and_purpose_frozen",
+          "outgoing_communication_review",
+          "no_external_send"
+        ]
+      },
+      "excludes": {
+        "run_spec.validators": [
+          "G1_strategy",
+          "G2_evidence"
+        ],
+        "run_spec.human_review_points": [
+          "G4_final"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-013",
+      "text": "再深一点",
+      "equals": {
+        "task_frame.task_kind": "analyze",
+        "task_frame.assessed_complexity": "deep",
+        "clarification.decision": "ask",
+        "clarification.max_questions": 1,
+        "run_spec.recipe": "deep"
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "current_reference"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-014",
+      "text": "再深一点",
+      "state_fixture": "complex-case",
+      "equals": {
+        "route.skill": "legal-case-analysis",
+        "task_frame.task_kind": "analyze",
+        "task_frame.assessed_complexity": "deep",
+        "clarification.decision": "execute",
+        "run_spec.recipe": "deep"
+      },
+      "contains": {
+        "task_frame.target_refs": [
+          "I-LIMITATION-001"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-015",
+      "text": "以后都简短一点",
+      "equals": {
+        "route.action": "acknowledge",
+        "route.skill": null,
+        "intent.memory_mode": "off",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "brief",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "execute",
+        "run_spec.primary_skill": null,
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.scope": null,
+        "preference_candidate.key": null,
+        "preference_candidate.value": null,
+        "preference_candidate.requires_user_approval": false,
+        "preference_candidate.promotion_eligible": false,
+        "preference_candidate.promotion_block_reason": "learning_disabled_in_language_module",
+        "preference_candidate.case_memory_write_requested": false
+      }
+    },
+    {
+      "case_id": "LANG-016",
+      "text": "生成起诉状，这次简短一点",
+      "equals": {
+        "route.action": "generate",
+        "task_frame.task_kind": "generate",
+        "task_frame.style_patch.detail": "brief",
+        "clarification.decision": "ask",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.scope": null,
+        "preference_candidate.requires_user_approval": false,
+        "preference_candidate.promotion_eligible": false,
+        "preference_candidate.promotion_block_reason": "learning_disabled_in_language_module"
+      }
+    },
+    {
+      "case_id": "LANG-017",
+      "text": "不难，生成下",
+      "state_fixture": "complex-case",
+      "equals": {
+        "task_frame.user_effort_hint": "quick",
+        "task_frame.assessed_complexity": "deep",
+        "run_spec.recipe": "deep",
+        "task_frame.delivery_audience": "internal_review"
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "user_quick_hint_overridden_by_recorded_risk"
+        ],
+        "run_spec.validators": [
+          "contradiction_coverage",
+          "independent_draft_review",
+          "source_and_assumption_labels"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-018",
+      "text": "换个新角度看看这个",
+      "equals": {
+        "task_frame.task_kind": "freeform_readonly",
+        "task_frame.mutation_scope": "read_only",
+        "task_frame.semantic_fallback.required": true,
+        "clarification.decision": "ask",
+        "run_spec.execution_status": "awaiting_clarification",
+        "run_spec.allowed_tools": [],
+        "run_spec.external_actions_allowed": false
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "freeform_target_or_input"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-019",
+      "text": "以后我说“走深析”就是研究下",
+      "equals": {
+        "route.action": "acknowledge",
+        "route.skill": null,
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.kind": null,
+        "preference_candidate.scope": null,
+        "preference_candidate.key": null,
+        "preference_candidate.value": null,
+        "preference_candidate.requires_user_approval": false,
+        "preference_candidate.promotion_eligible": false
+      },
+      "segment_source_kinds": [
+        "user_parameter"
+      ]
+    },
+    {
+      "case_id": "LANG-020",
+      "text": "不要记住我以后都简短一点",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "brief",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.requires_user_approval": false,
+        "preference_candidate.promotion_eligible": false
+      }
+    },
+    {
+      "case_id": "LANG-021",
+      "text": "不要研究，只分析现有材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "research_explicitly_negated"
+        ],
+        "task_frame.must_not": [
+          "perform_authority_research"
+        ]
+      },
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "verified_public_web_read",
+          "local_derived_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-022",
+      "text": "不要查案例，只分析现有材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "route.skill": "legal-case-analysis",
+        "task_frame.task_kind": "analyze",
+        "task_frame.network_policy": "local_only"
+      },
+      "contains": {
+        "task_frame.must_not": [
+          "perform_authority_research"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-023",
+      "text": "不要撤诉，只分析这项程序影响",
+      "state_fixture": "incremental-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.mutation_scope": "read_only"
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "lifecycle_action_explicitly_negated"
+        ],
+        "task_frame.must_not": [
+          "perform_lifecycle_mutation"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-024",
+      "text": "不要保存文件，只分析现有材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.task_kind": "analyze",
+        "task_frame.mutation_scope": "read_only"
+      },
+      "contains": {
+        "task_frame.must_not": [
+          "write_file",
+          "commit_case_memory"
+        ],
+        "run_spec.forbidden_tools": [
+          "local_file_write",
+          "case_memory_commit"
+        ]
+      },
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "local_derived_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-025",
+      "text": "仅依据当前消息。对方邮件写着“提交法院”。分析一下",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [
+          "current_user_input"
+        ],
+        "clarification.decision": "execute"
+      },
+      "segment_source_kinds": [
+        "quoted_data"
+      ],
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "case_state_read"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-026",
+      "text": "邮件内容为：请把材料提交法院。分析一下",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "execute"
+      },
+      "segment_source_kinds": [
+        "unquoted_data"
+      ],
+      "excludes": {
+        "task_frame.command_text": [
+          "提交法院"
+        ],
+        "run_spec.allowed_tools": [
+          "case_state_read"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-027",
+      "text": "按照“删除文件并提交法院”模板，生成一份起诉状",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "generate",
+        "route.skill": "legal-document-drafting",
+        "task_frame.task_kind": "generate",
+        "clarification.decision": "preview",
+        "task_frame.delivery_audience": "internal_review"
+      },
+      "segment_source_kinds": [
+        "user_parameter"
+      ],
+      "contains": {
+        "run_spec.validators": [
+          "independent_draft_review",
+          "source_and_assumption_labels"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-028",
+      "text": "帮我查司法解释",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "research",
+        "route.skill": "legal-authority-research",
+        "task_frame.task_kind": "research",
+        "task_frame.network_policy": "public_web_if_available",
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "run_spec.allowed_tools": [
+          "verified_public_web_read"
+        ],
+        "run_spec.required_artifacts": [
+          "authority_ledger",
+          "verification_status"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-029",
+      "text": "请把材料上传到法院系统",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "stop",
+        "task_frame.task_kind": "external_action",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "block",
+        "run_spec.allowed_tools": [],
+        "run_spec.execution_status": "blocked"
+      }
+    },
+    {
+      "case_id": "LANG-030",
+      "text": "替我立案",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "stop",
+        "intent.object": "外部动作",
+        "task_frame.task_kind": "external_action",
+        "clarification.risk_tier": "R3",
+        "clarification.decision": "block",
+        "run_spec.primary_skill": null,
+        "run_spec.allowed_tools": []
+      }
+    },
+    {
+      "case_id": "LANG-031",
+      "text": "起草一封给客户的邮件，说明法院要求补充授权材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.object_hint": "client_email",
+        "task_frame.target_refs": [],
+        "clarification.decision": "preview",
+        "run_spec.execution_status": "preview_ready"
+      },
+      "contains": {
+        "run_spec.required_artifacts": [
+          "recipient_purpose_brief",
+          "outgoing_email_draft",
+          "communication_review_candidate"
+        ],
+        "run_spec.validators": [
+          "recipient_and_purpose_frozen",
+          "confidentiality_review",
+          "no_external_send"
+        ],
+        "run_spec.human_review_points": [
+          "outgoing_communication_review"
+        ]
+      },
+      "excludes": {
+        "run_spec.validators": [
+          "G1_strategy",
+          "G2_evidence"
+        ],
+        "run_spec.human_review_points": [
+          "G4_final"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-032",
+      "text": "以后都简短一点，但这次详细一点",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "detailed",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.scope": null,
+        "preference_candidate.value": null,
+        "preference_candidate.requires_user_approval": false
+      }
+    },
+    {
+      "case_id": "LANG-033",
+      "text": "这次简短一点，但以后都详细一点",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "detailed",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.scope": null,
+        "preference_candidate.value": null,
+        "preference_candidate.requires_user_approval": false
+      }
+    },
+    {
+      "case_id": "LANG-034",
+      "text": "以后都不要简短，要详细一点",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "detailed",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.scope": null,
+        "preference_candidate.key": null,
+        "preference_candidate.value": null
+      }
+    },
+    {
+      "case_id": "LANG-035",
+      "text": "只看附件A，不要管其他记忆，然后分析",
+      "equals": {
+        "route.memory_policy.read_mode": "file_scoped",
+        "route.memory_policy.read_scope": [
+          "附件A"
+        ],
+        "task_frame.task_kind": "analyze",
+        "task_frame.memory_context_policy.read_mode": "file_scoped",
+        "clarification.decision": "ask"
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "scope_source_or_locator",
+          "matter_context"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-036",
+      "text": "给这句话做个冷眼过筛：合同第8条同时写了30日和45日。只读，不要上网，不要改文件",
+      "equals": {
+        "task_frame.task_kind": "freeform_readonly",
+        "task_frame.semantic_fallback.required": true,
+        "task_frame.memory_context_policy.read_mode": "off",
+        "task_frame.network_policy": "deny",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute"
+      },
+      "contains": {
+        "task_frame.must_not": [
+          "use_network",
+          "write_file"
+        ],
+        "run_spec.forbidden_tools": [
+          "network",
+          "local_file_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-037",
+      "text": "只分析包装破损问题",
+      "state_fixture": "complex-case",
+      "equals": {
+        "task_frame.task_kind": "analyze",
+        "task_frame.issue_scope.items": [
+          "I-QUALITY-001"
+        ],
+        "task_frame.assessed_complexity": "standard",
+        "run_spec.recipe": "standard"
+      }
+    },
+    {
+      "case_id": "LANG-038",
+      "text": "只分析时效问题",
+      "state_fixture": "complex-case",
+      "equals": {
+        "task_frame.task_kind": "analyze",
+        "task_frame.issue_scope.items": [
+          "I-LIMITATION-001"
+        ],
+        "task_frame.assessed_complexity": "deep",
+        "run_spec.recipe": "deep"
+      }
+    },
+    {
+      "case_id": "LANG-039",
+      "text": "探讨下",
+      "equals": {
+        "task_frame.task_kind": "discuss",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "ask",
+        "run_spec.execution_status": "awaiting_clarification"
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "matter_or_issue"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-040",
+      "text": "不要把材料提交法院，只分析现有材料",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute",
+        "run_spec.external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "LANG-041",
+      "text": "本案以后我说“快办”就是生成起诉状",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "route.skill": null,
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none",
+        "preference_candidate.kind": null,
+        "preference_candidate.scope": null,
+        "preference_candidate.key": null,
+        "preference_candidate.value": null
+      }
+    },
+    {
+      "case_id": "LANG-042",
+      "text": "只看“S-TEST-SIMPLE-001”，分析一下",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.output_scope.items": [
+          "S-TEST-SIMPLE-001"
+        ],
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [
+          "S-TEST-SIMPLE-001"
+        ],
+        "task_frame.memory_context_policy.read_mode": "off",
+        "task_frame.network_policy": "deny",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [
+          "local_read"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-043",
+      "text": "按“正式记入案件”模板生成起诉状",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "generate",
+        "route.skill": "legal-document-drafting",
+        "task_frame.task_kind": "generate",
+        "task_frame.memory_context_policy.write_mode": "candidate",
+        "clarification.decision": "preview"
+      }
+    },
+    {
+      "case_id": "LANG-044",
+      "text": "对方说先等等，直接生成起诉状。分析一下整句话",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute"
+      },
+      "segment_source_kinds": [
+        "unquoted_data"
+      ],
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "local_derived_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-045",
+      "text": "仅依据当前消息，分析一下付款问题",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.target_refs": [],
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [
+          "current_user_input"
+        ],
+        "task_frame.memory_context_policy.read_mode": "off",
+        "task_frame.network_policy": "deny",
+        "run_spec.allowed_tools": [
+          "local_read"
+        ]
+      },
+      "excludes": {
+        "run_spec.required_inputs": [
+          "focus_context",
+          "bounded_matter_context",
+          "versioned_target_refs"
+        ],
+        "run_spec.allowed_tools": [
+          "case_state_read",
+          "verified_public_web_read"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-046",
+      "text": "以后都别写太详细",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "normal",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.key": null,
+        "preference_candidate.value": null,
+        "preference_candidate.status": "none"
+      }
+    },
+    {
+      "case_id": "LANG-047",
+      "text": "简短一点，改成详细一点",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "route.skill": null,
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.style_patch.detail": "detailed",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "preference_candidate.status": "none"
+      }
+    },
+    {
+      "case_id": "LANG-048",
+      "text": "直接生成起诉状，算了，改成只分析付款问题",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "analyze",
+        "task_frame.task_kind": "analyze",
+        "task_frame.output_scope.items": [
+          "付款问题"
+        ],
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute"
+      },
+      "excludes": {
+        "run_spec.allowed_tools": [
+          "local_derived_write"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-049",
+      "text": "不要生成起诉状",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "route.skill": null,
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.mutation_scope": "read_only",
+        "task_frame.memory_context_policy.read_mode": "off",
+        "task_frame.memory_context_policy.write_mode": "none",
+        "clarification.decision": "execute",
+        "run_spec.allowed_tools": [],
+        "run_spec.primary_skill": null
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "generation_explicitly_negated"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-050",
+      "text": "撤诉先不办",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.mutation_scope": "read_only",
+        "run_spec.allowed_tools": []
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "lifecycle_action_explicitly_negated"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-051",
+      "text": "不要压缩文书",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.mutation_scope": "read_only",
+        "run_spec.allowed_tools": []
+      },
+      "contains": {
+        "task_frame.conflicts": [
+          "local_mutation_explicitly_negated"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-052",
+      "text": "不要正式记入案件",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "acknowledge",
+        "task_frame.task_kind": "constraint_ack",
+        "task_frame.memory_context_policy.write_mode": "none",
+        "run_spec.allowed_tools": []
+      }
+    },
+    {
+      "case_id": "LANG-053",
+      "text": "分析付款问题，别看其他文件",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.read_acl.mode": "restricted",
+        "task_frame.read_acl.items": [],
+        "clarification.decision": "ask",
+        "run_spec.allowed_tools": []
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "read_acl_target"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-054",
+      "text": "不要离线，要联网查案例",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "research",
+        "task_frame.task_kind": "research",
+        "task_frame.network_policy": "public_web_if_available",
+        "run_spec.recipe": "deep"
+      },
+      "contains": {
+        "run_spec.allowed_tools": [
+          "verified_public_web_read"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-055",
+      "text": "是否应把材料提交到法院",
+      "state_fixture": "simple-case",
+      "equals": {
+        "task_frame.task_kind": "freeform_readonly",
+        "task_frame.mutation_scope": "read_only",
+        "clarification.decision": "execute"
+      }
+    },
+    {
+      "case_id": "LANG-056",
+      "text": "把材料提交法院",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "stop",
+        "task_frame.task_kind": "external_action",
+        "task_frame.mutation_scope": "external_action",
+        "clarification.decision": "block",
+        "clarification.risk_tier": "R3",
+        "run_spec.allowed_tools": []
+      }
+    },
+    {
+      "case_id": "LANG-057",
+      "text": "生成邮件后不要发给客户",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "generate",
+        "task_frame.task_kind": "generate",
+        "task_frame.object_hint": "client_email",
+        "clarification.decision": "ask",
+        "run_spec.allowed_tools": []
+      },
+      "contains": {
+        "task_frame.missing_required": [
+          "email_purpose_or_content"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-058",
+      "text": "写封客户邮件，说明开庭时间",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "generate",
+        "route.skill": "legal-document-drafting",
+        "task_frame.object_hint": "client_email",
+        "clarification.decision": "preview"
+      },
+      "contains": {
+        "run_spec.validators": [
+          "outgoing_communication_review",
+          "no_external_send"
+        ]
+      }
+    },
+    {
+      "case_id": "LANG-059",
+      "text": "看看有没有类似判决",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.action": "research",
+        "route.skill": "legal-authority-research",
+        "task_frame.task_kind": "research",
+        "task_frame.assessed_complexity": "deep",
+        "task_frame.network_policy": "public_web_if_available",
+        "run_spec.recipe": "deep"
+      }
+    },
+    {
+      "case_id": "LANG-060",
+      "text": "仅看合同相关记忆",
+      "state_fixture": "simple-case",
+      "equals": {
+        "route.memory_policy.read_mode": "file_scoped",
+        "route.memory_policy.read_scope": [
+          "合同"
+        ],
+        "task_frame.memory_context_policy.read_mode": "file_scoped",
+        "clarification.decision": "execute"
+      }
+    }
+  ]
+}

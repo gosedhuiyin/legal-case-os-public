@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "test_only": true,
+  "notice": "TEST-ONLY：只保存归一化文本的SHA-256与长度，不保存旧案明文。",
+  "template_id": "TPL-P-S-001",
+  "profile_id": "PROFILE-TPL-P-S-001",
+  "profile_sha256": "020e0e33c6e411119f4608d82f0b0f633d71617d16a29cae0373b1a44530cf2d",
+  "source_sha256": "cb946dda8f0c862d61a0b178a0c73dd146ce92afcbd59d87fd8ebc626bbeafbd",
+  "fingerprints": [
+    {
+      "exemplar_id": "TPL-P-S-001",
+      "kind": "characteristic_phrase",
+      "sha256": "32f79394763612579b8f71792ac524778c78f50f51f96933f0c80d318ec116be",
+      "normalized_length": 17
+    },
+    {
+      "exemplar_id": "TPL-P-S-001",
+      "kind": "name",
+      "sha256": "b6d223715180b536fe6014fd42614e465ae1bad61c9536b5133e267183fda532",
+      "normalized_length": 6
+    },
+    {
+      "exemplar_id": "TPL-P-S-001",
+      "kind": "case_number",
+      "sha256": "c0042bdfbd29cd165001a42893f3bafc5bb3e574fbe7455e09d6c23e7dede81d",
+      "normalized_length": 18
+    },
+    {
+      "exemplar_id": "TPL-P-S-001",
+      "kind": "amount",
+      "sha256": "6b4cd4f5584f2b1ff70a52ecc488d56e00eeadccc559e857bbdc89c2acc0055d",
+      "normalized_length": 9
+    }
+  ]
+}

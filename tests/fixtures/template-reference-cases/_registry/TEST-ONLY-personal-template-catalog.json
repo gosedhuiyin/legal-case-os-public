@@ -1,0 +1,62 @@
+{
+  "test_only": true,
+  "catalog_version": "1.0.0",
+  "notice": "TEST-ONLY：完全虚构的个人模板与套件解析夹具。",
+  "templates": [
+    {
+      "id": "TPL-P-S-001",
+      "name": "TEST-ONLY标准买卖合同起诉状",
+      "aliases": ["简模001", "标准买卖合同起诉状"],
+      "document_type": "civil_complaint",
+      "category": "simple_standard",
+      "path": "../templates/TEST-ONLY-simple-reference.docx",
+      "profile_path": "../_profiles/TPL-P-S-001.writing-profile.json",
+      "profile_sha256": "020e0e33c6e411119f4608d82f0b0f633d71617d16a29cae0373b1a44530cf2d",
+      "fingerprint_manifest_path": "../_profiles/TPL-P-S-001.fingerprints.json",
+      "fingerprint_manifest_sha256": "7ed8d064ca8fb801caccb0ddd051e015c3892493eebd357cb7b29a210e12230c",
+      "fingerprint_count": 4,
+      "source": "TEST-ONLY-user-authorized-final",
+      "authorization": {
+        "status": "verified",
+        "basis": "TEST-ONLY：虚构文件由测试套件自行授权"
+      },
+      "approved_final": true,
+      "usage_mode": "reference",
+      "reusable_aspects": ["structure", "layout", "tone", "paragraph_function", "length"],
+      "composition_preferences": {
+        "layout_score": 90,
+        "structure_score": 85,
+        "auxiliary_score": 60,
+        "priority": 80,
+        "role_suitability": ["layout", "structure", "auxiliary"],
+        "section_targets": ["诉讼请求", "事实与理由"],
+        "selection_notes": "TEST-ONLY：版式简洁，结构适合标准起诉状，仅迁移方法。",
+        "compatibility_tags": {
+          "relief_or_position": ["neutral_civil_claim_structure"],
+          "evidence_use": ["claim_source_binding"],
+          "authority": ["verified_only"],
+          "external_risk": ["court_clean_text"]
+        }
+      },
+      "forbidden_transfer": ["client_facts", "names", "dates", "amounts", "claims", "evidence", "authorities", "conclusions"],
+      "sha256": "cb946dda8f0c862d61a0b178a0c73dd146ce92afcbd59d87fd8ebc626bbeafbd",
+      "version": "1.0.0-test",
+      "status": "active"
+    }
+  ],
+  "suites": [
+    {
+      "id": "SUITE-P-S-001",
+      "name": "TEST-ONLY简模001起诉套件",
+      "aliases": ["简模001套件", "标准起诉套件"],
+      "version": "1.0.0-test",
+      "status": "active",
+      "components": [
+        {"role": "civil_complaint", "registry": "personal", "template_id": "TPL-P-S-001"},
+        {"role": "power_of_attorney", "registry": "builtin", "template_id": "TPL-POWER-OF-ATTORNEY"},
+        {"role": "law_firm_letter", "registry": "builtin", "template_id": "TPL-LAW-FIRM-LETTER"},
+        {"role": "service_information", "registry": "builtin", "template_id": "TPL-SERVICE-INFO"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "all_machine_checks_passed": true,
+  "boundary_contract": {
+    "court_name_configured_max_chars": 55,
+    "large_amount_value": "人民币9,999,999,999,999,999,999.99元",
+    "note": "Configured regression boundaries, not statutory or universal business limits.",
+    "party_name_configured_max_chars": 69
+  },
+  "design_contract": {
+    "cell_margins_dxa": {
+      "bottom": 80,
+      "end": 120,
+      "start": 120,
+      "top": 80
+    },
+    "named_overrides": [
+      "Microsoft YaHei East Asian font for Chinese fixture text"
+    ],
+    "page": "US Letter portrait, one-inch margins",
+    "preset": "standard_business_brief",
+    "table_indent_dxa": 120,
+    "table_width_dxa": 9360
+  },
+  "generated_by": "tools/build_template_boundary_suite.py",
+  "purpose": "Template fill/render boundary regression; never a real-case or filing artifact",
+  "release_gate": {
+    "external_actions_executed": 0,
+    "filing_use_allowed": false,
+    "lawyer_visual_approval_present": false,
+    "lawyer_visual_approval_required": true,
+    "template_activation_allowed": false
+  },
+  "scenario_count": 5,
+  "scenarios": [
+    {
+      "all_machine_checks_passed": true,
+      "explicit_blank_fields": [],
+      "input_values": {
+        "address": "福建省泉州市丰泽区测试大道88号",
+        "amount": "人民币123,456.78元",
+        "cause_of_action": "TEST-ONLY虚构买卖合同纠纷",
+        "court_name": "福建省泉州市丰泽区人民法院",
+        "identifier": "91350500TESTONLY001",
+        "optional_note": "仅用于TEST-ONLY离线模板测试",
+        "party_name": "泉州测试星河网络科技有限公司"
+      },
+      "label": "正常值",
+      "machine_checks": {
+        "no_blank_pages": {
+          "blank_pages": [],
+          "method": "Each raster page has at least 0.1% non-white pixels",
+          "status": "pass"
+        },
+        "no_clipping": {
+          "method": "PDF character boxes stay within page bounds and 4-pixel raster edge bands contain no ink",
+          "out_of_bounds_chars": [],
+          "page_edge_metrics": [
+            {
+              "edge_nonwhite_pixels": 0,
+              "height_px": 1584,
+              "nonwhite_ratio": 0.06147979,
+              "page": 1,
+              "width_px": 1224
+            }
+          ],
+          "status": "pass"
+        },
+        "no_missing_glyphs": {
+          "method": "All non-empty injected values are recoverable from PDF text and no replacement/tofu glyph is extracted",
+          "missing_value_fields": [],
+          "replacement_glyphs": [],
+          "status": "pass"
+        },
+        "no_table_drift": {
+          "method": "OOXML geometry signature equals the immutable source and every package part except word/document.xml is byte-identical",
+          "status": "pass"
+        },
+        "no_text_overlap": {
+          "collisions": [],
+          "heuristic_limit": "Does not prove absence of every graphical overlap; AI and lawyer visual review remain separate gates.",
+          "method": "No pair of non-space PDF character boxes overlaps by 65% or more of the smaller glyph box",
+          "status": "pass"
+        },
+        "page_set_complete": {
+          "method": "PDF page count equals contiguous PNG page count",
+          "pdf_page_count": 1,
+          "png_page_count": 1,
+          "status": "pass"
+        }
+      },
+      "output_docx": {
+        "path": "scenarios/normal-values/filled.docx",
+        "sha256": "9f11c2b4e1fe0727f8b3814c1d4aaf0ad23929c8870ebdd579046939042f0aa9"
+      },
+      "page_dimensions": [
+        {
+          "height_pt": 792,
+          "width_pt": 612
+        }
+      ],
+      "render": {
+        "action": "reused_hash_verified_render",
+        "page_count": 1,
+        "pages": [
+          {
+            "page_number": 1,
+            "path": "scenarios/normal-values/render/page_p01.png",
+            "sha256": "f6e434d000a5f6d81a666977d44e80bd2df19eedf2fa4fdaf7e0348d11c7acc0"
+          }
+        ],
+        "pdf": {
+          "path": "scenarios/normal-values/render/page.pdf",
+          "sha256": "3fedd853d4cc92ff2280d682eaaf502b9cf49bf538367c50a1fc48c9791f1e18"
+        },
+        "renderer": "win-docx-render:LibreOffice+pypdfium2@144dpi",
+        "renderer_script": "win-docx-render:render_docx_win.py"
+      },
+      "scenario_id": "normal-values",
+      "structural_checks": {
+        "all_placeholders_resolved": {
+          "remaining": [],
+          "status": "pass"
+        },
+        "explicit_blank_preserved": {
+          "fields": [],
+          "status": "pass"
+        },
+        "non_document_ooxml_parts_unchanged": {
+          "changed_parts": [],
+          "status": "pass"
+        },
+        "table_geometry_unchanged": {
+          "method": "tblW/tblInd/tblLayout/tblGrid/tcW/gridSpan/vMerge and row/cell counts match the immutable source",
+          "status": "pass"
+        }
+      },
+      "test_only": true
+    },
+    {
+      "all_machine_checks_passed": true,
+      "explicit_blank_fields": [
+        "optional_note"
+      ],
+      "input_values": {
+        "address": "福建省泉州市丰泽区测试大道88号",
+        "amount": "人民币123,456.78元",
+        "cause_of_action": "TEST-ONLY虚构买卖合同纠纷",
+        "court_name": "福建省泉州市丰泽区人民法院",
+        "identifier": "91350500TESTONLY001",
+        "optional_note": "",
+        "party_name": "泉州测试星河网络科技有限公司"
+      },
+      "label": "明确空值",
+      "machine_checks": {
+        "no_blank_pages": {
+          "blank_pages": [],
+          "method": "Each raster page has at least 0.1% non-white pixels",
+          "status": "pass"
+        },
+        "no_clipping": {
+          "method": "PDF character boxes stay within page bounds and 4-pixel raster edge bands contain no ink",
+          "out_of_bounds_chars": [],
+          "page_edge_metrics": [
+            {
+              "edge_nonwhite_pixels": 0,
+              "height_px": 1584,
+              "nonwhite_ratio": 0.06026462,
+              "page": 1,
+              "width_px": 1224
+            }
+          ],
+          "status": "pass"
+        },
+        "no_missing_glyphs": {
+          "method": "All non-empty injected values are recoverable from PDF text and no replacement/tofu glyph is extracted",
+          "missing_value_fields": [],
+          "replacement_glyphs": [],
+          "status": "pass"
+        },
+        "no_table_drift": {
+          "method": "OOXML geometry signature equals the immutable source and every package part except word/document.xml is byte-identical",
+          "status": "pass"
+        },
+        "no_text_overlap": {
+          "collisions": [],
+          "heuristic_limit": "Does not prove absence of every graphical overlap; AI and lawyer visual review remain separate gates.",
+          "method": "No pair of non-space PDF character boxes overlaps by 65% or more of the smaller glyph box",
+          "status": "pass"
+        },
+        "page_set_complete": {
+          "method": "PDF page count equals contiguous PNG page count",
+          "pdf_page_count": 1,
+          "png_page_count": 1,
+          "status": "pass"
+        }
+      },
+      "output_docx": {
+        "path": "scenarios/explicit-empty/filled.docx",
+        "sha256": "1f9c286e102aab57b41111383e9eba929640b872bbca241725be2bd8b2a2ca4f"
+      },
+      "page_dimensions": [
+        {
+          "height_pt": 792,
+          "width_pt": 612
+        }
+      ],
+      "render": {
+        "action": "reused_hash_verified_render",
+        "page_count": 1,
+        "pages": [
+          {
+            "page_number": 1,
+            "path": "scenarios/explicit-empty/render/page_p01.png",
+            "sha256": "2f3fe225096cba165f284ab377618d77d3f0980e8f6afdbfaf7614c09c20c9ca"
+          }
+        ],
+        "pdf": {
+          "path": "scenarios/explicit-empty/render/page.pdf",
+          "sha256": "dbde3e036287f0f4564453f766a05cd234e98524770ec3a33fadc96f9efa60d0"
+        },
+        "renderer": "win-docx-render:LibreOffice+pypdfium2@144dpi",
+        "renderer_script": "win-docx-render:render_docx_win.py"
+      },
+      "scenario_id": "explicit-empty",
+      "structural_checks": {
+        "all_placeholders_resolved": {
+          "remaining": [],
+          "status": "pass"
+        },
+        "explicit_blank_preserved": {
+          "fields": [
+            "optional_note"
+          ],
+          "status": "pass"
+        },
+        "non_document_ooxml_parts_unchanged": {
+          "changed_parts": [],
+          "status": "pass"
+        },
+        "table_geometry_unchanged": {
+          "method": "tblW/tblInd/tblLayout/tblGrid/tcW/gridSpan/vMerge and row/cell counts match the immutable source",
+          "status": "pass"
+        }
+      },
+      "test_only": true
+    },
+    {
+      "all_machine_checks_passed": true,
+      "explicit_blank_fields": [],
+      "input_values": {
+        "address": "福建省泉州市丰泽区测试大道88号",
+        "amount": "人民币123,456.78元",
+        "cause_of_action": "TEST-ONLY虚构买卖合同纠纷",
+        "court_name": "福建省泉州市丰泽区人民法院",
+        "identifier": "91350500TESTONLY001",
+        "optional_note": "仅用于TEST-ONLY离线模板测试",
+        "party_name": "泉州市测试星河超长主体名称技术研发供应链管理知识产权服务电子商务有限责任公司厦门测试分公司福州测试办事处（TEST-ONLY虚构边界主体）"
+      },
+      "label": "配置上限主体名称",
+      "machine_checks": {
+        "no_blank_pages": {
+          "blank_pages": [],
+          "method": "Each raster page has at least 0.1% non-white pixels",
+          "status": "pass"
+        },
+        "no_clipping": {
+          "method": "PDF character boxes stay within page bounds and 4-pixel raster edge bands contain no ink",
+          "out_of_bounds_chars": [],
+          "page_edge_metrics": [
+            {
+              "edge_nonwhite_pixels": 0,
+              "height_px": 1584,
+              "nonwhite_ratio": 0.0682793,
+              "page": 1,
+              "width_px": 1224
+            }
+          ],
+          "status": "pass"
+        },
+        "no_missing_glyphs": {
+          "method": "All non-empty injected values are recoverable from PDF text and no replacement/tofu glyph is extracted",
+          "missing_value_fields": [],
+          "replacement_glyphs": [],
+          "status": "pass"
+        },
+        "no_table_drift": {
+          "method": "OOXML geometry signature equals the immutable source and every package part except word/document.xml is byte-identical",
+          "status": "pass"
+        },
+        "no_text_overlap": {
+          "collisions": [],
+          "heuristic_limit": "Does not prove absence of every graphical overlap; AI and lawyer visual review remain separate gates.",
+          "method": "No pair of non-space PDF character boxes overlaps by 65% or more of the smaller glyph box",
+          "status": "pass"
+        },
+        "page_set_complete": {
+          "method": "PDF page count equals contiguous PNG page count",
+          "pdf_page_count": 1,
+          "png_page_count": 1,
+          "status": "pass"
+        }
+      },
+      "output_docx": {
+        "path": "scenarios/max-party-name/filled.docx",
+        "sha256": "3a3bfa0221131ca29433c8ec42129136ecb0ec104ffe298ef0b7ccd8ddaf9172"
+      },
+      "page_dimensions": [
+        {
+          "height_pt": 792,
+          "width_pt": 612
+        }
+      ],
+      "render": {
+        "action": "reused_hash_verified_render",
+        "page_count": 1,
+        "pages": [
+          {
+            "page_number": 1,
+            "path": "scenarios/max-party-name/render/page_p01.png",
+            "sha256": "2eeef6c5c9524a3c5139ec287a38abc2b420c392d443511799f39e3b6856c445"
+          }
+        ],
+        "pdf": {
+          "path": "scenarios/max-party-name/render/page.pdf",
+          "sha256": "1188a50208da5e1d4790134944285b407b8315fac3af2b2aafb546e2bd275c62"
+        },
+        "renderer": "win-docx-render:LibreOffice+pypdfium2@144dpi",
+        "renderer_script": "win-docx-render:render_docx_win.py"
+      },
+      "scenario_id": "max-party-name",
+      "structural_checks": {
+        "all_placeholders_resolved": {
+          "remaining": [],
+          "status": "pass"
+        },
+        "explicit_blank_preserved": {
+          "fields": [],
+          "status": "pass"
+        },
+        "non_document_ooxml_parts_unchanged": {
+          "changed_parts": [],
+          "status": "pass"
+        },
+        "table_geometry_unchanged": {
+          "method": "tblW/tblInd/tblLayout/tblGrid/tcW/gridSpan/vMerge and row/cell counts match the immutable source",
+          "status": "pass"
+        }
+      },
+      "test_only": true
+    },
+    {
+      "all_machine_checks_passed": true,
+      "explicit_blank_fields": [],
+      "input_values": {
+        "address": "福建省泉州市丰泽区测试大道88号",
+        "amount": "人民币123,456.78元",
+        "cause_of_action": "TEST-ONLY虚构买卖合同纠纷",
+        "court_name": "中华人民共和国福建省测试市测试区人民法院知识产权与涉外商事案件综合审判庭（TEST-ONLY虚构最长法院名称）",
+        "identifier": "91350500TESTONLY001",
+        "optional_note": "仅用于TEST-ONLY离线模板测试",
+        "party_name": "泉州测试星河网络科技有限公司"
+      },
+      "label": "配置上限法院名称",
+      "machine_checks": {
+        "no_blank_pages": {
+          "blank_pages": [],
+          "method": "Each raster page has at least 0.1% non-white pixels",
+          "status": "pass"
+        },
+        "no_clipping": {
+          "method": "PDF character boxes stay within page bounds and 4-pixel raster edge bands contain no ink",
+          "out_of_bounds_chars": [],
+          "page_edge_metrics": [
+            {
+              "edge_nonwhite_pixels": 0,
+              "height_px": 1584,
+              "nonwhite_ratio": 0.06613418,
+              "page": 1,
+              "width_px": 1224
+            }
+          ],
+          "status": "pass"
+        },
+        "no_missing_glyphs": {
+          "method": "All non-empty injected values are recoverable from PDF text and no replacement/tofu glyph is extracted",
+          "missing_value_fields": [],
+          "replacement_glyphs": [],
+          "status": "pass"
+        },
+        "no_table_drift": {
+          "method": "OOXML geometry signature equals the immutable source and every package part except word/document.xml is byte-identical",
+          "status": "pass"
+        },
+        "no_text_overlap": {
+          "collisions": [],
+          "heuristic_limit": "Does not prove absence of every graphical overlap; AI and lawyer visual review remain separate gates.",
+          "method": "No pair of non-space PDF character boxes overlaps by 65% or more of the smaller glyph box",
+          "status": "pass"
+        },
+        "page_set_complete": {
+          "method": "PDF page count equals contiguous PNG page count",
+          "pdf_page_count": 1,
+          "png_page_count": 1,
+          "status": "pass"
+        }
+      },
+      "output_docx": {
+        "path": "scenarios/max-court-name/filled.docx",
+        "sha256": "906896a974c1ac8d3a4faa918648e375020d6f5908a4b9d7a1bd261bdde4a057"
+      },
+      "page_dimensions": [
+        {
+          "height_pt": 792,
+          "width_pt": 612
+        }
+      ],
+      "render": {
+        "action": "reused_hash_verified_render",
+        "page_count": 1,
+        "pages": [
+          {
+            "page_number": 1,
+            "path": "scenarios/max-court-name/render/page_p01.png",
+            "sha256": "ddfa8ea807f3299a7ef795fd3d19184f45dfd6bc8ccee4e47f0e338d613babed"
+          }
+        ],
+        "pdf": {
+          "path": "scenarios/max-court-name/render/page.pdf",
+          "sha256": "c88bdf147248a8340915ca6a5b56a5edd834835d22671ec8fbe788fdc0092016"
+        },
+        "renderer": "win-docx-render:LibreOffice+pypdfium2@144dpi",
+        "renderer_script": "win-docx-render:render_docx_win.py"
+      },
+      "scenario_id": "max-court-name",
+      "structural_checks": {
+        "all_placeholders_resolved": {
+          "remaining": [],
+          "status": "pass"
+        },
+        "explicit_blank_preserved": {
+          "fields": [],
+          "status": "pass"
+        },
+        "non_document_ooxml_parts_unchanged": {
+          "changed_parts": [],
+          "status": "pass"
+        },
+        "table_geometry_unchanged": {
+          "method": "tblW/tblInd/tblLayout/tblGrid/tcW/gridSpan/vMerge and row/cell counts match the immutable source",
+          "status": "pass"
+        }
+      },
+      "test_only": true
+    },
+    {
+      "all_machine_checks_passed": true,
+      "explicit_blank_fields": [],
+      "input_values": {
+        "address": "福建省泉州市丰泽区测试大道88号",
+        "amount": "人民币9,999,999,999,999,999,999.99元",
+        "cause_of_action": "TEST-ONLY虚构买卖合同纠纷",
+        "court_name": "福建省泉州市丰泽区人民法院",
+        "identifier": "91350500TESTONLY001",
+        "optional_note": "仅用于TEST-ONLY离线模板测试",
+        "party_name": "泉州测试星河网络科技有限公司"
+      },
+      "label": "大额金额",
+      "machine_checks": {
+        "no_blank_pages": {
+          "blank_pages": [],
+          "method": "Each raster page has at least 0.1% non-white pixels",
+          "status": "pass"
+        },
+        "no_clipping": {
+          "method": "PDF character boxes stay within page bounds and 4-pixel raster edge bands contain no ink",
+          "out_of_bounds_chars": [],
+          "page_edge_metrics": [
+            {
+              "edge_nonwhite_pixels": 0,
+              "height_px": 1584,
+              "nonwhite_ratio": 0.06241696,
+              "page": 1,
+              "width_px": 1224
+            }
+          ],
+          "status": "pass"
+        },
+        "no_missing_glyphs": {
+          "method": "All non-empty injected values are recoverable from PDF text and no replacement/tofu glyph is extracted",
+          "missing_value_fields": [],
+          "replacement_glyphs": [],
+          "status": "pass"
+        },
+        "no_table_drift": {
+          "method": "OOXML geometry signature equals the immutable source and every package part except word/document.xml is byte-identical",
+          "status": "pass"
+        },
+        "no_text_overlap": {
+          "collisions": [],
+          "heuristic_limit": "Does not prove absence of every graphical overlap; AI and lawyer visual review remain separate gates.",
+          "method": "No pair of non-space PDF character boxes overlaps by 65% or more of the smaller glyph box",
+          "status": "pass"
+        },
+        "page_set_complete": {
+          "method": "PDF page count equals contiguous PNG page count",
+          "pdf_page_count": 1,
+          "png_page_count": 1,
+          "status": "pass"
+        }
+      },
+      "output_docx": {
+        "path": "scenarios/large-amount/filled.docx",
+        "sha256": "ca0872f21eae1a778741a3f357636f66affce42f2d0813a4dedeb585b7caf495"
+      },
+      "page_dimensions": [
+        {
+          "height_pt": 792,
+          "width_pt": 612
+        }
+      ],
+      "render": {
+        "action": "reused_hash_verified_render",
+        "page_count": 1,
+        "pages": [
+          {
+            "page_number": 1,
+            "path": "scenarios/large-amount/render/page_p01.png",
+            "sha256": "40d578215fae514c0e956603847cc0ac08841a1f95886ca7a339a49b88aac84e"
+          }
+        ],
+        "pdf": {
+          "path": "scenarios/large-amount/render/page.pdf",
+          "sha256": "2649f4b692ffdfcc32568b52a6e52222f14a4a3fa329e91c6c1563687ca8b601"
+        },
+        "renderer": "win-docx-render:LibreOffice+pypdfium2@144dpi",
+        "renderer_script": "win-docx-render:render_docx_win.py"
+      },
+      "scenario_id": "large-amount",
+      "structural_checks": {
+        "all_placeholders_resolved": {
+          "remaining": [],
+          "status": "pass"
+        },
+        "explicit_blank_preserved": {
+          "fields": [],
+          "status": "pass"
+        },
+        "non_document_ooxml_parts_unchanged": {
+          "changed_parts": [],
+          "status": "pass"
+        },
+        "table_geometry_unchanged": {
+          "method": "tblW/tblInd/tblLayout/tblGrid/tcW/gridSpan/vMerge and row/cell counts match the immutable source",
+          "status": "pass"
+        }
+      },
+      "test_only": true
+    }
+  ],
+  "schema_version": "1.0",
+  "source": {
+    "baseline_path": "source/source-baseline.json",
+    "baseline_sha256": "516470364ea950621cf64e79fa20b7c93437cfc71b991dc30bc360b936ed5df0",
+    "immutable_after_first_build": true,
+    "lawyer_approved_template": false,
+    "path": "source/TEST-ONLY-form-template.docx",
+    "sha256": "516470364ea950621cf64e79fa20b7c93437cfc71b991dc30bc360b936ed5df0",
+    "unchanged_during_run": true
+  },
+  "suite_id": "TEST-ONLY-template-boundary-v12",
+  "test_only": true,
+  "visual_review": {
+    "filing_use_allowed": false,
+    "findings": [],
+    "lawyer_approval": false,
+    "lawyer_approval_substituted": false,
+    "pages": [
+      {
+        "page_number": 1,
+        "result": "pass",
+        "scenario_id": "normal-values",
+        "sha256": "f6e434d000a5f6d81a666977d44e80bd2df19eedf2fa4fdaf7e0348d11c7acc0"
+      },
+      {
+        "page_number": 1,
+        "result": "pass",
+        "scenario_id": "explicit-empty",
+        "sha256": "2f3fe225096cba165f284ab377618d77d3f0980e8f6afdbfaf7614c09c20c9ca"
+      },
+      {
+        "page_number": 1,
+        "result": "pass",
+        "scenario_id": "max-party-name",
+        "sha256": "2eeef6c5c9524a3c5139ec287a38abc2b420c392d443511799f39e3b6856c445"
+      },
+      {
+        "page_number": 1,
+        "result": "pass",
+        "scenario_id": "max-court-name",
+        "sha256": "ddfa8ea807f3299a7ef795fd3d19184f45dfd6bc8ccee4e47f0e338d613babed"
+      },
+      {
+        "page_number": 1,
+        "result": "pass",
+        "scenario_id": "large-amount",
+        "sha256": "40d578215fae514c0e956603847cc0ac08841a1f95886ca7a339a49b88aac84e"
+      }
+    ],
+    "review_method": "All five 144-DPI PNG pages inspected at original resolution for clipping, overlap, missing glyphs, blank pages, wrapping, table borders and row expansion.",
+    "review_path": "visual-review.json",
+    "reviewed_at": "2026-08-25",
+    "reviewer": "Codex independent AI visual QA",
+    "reviewer_type": "ai",
+    "status": "ai_visual_review_complete_pending_lawyer_approval",
+    "suite_id": "TEST-ONLY-template-boundary-v12",
+    "test_only": true
+  }
+}

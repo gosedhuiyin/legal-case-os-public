@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/preference-candidate.schema.json",
+  "title": "Legal Case OS disabled preference-learning compatibility envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "status", "kind", "scope", "key", "value", "source_span",
+    "explicit", "confidence", "requires_user_approval", "promotion_eligible",
+    "promotion_block_reason", "expected_state_version", "case_memory_write_requested"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "status": { "const": "none" },
+    "kind": { "type": "null" },
+    "scope": { "type": "null" },
+    "key": { "type": "null" },
+    "value": { "type": "null" },
+    "source_span": { "type": "null" },
+    "explicit": { "const": false },
+    "confidence": { "const": 0 },
+    "requires_user_approval": { "const": false },
+    "promotion_eligible": { "const": false },
+    "promotion_block_reason": { "const": "learning_disabled_in_language_module" },
+    "expected_state_version": { "type": "null" },
+    "case_memory_write_requested": { "const": false }
+  }
+}

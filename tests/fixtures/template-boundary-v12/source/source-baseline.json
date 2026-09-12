@@ -1,0 +1,8 @@
+{
+  "created_by": "tools/build_template_boundary_suite.py",
+  "immutable_after_first_build": true,
+  "lawyer_approved_template": false,
+  "path": "source/TEST-ONLY-form-template.docx",
+  "sha256": "516470364ea950621cf64e79fa20b7c93437cfc71b991dc30bc360b936ed5df0",
+  "test_only": true
+}

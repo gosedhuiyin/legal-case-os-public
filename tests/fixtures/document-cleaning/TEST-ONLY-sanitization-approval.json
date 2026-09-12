@@ -1,0 +1,84 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：虚构自有生成稿的逐项清洁批准，不构成真实案件授权。",
+  "ownership": "self_generated",
+  "approval_id": "P-TEST-SANITIZE-001",
+  "approved_by": "TEST-ONLY synthetic lawyer",
+  "approved_at": "2026-08-23T08:00:00Z",
+  "independent_review_id": "R-TEST-PRE-CLEAN-REVIEW-001",
+  "pre_review_status": "passed",
+  "approved_items": [
+    "comments",
+    "tracked_changes",
+    "draft_watermark",
+    "authorized_metadata",
+    "internal_ids",
+    "internal_notes"
+  ],
+  "authorized_watermarks": [
+    "DRAFT"
+  ],
+  "approved_internal_ids": [
+    "内部编号：INT-TEST-CASE-001"
+  ],
+  "approved_targets": [
+    {
+      "item_id": "SAN-TEST-001",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有生成稿批注，经模拟律师逐项批准移除",
+      "kind": "comments",
+      "location": "word/comments.xml",
+      "source_part_sha256": "6f5d4adbe41d32c173e012614d1947ce6feb85371d89fdd847354e5151326847",
+      "expected_count": 1
+    },
+    {
+      "item_id": "SAN-TEST-002",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有生成稿修订，经模拟律师逐项批准接受",
+      "kind": "tracked_changes",
+      "location": "word/document.xml",
+      "source_part_sha256": "dd6b9e014610f014e903ec93ae54af2ea3fdb086d205a56a6b8779278f9638e9",
+      "expected_count": 2
+    },
+    {
+      "item_id": "SAN-TEST-003",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有生成的DRAFT水印，经模拟律师确认有权移除",
+      "kind": "draft_watermark",
+      "location": "word/header1.xml",
+      "source_part_sha256": "2a475676549c3d4988d977839b24007c731db887463e14f0ec6e85b16d959288",
+      "value": "DRAFT"
+    },
+    {
+      "item_id": "SAN-TEST-004",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有生成稿元数据，经模拟律师逐项批准清理",
+      "kind": "authorized_metadata",
+      "location": "docProps/core.xml",
+      "source_part_sha256": "013f496528639d8847e4f18fe2b642b0283fff7954c6056d59e39849387fef12",
+      "expected_count": 6
+    },
+    {
+      "item_id": "SAN-TEST-005",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有内部编号，经模拟律师逐项批准移除",
+      "kind": "internal_ids",
+      "location": "word/document.xml",
+      "source_part_sha256": "dd6b9e014610f014e903ec93ae54af2ea3fdb086d205a56a6b8779278f9638e9",
+      "value": "内部编号：INT-TEST-CASE-001"
+    },
+    {
+      "item_id": "SAN-TEST-006",
+      "ownership": "self_generated",
+      "authority_basis": "TEST-ONLY：自有内部审阅备注，经模拟律师逐项批准移除",
+      "kind": "internal_notes",
+      "location": "word/document.xml",
+      "source_part_sha256": "dd6b9e014610f014e903ec93ae54af2ea3fdb086d205a56a6b8779278f9638e9",
+      "original_text_sha256": "c28973fe9bf216f12b8b58a097ef2304825d199f0f09c10b89b9dd54bf45f356"
+    }
+  ],
+  "approval_set_sha256": "3938849153d916f6f2b08c878ea63510b1cec735d4cbe820465a5961a6c9bda7",
+  "source_artifact_id": "R-TEST-SANITIZE-SOURCE-001",
+  "derived_artifact_id": "R-TEST-SANITIZE-DERIVED-001",
+  "report_id": "SR-TEST-SANITIZE-001"
+}

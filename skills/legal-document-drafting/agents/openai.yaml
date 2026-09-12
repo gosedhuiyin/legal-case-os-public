@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律文书起草"
+  short_description: "依据已批策略、证据、法源和合法模板生成可审阅候选文书"
+  default_prompt: "Use $legal-document-drafting to create a sourced review candidate from the approved matter state and exact template."
+policy:
+  allow_implicit_invocation: true

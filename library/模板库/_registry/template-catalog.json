@@ -1,0 +1,6 @@
+{
+  "catalog_version": "1.0.0",
+  "notice": "公共发行包不携带任何个人模板。目录表初始为空；登记自己的模板后，本文件由 template-register 等命令在本机维护，00-待登记/ 与 _profiles/ 默认被版本控制忽略。",
+  "templates": [],
+  "suites": []
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律长稿压缩"
+  short_description: "在不损失主张、抗辩和证据链前提下生成更短派生候选文书"
+  default_prompt: "Use $legal-draft-compressor to shorten this exact draft to the stated target while preserving protected litigation functions."
+policy:
+  allow_implicit_invocation: true

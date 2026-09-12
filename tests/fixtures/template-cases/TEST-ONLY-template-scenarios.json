@@ -1,0 +1,75 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：五种模板情形的输入与预期。",
+  "cases": [
+    {
+      "case_id": "TPL-CASE-EXISTS",
+      "description": "模板存在、许可明确、版本有效、必填字段齐全",
+      "template_alias": "测试起诉状套件",
+      "input_fields": {
+        "court_candidate": "测试法院（虚构）",
+        "plaintiff_label": "测试原告（虚构）",
+        "defendant_label": "测试被告（虚构）",
+        "claims": "虚构测试请求",
+        "facts_and_reasons": "虚构测试事实与理由"
+      },
+      "expected": {
+        "resolution": "TPL-TEST-COMPLAINT-VALID",
+        "allowed": true,
+        "stop_reason": null
+      }
+    },
+    {
+      "case_id": "TPL-CASE-MISSING",
+      "description": "用户所称套件不存在",
+      "template_alias": "不存在的某某套件",
+      "input_fields": {},
+      "expected": {
+        "resolution": null,
+        "allowed": false,
+        "stop_reason": "template_not_found",
+        "must_not_claim_applied": true
+      }
+    },
+    {
+      "case_id": "TPL-CASE-LICENSE-UNKNOWN",
+      "description": "模板存在但许可不明",
+      "template_alias": "许可不明测试套件",
+      "input_fields": {"claims": "虚构测试请求"},
+      "expected": {
+        "resolution": "TPL-TEST-LICENSE-UNKNOWN",
+        "allowed": false,
+        "stop_reason": "license_unknown"
+      }
+    },
+    {
+      "case_id": "TPL-CASE-REQUIRED-MISSING",
+      "description": "有效模板缺少法院和事实理由",
+      "template_alias": "测试起诉状套件",
+      "input_fields": {
+        "plaintiff_label": "测试原告（虚构）",
+        "defendant_label": "测试被告（虚构）",
+        "claims": "虚构测试请求"
+      },
+      "expected": {
+        "resolution": "TPL-TEST-COMPLAINT-VALID",
+        "allowed": false,
+        "stop_reason": "required_fields_missing",
+        "missing_fields": ["court_candidate", "facts_and_reasons"],
+        "must_not_invent": true
+      }
+    },
+    {
+      "case_id": "TPL-CASE-STALE",
+      "description": "模板版本已过期",
+      "template_alias": "过期手续测试套件",
+      "input_fields": {"principal_label": "测试委托人（虚构）"},
+      "expected": {
+        "resolution": "TPL-TEST-STALE",
+        "allowed": false,
+        "stop_reason": "template_stale"
+      }
+    }
+  ]
+}
+

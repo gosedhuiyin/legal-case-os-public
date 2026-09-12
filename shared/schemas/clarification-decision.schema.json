@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/clarification-decision.schema.json",
+  "title": "Legal Case OS clarification decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "decision", "risk_tier", "requires_user_input", "question",
+    "reason_codes", "assumptions", "alternatives", "max_questions", "continue_read_only"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "decision": { "enum": ["execute", "ask", "preview", "block"] },
+    "risk_tier": { "enum": ["R0", "R1", "R2", "R3"] },
+    "requires_user_input": { "type": "boolean" },
+    "question": { "type": ["string", "null"] },
+    "reason_codes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "assumptions": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "alternatives": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "max_questions": { "const": 1 },
+    "continue_read_only": { "type": "boolean" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "decision": { "const": "ask" } },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "requires_user_input": { "const": true },
+          "question": { "type": "string", "minLength": 1 }
+        }
+      },
+      "else": {
+        "properties": {
+          "requires_user_input": { "const": false },
+          "question": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "risk_tier": { "const": "R3" } },
+        "required": ["risk_tier"]
+      },
+      "then": {
+        "properties": { "decision": { "const": "block" } }
+      }
+    }
+  ]
+}

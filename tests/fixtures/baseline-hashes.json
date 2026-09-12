@@ -1,0 +1,16 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：原始夹具的 SHA-256 基线；执行器据此验证原件未被修改。",
+  "algorithm": "sha256",
+  "files": {
+    "simple-case/00-originals/TEST-ONLY-01-买卖合同.md": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565",
+    "simple-case/00-originals/TEST-ONLY-02-交付验收单.md": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15",
+    "simple-case/00-originals/TEST-ONLY-03-付款记录.md": "87e1db5a09890778d0f0b3f66d63b617fc88bf4b751e8f7a49a07fb1985b2c76",
+    "simple-case/00-originals/TEST-ONLY-04-催款通信.md": "dada1ed1cd6c5e4cef1a69a0ef446d9f3bd4af1c42ce10b0641bcbbb7b956f7a",
+    "complex-case/00-originals/TEST-ONLY-01-框架协议.md": "582739246dfec877d63821835a0ebd2bf351396cec0c5960f6e679514ca91717",
+    "complex-case/00-originals/TEST-ONLY-02-仓储登记.md": "ed7458f534a52097315d7999d410154939c37e39c26fbdd15259aed9788044d6",
+    "complex-case/00-originals/TEST-ONLY-03-双向通信.md": "cb200459c09fc8d9839ed414218c447fd98a9b40203cac4a5900dd073c535f79",
+    "complex-case/00-originals/TEST-ONLY-04-催告记录.md": "a411a1e06ca15a10d950330d0dab558ead2ca665066d10894a8cd68de50deb6b"
+  }
+}
+

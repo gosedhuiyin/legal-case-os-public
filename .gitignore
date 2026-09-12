@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+
+# Personal working directories are never part of this public repository.
+# 个人工作目录不入库：模板原件、画像与登记锁文件只保存在使用者本机。
+library/模板库/00-待登记/
+library/模板库/_profiles/
+library/模板库/_registry/*.lock
+
+# Local test/acceptance outputs stay out of version control.
+reports/
+tests/test-report.json

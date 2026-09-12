@@ -1,0 +1,74 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：ok 只能批准唯一、刚展示、版本未变化且明确待批准的对象。",
+  "cases": [
+    {
+      "case_id": "OK-NONE",
+      "utterance": "ok",
+      "focus": {
+        "recently_displayed_candidates": [],
+        "exact_pending_approval_object": null
+      },
+      "expected": {
+        "decision": "clarify",
+        "approval_created": false,
+        "reason": "no_pending_approval_object"
+      }
+    },
+    {
+      "case_id": "OK-UNIQUE-CURRENT",
+      "utterance": "ok",
+      "focus": {
+        "recently_displayed_candidates": [
+          {"object_id": "D-TEST-G1-001", "object_hash": "1111111111111111111111111111111111111111111111111111111111111111", "gate": "G1_strategy", "display_sequence": 7, "status": "pending"}
+        ],
+        "exact_pending_approval_object": {"object_id": "D-TEST-G1-001", "object_hash": "1111111111111111111111111111111111111111111111111111111111111111", "gate": "G1_strategy", "display_sequence": 7}
+      },
+      "current_objects": [
+        {"object_id": "D-TEST-G1-001", "object_hash": "1111111111111111111111111111111111111111111111111111111111111111", "status": "pending"}
+      ],
+      "expected": {
+        "decision": "approve_exact_object",
+        "approval_created": true,
+        "approved_object_id": "D-TEST-G1-001",
+        "approved_object_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+        "gate": "G1_strategy"
+      }
+    },
+    {
+      "case_id": "OK-MULTIPLE",
+      "utterance": "ok",
+      "focus": {
+        "recently_displayed_candidates": [
+          {"object_id": "D-TEST-G1-001", "object_hash": "1111111111111111111111111111111111111111111111111111111111111111", "gate": "G1_strategy", "display_sequence": 8, "status": "pending"},
+          {"object_id": "D-TEST-G2-001", "object_hash": "2222222222222222222222222222222222222222222222222222222222222222", "gate": "G2_evidence", "display_sequence": 8, "status": "pending"}
+        ],
+        "exact_pending_approval_object": null
+      },
+      "expected": {
+        "decision": "clarify",
+        "approval_created": false,
+        "reason": "multiple_pending_approval_objects"
+      }
+    },
+    {
+      "case_id": "OK-STALE",
+      "utterance": "ok",
+      "focus": {
+        "recently_displayed_candidates": [
+          {"object_id": "D-TEST-G2-001", "object_hash": "2222222222222222222222222222222222222222222222222222222222222222", "gate": "G2_evidence", "display_sequence": 9, "status": "pending"}
+        ],
+        "exact_pending_approval_object": {"object_id": "D-TEST-G2-001", "object_hash": "2222222222222222222222222222222222222222222222222222222222222222", "gate": "G2_evidence", "display_sequence": 9}
+      },
+      "current_objects": [
+        {"object_id": "D-TEST-G2-001", "object_hash": "3333333333333333333333333333333333333333333333333333333333333333", "status": "pending"}
+      ],
+      "expected": {
+        "decision": "refuse_stale",
+        "approval_created": false,
+        "reason": "displayed_candidate_hash_changed"
+      }
+    }
+  ]
+}
+

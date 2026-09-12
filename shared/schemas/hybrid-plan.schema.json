@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/hybrid-plan.schema.json",
+  "title": "Legal Case OS TEST-ONLY HybridPlan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "test_only", "notice", "plan_id", "profile_id", "profile_path",
+    "template_id", "template_sha256", "usage_mode", "created_at", "status",
+    "mechanical_slots", "body_replacements"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "test_only": { "const": true },
+    "notice": { "type": "string", "pattern": ".*TEST-ONLY.*" },
+    "plan_id": { "type": "string", "minLength": 1 },
+    "profile_id": { "type": "string", "minLength": 1 },
+    "profile_path": { "type": "string", "minLength": 1 },
+    "template_id": { "type": "string", "minLength": 1 },
+    "template_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "usage_mode": { "const": "hybrid" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "status": { "enum": ["ready", "blocked"] },
+    "mechanical_slots": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["slot_id", "action", "value", "approval", "binding_sha256"],
+        "properties": {
+          "slot_id": { "type": "string", "minLength": 1 },
+          "action": { "enum": ["preserve", "replace", "clear_to_blank"] },
+          "value": { "type": ["string", "null"] },
+          "approval": { "type": ["object", "null"] },
+          "binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    },
+    "body_replacements": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["region_id", "paragraphs", "binding_sha256"],
+        "properties": {
+          "region_id": { "type": "string", "minLength": 1 },
+          "paragraphs": {
+            "type": "array",
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["paragraph_id", "role", "text"],
+              "properties": {
+                "paragraph_id": { "type": "string", "minLength": 1 },
+                "role": { "type": "string", "minLength": 1 },
+                "text": { "type": "string" }
+              }
+            }
+          },
+          "binding_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    }
+  }
+}

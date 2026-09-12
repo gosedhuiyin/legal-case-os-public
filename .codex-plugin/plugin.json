@@ -1,0 +1,38 @@
+{
+  "name": "legal-case-os",
+  "version": "1.2.2",
+  "description": "Offline-first Chinese litigation workflow skills: material intake, case-state memory, evidence gates, personal-template learning, fidelity-preserving form filling, and filing-package candidates. No external actions are executed.",
+  "author": {
+    "name": "Personal Legal Workflow Project"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "legal",
+    "litigation",
+    "chinese-law",
+    "case-workflow",
+    "case-memory",
+    "matter-lifecycle",
+    "document-review",
+    "legal-templates",
+    "document-composition"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "个人法律办案操作系统（公共版）",
+    "shortDescription": "供 AI 按既定步骤协助整理办案任务、案件记录和文书材料",
+    "longDescription": "一套离线优先、来源可追溯、批准可失效的中国诉讼办案技能包。你说明这次要做什么并提供允许使用的材料，AI 按相应流程处理：材料接入与读取、案件工作区与案件内记忆、通用文书起草、复杂争点深析、文书清洁与提交包候选。个人模板库默认为空，模板由使用者本机登记并经律师批准后启用。系统不会自行打印、上传、发送、送达或提交。",
+    "developerName": "Personal Legal Workflow Project",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "看一下这个材料，先简要告诉我主要问题。",
+      "这案子不难，按我给的材料帮我生成一份简洁的起诉状草稿；关键缺项先问我。",
+      "把这份材料导入本次任务，读完列出还缺什么。"
+    ],
+    "brandColor": "#2453D4"
+  }
+}

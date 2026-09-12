@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律材料接收"
+  short_description: "以只读方式完成材料哈希、去重、分页及可追溯索引登记"
+  default_prompt: "Use $legal-material-intake to inventory these matter files without changing originals or deciding filing evidence."
+policy:
+  allow_implicit_invocation: true

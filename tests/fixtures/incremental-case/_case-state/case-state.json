@@ -1,0 +1,138 @@
+{
+  "schema_version": "1.1.0",
+  "matter": {
+    "id": "M-TEST-INCREMENTAL-001",
+    "title": "TEST-ONLY 虚构持续增量案件",
+    "stage": "analysis",
+    "environment": "test",
+    "party_role": "虚构权利方代理测试",
+    "court": "测试法院（虚构）",
+    "cause_of_action": "虚构软件相关争议",
+    "objective": "验证案件文件夹内记忆、增量分诊、局部影响、新案线索和长期工单",
+    "created_at": "2026-08-01T00:00:00Z"
+  },
+  "intent": null,
+  "focus": {
+    "active_turn_id": null,
+    "current_matter_id": "M-TEST-INCREMENTAL-001",
+    "current_source_id": "S-TEST-INCREMENTAL-008",
+    "current_issue_id": "I-TEST-PERFORMANCE-001",
+    "current_artifact_id": "R-TEST-PROCEDURAL-CAPSULE-001",
+    "current_template_id": null,
+    "current_batch_id": "MB-TEST-008",
+    "current_event_id": "CE-TEST-008",
+    "current_workflow_instance_id": "WF-TEST-WITHDRAWAL-001",
+    "current_task_id": "K-TEST-WITHDRAWAL-001",
+    "recent_candidates": [],
+    "pending_approval_ids": [],
+    "output_mode": "discussion",
+    "range_lock": [],
+    "current_memory_mode": "relevant",
+    "read_memory_scope": [],
+    "state_version": 1,
+    "snapshot": null
+  },
+  "network_policy": {
+    "mode": "local_only",
+    "proprietary_services_allowed": false,
+    "api_credentials_allowed": false,
+    "last_degradation": null
+  },
+  "sources": [
+    {"id":"S-TEST-INCREMENTAL-001","path":"materials/TEST-ONLY-01-ordinary-email.md","sha256":"e5fc2311103a4a2d8246fbc872c1e32ad3a3bb8f1231b47b597e66d75abeaf74","size_bytes":281,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-01T08:00:00Z","ingested_at":"2026-08-01T08:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-002","path":"materials/TEST-ONLY-02-court-notice.md","sha256":"87554d6b4a61607e68be1737c388955acb2fbbf9fe07fc99b60423df54870ed1","size_bytes":290,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-03T10:00:00Z","ingested_at":"2026-08-03T10:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-003","path":"materials/TEST-ONLY-03-client-insists.md","sha256":"e1ebd990facf668fc5a653763b06d607aefd582020351f5a1a8f7ecc2101e837","size_bytes":277,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-04T09:00:00Z","ingested_at":"2026-08-04T09:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-004","path":"materials/TEST-ONLY-04-weak-signal-1.md","sha256":"c23b12edaea0d092af5f7baa119283285779d82de822c97dd3934e4f94a60867","size_bytes":254,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-05T09:00:00Z","ingested_at":"2026-08-05T09:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-005","path":"materials/TEST-ONLY-05-weak-signal-2.md","sha256":"ca4c641482071dc4bb68598e59a845da6dbb3e0021a98a311129da2346b45d9e","size_bytes":257,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-06T09:00:00Z","ingested_at":"2026-08-06T09:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-006","path":"materials/TEST-ONLY-06-weak-signal-3.md","sha256":"cb507a9560797208a0a343e3a9b2a108232b6a30c1c8a80ef26ebbbfe63204c0","size_bytes":293,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-07T09:00:00Z","ingested_at":"2026-08-07T09:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-007","path":"materials/TEST-ONLY-07-impacting-supplement.md","sha256":"4c249f6feeadc97e5e2295e6776deb801ea1ddbcf7e578aae2a82fc3ab5d7c9d","size_bytes":298,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-08T08:00:00Z","ingested_at":"2026-08-08T08:05:00Z"},
+    {"id":"S-TEST-INCREMENTAL-008","path":"materials/TEST-ONLY-08-procedural-request.md","sha256":"f6f0c00595bd67c83c03cb517d378108726adbf7a4077aa77d1f844df918e9d9","size_bytes":305,"version":1,"kind":"markdown","original":true,"read_only":true,"page_count":null,"ocr_status":"not_applicable","duplicate_of":null,"confidentiality":"ordinary","received_at":"2026-08-08T10:00:00Z","ingested_at":"2026-08-08T10:05:00Z"}
+  ],
+  "facts": [
+    {"id":"F-TEST-DELIVERY-001","statement":"TEST-ONLY：虚构交付状态是待新材料局部复核的既有事实。","status":"confirmed","source_locators":[{"source_id":"S-TEST-INCREMENTAL-007","locator":"正文第5行","record_kind":"direct_record","quote":null,"verified":true}],"version":1,"supersedes_id":null,"as_of_event_seq":6,"stale":false,"stale_reason":null},
+    {"id":"F-TEST-IDENTITY-001","statement":"TEST-ONLY：虚构主体身份与交付补充材料无直接依赖。","status":"confirmed","source_locators":[{"source_id":"S-TEST-INCREMENTAL-001","locator":"标题","record_kind":"direct_record","quote":null,"verified":true}],"version":1,"supersedes_id":null,"as_of_event_seq":1,"stale":false,"stale_reason":null}
+  ],
+  "issues": [
+    {"id":"I-TEST-PERFORMANCE-001","title":"TEST-ONLY 虚构履行争点","importance":"high","analysis_mode":"standard","status":"analyzed","version":1,"supersedes_id":null,"as_of_event_seq":6,"stale":false,"stale_reason":null},
+    {"id":"I-TEST-JURISDICTION-001","title":"TEST-ONLY 虚构管辖争点","importance":"medium","analysis_mode":"standard","status":"analyzed","version":1,"supersedes_id":null,"as_of_event_seq":1,"stale":false,"stale_reason":null}
+  ],
+  "theories": [],
+  "evidence": [
+    {
+      "id":"E-TEST-CLIENT-INSISTS-001","version":1,
+      "source_refs":[{"source_id":"S-TEST-INCREMENTAL-003","locator":"全文","record_kind":"direct_record","quote":null,"verified":true}],
+      "description":"TEST-ONLY：客户坚持提交但证明力低的虚构宣传截图指令",
+      "proposition":"只验证客户指令不等于律师提交决定",
+      "proof_purpose":"虚构辅助说明","proof_mode":"corroborative","related_issue_ids":[],"client_instruction_event_ids":["CE-TEST-003"],
+      "favorable_content":null,"risk_summary":"与当前争点关联很弱","gaps":["缺少与待证事实的直接联系"],
+      "authenticity":"unknown","legality":"unknown","relevance":"low","probative_strength":"low","adverse_content":null,"opens_new_issue":false,"opponent_likely_use":"可能主张无关","duplication":null,"timing":"G2前","consequence_if_not_submitted":"无明显影响","substitute":null,"applicable_stage":null,"procedural_authority_id":null,"risk_assessment_artifact_id":null,
+      "ai_recommendation":"do_not_submit","lawyer_decision":"undecided","decision_reason":null,"current_submission":false,"reserve":false,"internal_reference":false,"adverse":false,"confidential":false,"opponent_known_status":"unknown","disclosure_intent":"undecided","intended_recipient":null,"service_obligation_status":"requires_verification","status":"candidate"
+    }
+  ],
+  "authorities": [],
+  "decisions": [],
+  "approvals": [],
+  "artifacts": [
+    {"id":"R-TEST-CURRENT-VIEW-001","kind":"current_case_view","audience":"internal_review","version":1,"path":"_case-state/memory/TEST-ONLY-current-case-view.md","sha256":"872cf30c8f670b7e2ae1045fe630a28c4fcf9c6b888a363d367a6adbc9bcb6bd","status":"reviewed","review_status":"passed","input_snapshot":[],"stale":false,"stale_reason":null,"created_at":"2026-08-08T10:10:00Z"},
+    {"id":"R-TEST-PROCEDURAL-CAPSULE-001","kind":"procedural_capsule","audience":"internal_review","version":1,"path":"_case-state/memory/TEST-ONLY-procedural-capsule.md","sha256":"05be22b76daadcd7cabf080e347bd12e7c13b995b0a20040656d2995cdf61d5a","status":"reviewed","review_status":"passed","input_snapshot":[{"object_id":"S-TEST-INCREMENTAL-008","version":1,"hash":"f6f0c00595bd67c83c03cb517d378108726adbf7a4077aa77d1f844df918e9d9"}],"stale":false,"stale_reason":null,"created_at":"2026-08-08T10:15:00Z"}
+  ],
+  "templates": [],
+  "processing_coverages": [],
+  "sanitization_reports": [],
+  "package_manifests": [],
+  "external_actions": [],
+  "tasks": [
+    {"id":"K-TEST-WITHDRAWAL-001","title":"TEST-ONLY：拟定虚构撤诉申请","status":"in_progress","workflow_instance_id":"WF-TEST-WITHDRAWAL-001","owner":"synthetic_test_agent","due_at":null,"waiting_for":[],"resume_condition":null,"output_ids":[],"completed_by_event_id":null,"depends_on_task_ids":[],"created_at":"2026-08-08T10:16:00Z","started_at":"2026-08-08T10:17:00Z","completed_at":null}
+  ],
+  "material_batches": [
+    {"id":"MB-TEST-001","version":1,"source_ids":["S-TEST-INCREMENTAL-001"],"arrival_key":"1111111111111111111111111111111111111111111111111111111111111111","received_at":"2026-08-01T08:00:00Z","status":"triaged","cursor_before":0,"cursor_after":1,"triaged_at":"2026-08-01T08:10:00Z","failure_reason":null,"created_at":"2026-08-01T08:05:00Z"},
+    {"id":"MB-TEST-002","version":1,"source_ids":["S-TEST-INCREMENTAL-002"],"arrival_key":"2222222222222222222222222222222222222222222222222222222222222222","received_at":"2026-08-03T10:00:00Z","status":"triaged","cursor_before":1,"cursor_after":2,"triaged_at":"2026-08-03T10:10:00Z","failure_reason":null,"created_at":"2026-08-03T10:05:00Z"},
+    {"id":"MB-TEST-003","version":1,"source_ids":["S-TEST-INCREMENTAL-003"],"arrival_key":"3333333333333333333333333333333333333333333333333333333333333333","received_at":"2026-08-04T09:00:00Z","status":"triaged","cursor_before":2,"cursor_after":3,"triaged_at":"2026-08-04T09:10:00Z","failure_reason":null,"created_at":"2026-08-04T09:05:00Z"},
+    {"id":"MB-TEST-004","version":1,"source_ids":["S-TEST-INCREMENTAL-004"],"arrival_key":"4444444444444444444444444444444444444444444444444444444444444444","received_at":"2026-08-05T09:00:00Z","status":"triaged","cursor_before":3,"cursor_after":4,"triaged_at":"2026-08-05T09:10:00Z","failure_reason":null,"created_at":"2026-08-05T09:05:00Z"},
+    {"id":"MB-TEST-005","version":1,"source_ids":["S-TEST-INCREMENTAL-005"],"arrival_key":"5555555555555555555555555555555555555555555555555555555555555555","received_at":"2026-08-06T09:00:00Z","status":"triaged","cursor_before":4,"cursor_after":5,"triaged_at":"2026-08-06T09:10:00Z","failure_reason":null,"created_at":"2026-08-06T09:05:00Z"},
+    {"id":"MB-TEST-006","version":1,"source_ids":["S-TEST-INCREMENTAL-006"],"arrival_key":"6666666666666666666666666666666666666666666666666666666666666666","received_at":"2026-08-07T09:00:00Z","status":"triaged","cursor_before":5,"cursor_after":6,"triaged_at":"2026-08-07T09:10:00Z","failure_reason":null,"created_at":"2026-08-07T09:05:00Z"},
+    {"id":"MB-TEST-007","version":1,"source_ids":["S-TEST-INCREMENTAL-007"],"arrival_key":"7777777777777777777777777777777777777777777777777777777777777777","received_at":"2026-08-08T08:00:00Z","status":"triaged","cursor_before":6,"cursor_after":7,"triaged_at":"2026-08-08T08:10:00Z","failure_reason":null,"created_at":"2026-08-08T08:05:00Z"},
+    {"id":"MB-TEST-008","version":1,"source_ids":["S-TEST-INCREMENTAL-008"],"arrival_key":"8888888888888888888888888888888888888888888888888888888888888888","received_at":"2026-08-08T10:00:00Z","status":"triaged","cursor_before":7,"cursor_after":8,"triaged_at":"2026-08-08T10:10:00Z","failure_reason":null,"created_at":"2026-08-08T10:05:00Z"}
+  ],
+  "case_events": [
+    {"id":"CE-TEST-001","version":1,"sequence":1,"event_type":"material_received","title":"TEST-ONLY 普通邮件到件","summary":"无新增意义","occurred_at":"2026-08-01T08:00:00Z","received_at":"2026-08-01T08:00:00Z","recorded_at":"2026-08-01T08:05:00Z","source_ids":["S-TEST-INCREMENTAL-001"],"source_locators":[],"related_object_ids":["MB-TEST-001"],"authority":"client","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-002","version":1,"sequence":2,"event_type":"court_notice","title":"TEST-ONLY 法院日期通知","summary":"形成未核验期限候选","occurred_at":null,"received_at":"2026-08-03T10:00:00Z","recorded_at":"2026-08-03T10:05:00Z","source_ids":["S-TEST-INCREMENTAL-002"],"source_locators":[{"source_id":"S-TEST-INCREMENTAL-002","locator":"正文第5行","record_kind":"direct_record","quote":null,"verified":false}],"related_object_ids":["DL-TEST-001"],"authority":"court","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-003","version":1,"sequence":3,"event_type":"client_instruction","title":"TEST-ONLY 客户坚持提交","summary":"客户指令不等于G2决定","occurred_at":"2026-08-04T09:00:00Z","received_at":"2026-08-04T09:00:00Z","recorded_at":"2026-08-04T09:05:00Z","source_ids":["S-TEST-INCREMENTAL-003"],"source_locators":[],"related_object_ids":["E-TEST-CLIENT-INSISTS-001"],"authority":"client","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-004","version":1,"sequence":4,"event_type":"new_matter_signal","title":"TEST-ONLY 弱信号一","summary":"首次出现，休眠","occurred_at":"2026-08-05T09:00:00Z","received_at":"2026-08-05T09:00:00Z","recorded_at":"2026-08-05T09:05:00Z","source_ids":["S-TEST-INCREMENTAL-004"],"source_locators":[],"related_object_ids":[],"authority":"third_party","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-005","version":1,"sequence":5,"event_type":"new_matter_signal","title":"TEST-ONLY 弱信号二","summary":"第二次出现，继续休眠","occurred_at":"2026-08-06T09:00:00Z","received_at":"2026-08-06T09:00:00Z","recorded_at":"2026-08-06T09:05:00Z","source_ids":["S-TEST-INCREMENTAL-005"],"source_locators":[],"related_object_ids":[],"authority":"third_party","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-006","version":1,"sequence":6,"event_type":"new_matter_signal","title":"TEST-ONLY 弱信号三","summary":"达到候选阈值但不得自动建案","occurred_at":"2026-08-07T09:00:00Z","received_at":"2026-08-07T09:00:00Z","recorded_at":"2026-08-07T09:05:00Z","source_ids":["S-TEST-INCREMENTAL-006"],"source_locators":[],"related_object_ids":["SEED-TEST-001"],"authority":"third_party","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-007","version":1,"sequence":7,"event_type":"fact_change","title":"TEST-ONLY 局部事实变化","summary":"只影响声明依赖","occurred_at":"2026-08-08T08:00:00Z","received_at":"2026-08-08T08:00:00Z","recorded_at":"2026-08-08T08:05:00Z","source_ids":["S-TEST-INCREMENTAL-007"],"source_locators":[],"related_object_ids":["IA-TEST-001"],"authority":"client","confidence":"direct_record","status":"active","supersedes_event_id":null},
+    {"id":"CE-TEST-008","version":1,"sequence":8,"event_type":"procedural_action","title":"TEST-ONLY 撤诉程序请求","summary":"建立程序工单","occurred_at":"2026-08-08T10:00:00Z","received_at":"2026-08-08T10:00:00Z","recorded_at":"2026-08-08T10:05:00Z","source_ids":["S-TEST-INCREMENTAL-008"],"source_locators":[],"related_object_ids":["WF-TEST-WITHDRAWAL-001"],"authority":"court","confidence":"direct_record","status":"active","supersedes_event_id":null}
+  ],
+  "triage_cards": [
+    {"id":"TC-TEST-001","version":1,"batch_id":"MB-TEST-001","source_id":"S-TEST-INCREMENTAL-001","relevance":"none","action_route":"no_action","secondary_routes":[],"summary":"无新增意义","reason":"只有收讫确认","direct_link_ids":["CE-TEST-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-01T08:10:00Z","created_at":"2026-08-01T08:06:00Z"},
+    {"id":"TC-TEST-002","version":1,"batch_id":"MB-TEST-002","source_id":"S-TEST-INCREMENTAL-002","relevance":"medium","action_route":"deadline_only","secondary_routes":[],"summary":"只提取日期候选","reason":"程序日期待核验","direct_link_ids":["CE-TEST-002","DL-TEST-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-03T10:10:00Z","created_at":"2026-08-03T10:06:00Z"},
+    {"id":"TC-TEST-003","version":1,"batch_id":"MB-TEST-003","source_id":"S-TEST-INCREMENTAL-003","relevance":"low","action_route":"evidence_review","secondary_routes":[],"summary":"客户指令留待G2","reason":"证明力低但客户坚持","direct_link_ids":["CE-TEST-003","E-TEST-CLIENT-INSISTS-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-04T09:10:00Z","created_at":"2026-08-04T09:06:00Z"},
+    {"id":"TC-TEST-004","version":1,"batch_id":"MB-TEST-004","source_id":"S-TEST-INCREMENTAL-004","relevance":"low","action_route":"prospective_matter","secondary_routes":[],"summary":"弱信号一休眠","reason":"信息不足","direct_link_ids":["CE-TEST-004"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-05T09:10:00Z","created_at":"2026-08-05T09:06:00Z"},
+    {"id":"TC-TEST-005","version":1,"batch_id":"MB-TEST-005","source_id":"S-TEST-INCREMENTAL-005","relevance":"low","action_route":"prospective_matter","secondary_routes":[],"summary":"弱信号二休眠","reason":"仍不足以建案","direct_link_ids":["CE-TEST-005"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-06T09:10:00Z","created_at":"2026-08-06T09:06:00Z"},
+    {"id":"TC-TEST-006","version":1,"batch_id":"MB-TEST-006","source_id":"S-TEST-INCREMENTAL-006","relevance":"medium","action_route":"prospective_matter","secondary_routes":[],"summary":"第三批生成Seed候选","reason":"跨批次信号达到测试阈值","direct_link_ids":["CE-TEST-006","SEED-TEST-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-07T09:10:00Z","created_at":"2026-08-07T09:06:00Z"},
+    {"id":"TC-TEST-007","version":1,"batch_id":"MB-TEST-007","source_id":"S-TEST-INCREMENTAL-007","relevance":"high","action_route":"current_matter_analysis","secondary_routes":[],"summary":"只评估局部依赖","reason":"补充材料直接冲击履行事实","direct_link_ids":["CE-TEST-007","IA-TEST-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-08T08:10:00Z","created_at":"2026-08-08T08:06:00Z"},
+    {"id":"TC-TEST-008","version":1,"batch_id":"MB-TEST-008","source_id":"S-TEST-INCREMENTAL-008","relevance":"medium","action_route":"workflow","secondary_routes":[],"summary":"纯程序撤诉工单","reason":"无需实体证据全文","direct_link_ids":["CE-TEST-008","WF-TEST-WITHDRAWAL-001"],"status":"committed","committed_by":"synthetic_test_lawyer","committed_at":"2026-08-08T10:10:00Z","created_at":"2026-08-08T10:06:00Z"}
+  ],
+  "deadline_records": [
+    {"id":"DL-TEST-001","version":1,"title":"TEST-ONLY 提交程序说明日期","kind":"response","raw_text":"请于2026年9月18日前提交一份程序性说明","due_at":"2026-09-18T23:59:59Z","timezone":"Asia/Shanghai","status":"candidate","source_event_id":"CE-TEST-002","source_locator":{"source_id":"S-TEST-INCREMENTAL-002","locator":"正文第5行","record_kind":"direct_record","quote":null,"verified":false},"related_workflow_instance_id":null,"verified_by":null,"verified_at":null,"dismissal_reason":null,"completed_at":null,"created_at":"2026-08-03T10:10:00Z"}
+  ],
+  "impact_assessments": [
+    {"id":"IA-TEST-001","version":1,"batch_id":"MB-TEST-007","source_ids":["S-TEST-INCREMENTAL-007"],"affected_object_ids":["F-TEST-DELIVERY-001","I-TEST-PERFORMANCE-001"],"stale_object_ids":["F-TEST-DELIVERY-001","I-TEST-PERFORMANCE-001"],"counterevidence_object_ids":["F-TEST-IDENTITY-001"],"impact_level":"high","summary":"TEST-ONLY：只让已声明的履行事实和争点失效，不波及主体与管辖。","requires_deep_analysis":true,"status":"candidate","lawyer_review_required":true,"lawyer_decision":"pending","created_at":"2026-08-08T08:10:00Z","applied_at":null}
+  ],
+  "prospective_matter_seeds": [
+    {"id":"SEED-TEST-001","version":1,"title":"TEST-ONLY 北辰平台潜在新案线索","hypothesis":"三批弱信号可能共同指向一项新的中国境内争议，但尚未核验。","origin_matter_id":"M-TEST-INCREMENTAL-001","trigger_event_ids":["CE-TEST-004","CE-TEST-005","CE-TEST-006"],"source_ids":["S-TEST-INCREMENTAL-004","S-TEST-INCREMENTAL-005","S-TEST-INCREMENTAL-006"],"supporting_object_ids":["CE-TEST-004","CE-TEST-005","CE-TEST-006"],"counterevidence_object_ids":["F-TEST-IDENTITY-001"],"status":"candidate","human_decision":"pending","decided_by":null,"decided_at":null,"promoted_matter_id":null,"promotion_event_id":null,"created_at":"2026-08-07T09:10:00Z","updated_at":"2026-08-07T09:10:00Z"}
+  ],
+  "workflow_instances": [
+    {"id":"WF-TEST-WITHDRAWAL-001","version":1,"matter_id":"M-TEST-INCREMENTAL-001","kind":"withdrawal","title":"TEST-ONLY 虚构撤诉手续","status":"in_progress","origin_event_id":"CE-TEST-008","related_object_ids":["R-TEST-PROCEDURAL-CAPSULE-001"],"task_ids":["K-TEST-WITHDRAWAL-001"],"output_ids":[],"proceeding_branch":"TEST-ONLY 一审","stage":"drafting_procedural_document","due_at":null,"waiting_for":[],"resume_condition":null,"approval_id":null,"created_at":"2026-08-08T10:15:00Z","started_at":"2026-08-08T10:16:00Z","updated_at":"2026-08-08T10:20:00Z","completed_at":null,"completed_by":null}
+  ],
+  "run_attempts": [
+    {"id":"RUN-TEST-001","version":1,"workflow_instance_id":"WF-TEST-WITHDRAWAL-001","task_id":"K-TEST-WITHDRAWAL-001","operation":"TEST-ONLY render withdrawal draft","status":"failed","actor":"synthetic_test_agent","input_snapshot":[{"object_id":"R-TEST-PROCEDURAL-CAPSULE-001","version":1,"hash":"05be22b76daadcd7cabf080e347bd12e7c13b995b0a20040656d2995cdf61d5a"}],"output_ids":[],"output_log_path":null,"output_cursor":null,"cursor_before":8,"cursor_after":null,"commit_status":"discarded","failure_reason":"TEST_ONLY_RENDER_FAILURE","created_at":"2026-08-08T10:17:00Z","started_at":"2026-08-08T10:17:00Z","finished_at":"2026-08-08T10:18:00Z","state_version_before":1,"state_version_after":null}
+  ],
+  "memory_state": {
+    "storage_scope":"matter_workspace","default_read_mode":"relevant","default_write_mode":"candidate","last_committed_event_seq":8,"last_batch_id":"MB-TEST-008","current_view_artifact_id":"R-TEST-CURRENT-VIEW-001","current_view_version":1,"current_view_as_of_event_seq":8,"current_view_input_hash":"9999999999999999999999999999999999999999999999999999999999999999","current_view_updated_at":"2026-08-08T10:20:00Z","last_reflection_event_seq":6,"pending_candidate_ids":["DL-TEST-001","IA-TEST-001","SEED-TEST-001","E-TEST-CLIENT-INSISTS-001"],"last_commit_actor":null,"last_commit_at":null,"last_commit_approval_id":null
+  },
+  "status": {"workflow":"active","current_gate":null,"blockers":["TEST-ONLY：期限待核验","TEST-ONLY：Seed待律师决定"],"degradations":[]},
+  "audit": {"path":"_case-state/audit-log.jsonl","last_sequence":0,"last_event_hash":null},
+  "last_updated":"2026-08-08T10:20:00Z"
+}

@@ -1,0 +1,67 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：以下法源、案号、法院、规则文本均为虚构测试数据，不得用于真实检索结论或法院提交。",
+  "corpus_id": "TEST-AUTHORITY-CORPUS-V1",
+  "production_policy": "reject_all_test_only",
+  "authorities": [
+    {
+      "authority_id": "A-TEST-SUPPORT-001",
+      "title": "测试支持案例：验收与部分付款的证明路径",
+      "authority_type": "synthetic_case",
+      "citation": "（TEST-ONLY）测试法院虚构民事判决 TEST-CASE-SUPPORT-001",
+      "source_level": "L1_verified_authoritative_source",
+      "verification_status": "verified_against_local_test_record",
+      "position": "supportive",
+      "major_adverse": false,
+      "holding_summary": "在纯测试规则中，验收记录与部分付款能够共同支持剩余价款请求，但仍须核对主体、完整履行和抗辩。",
+      "full_text_available": true,
+      "test_only": true,
+      "production_eligible": false,
+      "expected_use": "include_in_test_research_with_TEST_ONLY_banner"
+    },
+    {
+      "authority_id": "A-TEST-ADVERSE-001",
+      "title": "测试重大不利案例：质量异议可能削弱价款请求",
+      "authority_type": "synthetic_case",
+      "citation": "（TEST-ONLY）测试法院虚构民事判决 TEST-CASE-ADVERSE-001",
+      "source_level": "L1_verified_authoritative_source",
+      "verification_status": "verified_against_local_test_record",
+      "position": "adverse",
+      "major_adverse": true,
+      "holding_summary": "在纯测试规则中，及时且有材料支持的质量异议可能影响付款条件与金额；研究报告不得因用户只说找支持案例而隐藏该结果。",
+      "full_text_available": true,
+      "test_only": true,
+      "production_eligible": false,
+      "expected_use": "must_disclose_as_major_adverse_in_test_research"
+    },
+    {
+      "authority_id": "A-TEST-SUMMARY-001",
+      "title": "测试不可核验摘要：交付日期与测试时效",
+      "authority_type": "synthetic_summary",
+      "citation": null,
+      "source_level": "L4_model_inference_pending_verification",
+      "verification_status": "summary_only_unverified",
+      "position": "supportive",
+      "major_adverse": false,
+      "holding_summary": "只有二手摘要，没有全文、案号和可复核来源。",
+      "full_text_available": false,
+      "test_only": true,
+      "production_eligible": false,
+      "expected_use": "research_lead_only_never_cite"
+    }
+  ],
+  "expected": {
+    "research_report_ids": [
+      "A-TEST-SUPPORT-001",
+      "A-TEST-ADVERSE-001"
+    ],
+    "major_adverse_ids": [
+      "A-TEST-ADVERSE-001"
+    ],
+    "lead_only_ids": [
+      "A-TEST-SUMMARY-001"
+    ],
+    "production_citation_ids": []
+  }
+}
+

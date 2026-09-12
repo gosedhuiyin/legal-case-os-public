@@ -1,0 +1,53 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：外部能力不可用时必须明确降级或停止，不得伪造完成状态。",
+  "cases": [
+    {
+      "case_id": "DEGRADE-NETWORK-DENIED",
+      "request": "不要联网，只看我给的材料",
+      "capabilities": {"local_files": true, "public_web": true, "member_database": false, "third_party_api": false},
+      "network_policy": "deny",
+      "expected": {
+        "status": "completed_local_only",
+        "allowed_sources": ["user_provided", "local_verified"],
+        "must_report": ["network_not_used", "authority_questions_unresolved"],
+        "must_not": ["call_public_web", "claim_complete_authority_search"]
+      }
+    },
+    {
+      "case_id": "DEGRADE-PUBLIC-WEB-UNAVAILABLE",
+      "request": "帮我找支持案例",
+      "capabilities": {"local_files": true, "public_web": false, "member_database": false, "third_party_api": false},
+      "network_policy": "public_web_allowed",
+      "expected": {
+        "status": "degraded_or_stopped",
+        "allowed_sources": ["user_provided", "local_verified"],
+        "must_report": ["public_web_unavailable", "search_incomplete", "unverified_items_blocked"],
+        "must_not": ["invent_case", "claim_database_searched", "promote_summary_to_verified"]
+      }
+    },
+    {
+      "case_id": "DEGRADE-MEMBER-DATABASE-ABSENT",
+      "request": "检索案例",
+      "capabilities": {"local_files": true, "public_web": true, "member_database": false, "third_party_api": false},
+      "network_policy": "public_web_allowed",
+      "expected": {
+        "status": "continue_with_public_sources",
+        "must_report": ["member_database_not_connected", "source_scope"],
+        "must_not": ["request_credentials_implicitly", "claim_proprietary_coverage"]
+      }
+    },
+    {
+      "case_id": "DEGRADE-OCR-PARTIAL",
+      "request": "看一下全部材料",
+      "capabilities": {"local_files": true, "ocr": "partial", "audio_transcription": false},
+      "network_policy": "deny",
+      "expected": {
+        "status": "partial_with_blockers",
+        "must_report": ["processed_range", "failed_pages", "manual_check_items"],
+        "must_not": ["claim_full_coverage", "infer_unread_content"]
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,439 @@
+{
+  "schema_version": "1.1.0",
+  "matter": {
+    "id": "M-TEST-COMPLEX-001",
+    "title": "TEST-ONLY 虚构冲突日期与双向通信案",
+    "stage": "analysis",
+    "environment": "test",
+    "party_role": "虚构供应方代理测试",
+    "court": null,
+    "cause_of_action": "虚构合同履行争议",
+    "objective": "只深析三个交付日期对到期及测试时效路径的影响",
+    "created_at": "2026-08-23T01:00:00Z"
+  },
+  "intent": {
+    "id": "INTENT-TEST-COMPLEX-001",
+    "raw_text": "TEST-ONLY：不要那么复杂，只告诉我时效这个主要问题",
+    "action": "分析",
+    "object": "争点",
+    "reasoning_depth": "deep",
+    "display_length": "brief",
+    "audience": "discussion",
+    "output_formats": ["chat", "markdown"],
+    "template_alias": null,
+    "read_scope": ["I-LIMITATION-001"],
+    "memory_mode": "relevant",
+    "read_memory_scope": ["I-LIMITATION-001"],
+    "write_memory_mode": "candidate",
+    "network_mode": "local_only",
+    "modify_scope": [],
+    "scope_lock": ["I-LIMITATION-001"],
+    "analysis_lens": "neutral",
+    "approval_response": "none",
+    "created_at": "2026-08-23T01:30:00Z"
+  },
+  "focus": {
+    "active_turn_id": "TEST-TURN-COMPLEX-001",
+    "current_matter_id": "M-TEST-COMPLEX-001",
+    "current_source_id": "S-TEST-COMPLEX-003",
+    "current_issue_id": "I-LIMITATION-001",
+    "current_artifact_id": "R-TEST-ANALYSIS-001",
+    "current_template_id": null,
+    "current_batch_id": null,
+    "current_event_id": null,
+    "current_workflow_instance_id": null,
+    "current_task_id": null,
+    "recent_candidates": [
+      {
+        "object_id": "D-TEST-COMPLEX-G1-001",
+        "object_type": "decision",
+        "version": 1,
+        "hash": "e35b2e64172dcf190a2da730b872e05c7ccb27702c179cc23ccc8f9cdade7d02",
+        "pending_approval_id": "P-TEST-COMPLEX-G1-001",
+        "displayed_in_turn": "TEST-TURN-COMPLEX-001",
+        "displayed_at": "2026-08-23T01:29:00Z",
+        "just_displayed": true,
+        "stale": false
+      }
+    ],
+    "pending_approval_ids": ["P-TEST-COMPLEX-G1-001"],
+    "output_mode": "discussion",
+    "range_lock": ["I-LIMITATION-001"],
+    "current_memory_mode": "relevant",
+    "read_memory_scope": ["I-LIMITATION-001"],
+    "state_version": 1,
+    "snapshot": null
+  },
+  "network_policy": {
+    "mode": "local_only",
+    "proprietary_services_allowed": false,
+    "api_credentials_allowed": false,
+    "last_degradation": {"code": "TEST_ONLY_LOCAL_AUTHORITY_CORPUS", "message": "未连接会员库、第三方 API 或公网检索"}
+  },
+  "sources": [
+    {
+      "id": "S-TEST-COMPLEX-001",
+      "path": "00-originals/TEST-ONLY-01-框架协议.md",
+      "sha256": "582739246dfec877d63821835a0ebd2bf351396cec0c5960f6e679514ca91717",
+      "size_bytes": 534,
+      "version": 1,
+      "kind": "synthetic_agreement_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T01:01:00Z"
+    },
+    {
+      "id": "S-TEST-COMPLEX-002",
+      "path": "00-originals/TEST-ONLY-02-仓储登记.md",
+      "sha256": "ed7458f534a52097315d7999d410154939c37e39c26fbdd15259aed9788044d6",
+      "size_bytes": 314,
+      "version": 1,
+      "kind": "synthetic_warehouse_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T01:02:00Z"
+    },
+    {
+      "id": "S-TEST-COMPLEX-003",
+      "path": "00-originals/TEST-ONLY-03-双向通信.md",
+      "sha256": "cb200459c09fc8d9839ed414218c447fd98a9b40203cac4a5900dd073c535f79",
+      "size_bytes": 698,
+      "version": 1,
+      "kind": "synthetic_mixed_communication_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T01:03:00Z"
+    },
+    {
+      "id": "S-TEST-COMPLEX-004",
+      "path": "00-originals/TEST-ONLY-04-催告记录.md",
+      "sha256": "a411a1e06ca15a10d950330d0dab558ead2ca665066d10894a8cd68de50deb6b",
+      "size_bytes": 572,
+      "version": 1,
+      "kind": "synthetic_demand_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T01:04:00Z"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F-TEST-DATE-CONTRACT-001",
+      "statement": "虚构协议记载约定首批交付日为 2022 年 4 月 10 日。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-COMPLEX-001", "locator": "协议第7行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-DATE-FIRST-001",
+      "statement": "虚构仓储系统记载首次到货日为 2022 年 4 月 8 日。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-COMPLEX-002", "locator": "仓储登记第6行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-DATE-COMPLETE-001",
+      "statement": "虚构纸面补录记载完整到货日为 2022 年 4 月 12 日。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-COMPLEX-002", "locator": "仓储登记第7行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-COMM-MIXED-001",
+      "statement": "同一虚构通信既记载全部收货和余额以后结算，也记载包装破损及先核损失。",
+      "status": "disputed",
+      "source_locators": [
+        {"source_id": "S-TEST-COMPLEX-003", "locator": "通信第5—8行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "id": "I-LIMITATION-001",
+      "title": "三个交付日期与后续通信对到期及测试时效路径的影响",
+      "importance": "critical",
+      "analysis_mode": "deep",
+      "status": "analyzed",
+      "scope_lock": true,
+      "conflicting_dates": ["2022-04-08", "2022-04-10", "2022-04-12"],
+      "strongest_supportive_path": "全部收货及余额以后结算可能支持请求方，但具体法律效果必须核验。",
+      "strongest_adverse_path": "包装破损、先核损失及日期矛盾可能影响到期判断和请求基础。",
+      "facts_that_change_outcome": ["原始运输记录", "完整验收记录", "完整对账材料", "适用法律与时效事件核验"]
+    },
+    {
+      "id": "I-QUALITY-001",
+      "title": "包装破损异议是否成立及其影响",
+      "importance": "high",
+      "analysis_mode": "standard",
+      "status": "open"
+    }
+  ],
+  "theories": [
+    {"id": "T-TEST-COMPLEX-CLAIM-001", "title": "虚构余额请求路径", "kind": "claim", "status": "candidate"},
+    {"id": "T-TEST-COMPLEX-DEFENSE-001", "title": "虚构质量异议和到期抗辩路径", "kind": "defense", "status": "candidate"}
+  ],
+  "evidence": [
+    {
+      "id": "E-TEST-COMPLEX-001",
+      "version": 1,
+      "source_refs": [{"source_id": "S-TEST-COMPLEX-001", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}],
+      "description": "虚构框架协议",
+      "proposition": "约定交付、验收、付款和争议解决内容",
+      "authenticity": "supported",
+      "legality": "supported",
+      "relevance": "high",
+      "probative_strength": "medium",
+      "adverse_content": "未约定分批交付时付款期限如何计算",
+      "opens_new_issue": true,
+      "opponent_likely_use": "可能利用条款缺口主张到期时间不同",
+      "duplication": null,
+      "timing": "TEST-ONLY 分析阶段",
+      "consequence_if_not_submitted": "缺少约定日期和付款条件的直接材料",
+      "substitute": null,
+      "applicable_stage": "synthetic_internal_analysis",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": "R-TEST-ANALYSIS-001",
+      "ai_recommendation": "needs_review",
+      "lawyer_decision": "undecided",
+      "decision_reason": null,
+      "current_submission": false,
+      "reserve": false,
+      "internal_reference": true,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "undecided",
+      "intended_recipient": null,
+      "service_obligation_status": "requires_verification",
+      "status": "candidate"
+    },
+    {
+      "id": "E-TEST-COMPLEX-002",
+      "version": 1,
+      "source_refs": [{"source_id": "S-TEST-COMPLEX-002", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}],
+      "description": "虚构仓储登记",
+      "proposition": "两个实际到货日期记载冲突",
+      "authenticity": "disputed",
+      "legality": "unknown",
+      "relevance": "high",
+      "probative_strength": "medium",
+      "adverse_content": "日期冲突且未附原始运输记录",
+      "opens_new_issue": true,
+      "opponent_likely_use": "可能选择对其有利日期攻击请求到期与测试时效路径",
+      "duplication": null,
+      "timing": "TEST-ONLY 分析阶段",
+      "consequence_if_not_submitted": "日期矛盾仍无法消除",
+      "substitute": "原始运输及完整验收记录",
+      "applicable_stage": "synthetic_internal_analysis",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": "R-TEST-ANALYSIS-001",
+      "ai_recommendation": "needs_review",
+      "lawyer_decision": "undecided",
+      "decision_reason": null,
+      "current_submission": false,
+      "reserve": false,
+      "internal_reference": true,
+      "adverse": true,
+      "confidential": false,
+      "opponent_known_status": "unknown",
+      "disclosure_intent": "undecided",
+      "intended_recipient": null,
+      "service_obligation_status": "requires_verification",
+      "status": "candidate"
+    },
+    {
+      "id": "E-TEST-COMM-001",
+      "version": 1,
+      "source_refs": [{"source_id": "S-TEST-COMPLEX-003", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}],
+      "description": "虚构同时有利与不利的双向通信",
+      "proposition": "既可能支持全部收货和余额确认，也可能支持包装破损及先核损失的反方路径",
+      "authenticity": "unknown",
+      "legality": "unknown",
+      "relevance": "high",
+      "probative_strength": "high",
+      "adverse_content": "同一通信记载包装破损和先核损失，属于重大不利内容",
+      "opens_new_issue": true,
+      "opponent_likely_use": "用质量异议和损失核对反击余额请求",
+      "duplication": null,
+      "timing": "TEST-ONLY 分析阶段，提交决策未作出",
+      "consequence_if_not_submitted": "会丢失对余额回复的有利部分，但也避免未经评估披露重大不利内容",
+      "substitute": "完整通信链及质量处理材料",
+      "applicable_stage": "synthetic_internal_analysis",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": "R-TEST-ANALYSIS-001",
+      "ai_recommendation": "needs_review",
+      "lawyer_decision": "undecided",
+      "decision_reason": null,
+      "current_submission": false,
+      "reserve": false,
+      "internal_reference": true,
+      "adverse": true,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "undecided",
+      "intended_recipient": null,
+      "service_obligation_status": "requires_verification",
+      "status": "candidate"
+    },
+    {
+      "id": "E-TEST-COMPLEX-004",
+      "version": 1,
+      "source_refs": [{"source_id": "S-TEST-COMPLEX-004", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}],
+      "description": "虚构催告记录",
+      "proposition": "催告形成、发送和收到回复的三个时间点",
+      "authenticity": "supported",
+      "legality": "unknown",
+      "relevance": "high",
+      "probative_strength": "medium",
+      "adverse_content": "催告形成日、发送日和回复日不同，法律效果尚未核验",
+      "opens_new_issue": true,
+      "opponent_likely_use": "可能否认形成日具有对外效果，并争议回复含义",
+      "duplication": null,
+      "timing": "TEST-ONLY 内部研究阶段",
+      "consequence_if_not_submitted": "当前仍可进行内部争点分析，但不能主张该材料已产生确定法律效果",
+      "substitute": "完整发送日志和主体核验材料",
+      "applicable_stage": "synthetic_internal_only",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": "R-TEST-ANALYSIS-001",
+      "ai_recommendation": "internal_only",
+      "lawyer_decision": "internal_only",
+      "decision_reason": "TEST-ONLY：其法律效果尚未核验",
+      "current_submission": false,
+      "reserve": false,
+      "internal_reference": true,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "internal_only",
+      "intended_recipient": "测试律师内部",
+      "service_obligation_status": "not_applicable",
+      "status": "approved"
+    }
+  ],
+  "authorities": [
+    {"id": "A-TEST-SUPPORT-001", "title": "TEST-ONLY 虚构支持案例", "source_level": "L1_verified_authority", "verification_status": "test_only", "production_eligible": false, "adverse": false, "environment": "test", "test_only": true},
+    {"id": "A-TEST-ADVERSE-001", "title": "TEST-ONLY 虚构重大不利案例", "source_level": "L1_verified_authority", "verification_status": "test_only", "production_eligible": false, "adverse": true, "environment": "test", "test_only": true},
+    {"id": "A-TEST-SUMMARY-001", "title": "TEST-ONLY 仅摘要不可核验线索", "source_level": "L4_model_inference", "verification_status": "unverified", "production_eligible": false, "adverse": false, "environment": "test", "test_only": true}
+  ],
+  "decisions": [
+    {
+      "id": "D-TEST-COMPLEX-G1-001",
+      "subject_id": "I-LIMITATION-001",
+      "version": 1,
+      "content_hash": "4444444444444444444444444444444444444444444444444444444444444444",
+      "status": "candidate",
+      "reason": "TEST-ONLY：建议只对时效争点深析，其他争点保持 standard"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "P-TEST-COMPLEX-G1-001",
+      "gate": "G1_strategy",
+      "object_id": "D-TEST-COMPLEX-G1-001",
+      "object_version": 1,
+      "object_hash": "e35b2e64172dcf190a2da730b872e05c7ccb27702c179cc23ccc8f9cdade7d02",
+      "stage": "analysis",
+      "decision": "pending",
+      "reason": null,
+      "actor": null,
+      "decided_at": null,
+      "status": "pending",
+      "invalidation_reason": null,
+      "scope_snapshot": [
+        {"object_id": "I-LIMITATION-001", "version": 1, "hash": "64b8138c2a2a091802d1e1d8ab9e139f47ae843f87a81f8c0594d1efcea760a3"}
+      ],
+      "scope_hash": "6dfe1d2a24ba0def7ddc7809400f8ed20b1253df7ea82998f7fc8726d32871aa"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "R-TEST-ANALYSIS-001",
+      "kind": "synthetic_issue_analysis_markdown",
+      "audience": "internal_review",
+      "version": 1,
+      "path": "20-analysis/TEST-ONLY-深析范围.md",
+      "sha256": "8a6ecb29ae4527b1c040e231afc9291b514049fdf0a43175467dcc059fe079c1",
+      "status": "reviewed",
+      "review_status": "needs_review",
+      "input_snapshot": [
+        {"object_id": "S-TEST-COMPLEX-001", "version": 1, "hash": "582739246dfec877d63821835a0ebd2bf351396cec0c5960f6e679514ca91717"},
+        {"object_id": "S-TEST-COMPLEX-002", "version": 1, "hash": "ed7458f534a52097315d7999d410154939c37e39c26fbdd15259aed9788044d6"},
+        {"object_id": "S-TEST-COMPLEX-003", "version": 1, "hash": "cb200459c09fc8d9839ed414218c447fd98a9b40203cac4a5900dd073c535f79"},
+        {"object_id": "S-TEST-COMPLEX-004", "version": 1, "hash": "a411a1e06ca15a10d950330d0dab558ead2ca665066d10894a8cd68de50deb6b"}
+      ],
+      "stale": false,
+      "stale_reason": null,
+      "created_at": "2026-08-23T01:28:00Z"
+    }
+  ],
+  "templates": [],
+  "processing_coverages": [
+    {"id": "COV-TEST-COMPLEX-001", "source_id": "S-TEST-COMPLEX-001", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": [], "status": "complete", "created_at": "2026-08-23T01:10:00Z"},
+    {"id": "COV-TEST-COMPLEX-002", "source_id": "S-TEST-COMPLEX-002", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": ["补充原始运输记录"], "status": "complete", "created_at": "2026-08-23T01:11:00Z"},
+    {"id": "COV-TEST-COMPLEX-003", "source_id": "S-TEST-COMPLEX-003", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": ["核对通信完整性和上下文"], "status": "complete", "created_at": "2026-08-23T01:12:00Z"},
+    {"id": "COV-TEST-COMPLEX-004", "source_id": "S-TEST-COMPLEX-004", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": ["核对发送日志与回复主体"], "status": "complete", "created_at": "2026-08-23T01:13:00Z"}
+  ],
+  "sanitization_reports": [],
+  "package_manifests": [],
+  "external_actions": [],
+  "tasks": [
+    {"id": "K-TEST-COMPLEX-G1-001", "title": "TEST-ONLY：律师确认局部深析策略", "status": "pending"},
+    {"id": "K-TEST-COMPLEX-SOURCE-001", "title": "TEST-ONLY：补充运输和验收原始材料", "status": "blocked"}
+  ],
+  "material_batches": [],
+  "case_events": [],
+  "triage_cards": [],
+  "deadline_records": [],
+  "impact_assessments": [],
+  "prospective_matter_seeds": [],
+  "workflow_instances": [],
+  "run_attempts": [],
+  "memory_state": {
+    "storage_scope": "matter_workspace",
+    "default_read_mode": "relevant",
+    "default_write_mode": "candidate",
+    "last_committed_event_seq": 0,
+    "last_batch_id": null,
+    "current_view_artifact_id": null,
+    "current_view_version": 0,
+    "current_view_as_of_event_seq": 0,
+    "current_view_input_hash": null,
+    "current_view_updated_at": null,
+    "last_reflection_event_seq": 0,
+    "pending_candidate_ids": [],
+    "last_commit_actor": null,
+    "last_commit_at": null,
+    "last_commit_approval_id": null
+  },
+  "status": {
+    "workflow": "waiting_approval",
+    "current_gate": "G1_strategy",
+    "blockers": ["等待 G1 精确策略批准", "缺少可消除日期矛盾的原始运输及验收记录"],
+    "degradations": ["仅使用本地 TEST-ONLY 法源库，真实法律研究未执行"]
+  },
+  "audit": {
+    "path": "_case-state/audit-log.jsonl",
+    "last_sequence": 0,
+    "last_event_hash": null
+  },
+  "last_updated": "2026-08-23T01:30:00Z"
+}

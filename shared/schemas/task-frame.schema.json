@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.example/legal-case-os/task-frame.schema.json",
+  "title": "Legal Case OS transient TaskFrame",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "id", "parser_version", "raw_text", "command_text",
+    "task_kind", "object_hint", "stage", "target_refs", "issue_scope",
+    "output_scope", "evidence_sources", "memory_context_policy", "network_policy",
+    "authority_requirements", "read_acl", "mutation_scope", "user_effort_hint",
+    "assessed_complexity", "interaction_posture", "output_stage", "style_patch",
+    "must_not", "missing_required", "alternatives", "conflicts", "unknown",
+    "input_segments", "field_provenance", "semantic_fallback"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "id": { "type": "string", "pattern": "^TF-[A-Za-z0-9_-]+$" },
+    "parser_version": { "type": "string", "minLength": 1 },
+    "raw_text": { "type": "string", "minLength": 1 },
+    "command_text": { "type": "string" },
+    "task_kind": {
+      "enum": [
+        "approve", "recall", "record", "manage", "resume", "triage", "sanitize",
+        "research", "modify", "generate", "package", "analyze", "discuss",
+        "summarize", "view", "continue", "external_action", "freeform_readonly",
+        "constraint_ack"
+      ]
+    },
+    "object_hint": { "type": "string", "minLength": 1 },
+    "stage": { "type": "string", "minLength": 1 },
+    "target_refs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "template_refs": {
+      "description": "Ordered explicit template/style references; template_alias remains supported by the canonical IntentEnvelope.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "authority_research_precondition": {
+      "description": "True when verified authority research is an upstream phase of generation rather than the final task.",
+      "type": "boolean"
+    },
+    "issue_scope": { "$ref": "#/$defs/Scope" },
+    "output_scope": { "$ref": "#/$defs/Scope" },
+    "evidence_sources": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "memory_context_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["read_mode", "read_scope", "write_mode", "preference_mode", "max_preferences", "case_facts_from_preferences_allowed"],
+      "properties": {
+        "read_mode": { "enum": ["off", "file_scoped", "relevant", "reflect"] },
+        "read_scope": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "write_mode": { "enum": ["none", "candidate", "commit"] },
+        "preference_mode": { "const": "confirmed_relevant_only" },
+        "max_preferences": { "type": "integer", "minimum": 0 },
+        "case_facts_from_preferences_allowed": { "const": false }
+      }
+    },
+    "network_policy": { "enum": ["deny", "local_only", "public_web_if_available"] },
+    "delivery_audience": { "enum": ["discussion", "internal_review", "court_candidate"] },
+    "knowledge_policy": { "enum": ["off", "configured_readonly_if_available"] },
+    "input_materials": { "type": "array", "items": { "type": "object" } },
+    "authority_requirements": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "read_acl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "items", "explicit"],
+      "properties": {
+        "mode": { "enum": ["default", "restricted"] },
+        "items": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "explicit": { "type": "boolean" }
+      }
+    },
+    "mutation_scope": { "enum": ["read_only", "draft_only", "local_write", "external_action"] },
+    "user_effort_hint": { "enum": ["quick", "standard", "deep", "discuss"] },
+    "assessed_complexity": { "enum": ["quick", "standard", "deep"] },
+    "interaction_posture": { "enum": ["execute", "discuss", "inspect", "continue", "external"] },
+    "output_stage": { "enum": ["answer", "ideas", "analysis", "outline", "draft", "candidate_package", "decision"] },
+    "style_patch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["detail", "tone"],
+      "properties": {
+        "detail": { "enum": ["brief", "normal", "detailed"] },
+        "tone": { "enum": ["default", "formal", "litigation", "exploratory"] }
+      }
+    },
+    "must_not": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "missing_required": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "alternatives": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "conflicts": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "unknown": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "input_segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/InputSegment" }
+    },
+    "field_provenance": { "type": "object" },
+    "semantic_fallback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "reason"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "reason": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "$defs": {
+    "Scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "items"],
+      "properties": {
+        "mode": { "enum": ["inherit", "only", "all"] },
+        "items": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "InputSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "start", "end", "text", "source_kind", "trust_level", "command_eligible"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^SEG-[0-9]{3}$" },
+        "start": { "type": "integer", "minimum": 0 },
+        "end": { "type": "integer", "minimum": 0 },
+        "text": { "type": "string" },
+        "source_kind": { "enum": ["user_instruction", "user_parameter", "quoted_data", "unquoted_data"] },
+        "trust_level": { "enum": ["current_command", "current_parameter", "untrusted_data"] },
+        "command_eligible": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：全部路径、案件、对话与结论均为虚构离线测试数据。",
+  "contract_version": "1.1.0-test",
+  "canonical_storage": {
+    "matter_workspace": "tests/fixtures/incremental-case",
+    "canonical_state": "_case-state/case-state.json",
+    "derived_memory_directory": "_case-state/memory",
+    "chat_transcript_is_authority": false,
+    "global_case_memory_allowed": false,
+    "copy_original_content_into_memory": false,
+    "portable_with_matter_folder": true
+  },
+  "read_mode_cases": [
+    {
+      "case_id": "MEM-READ-OFF",
+      "text": "这段不用关联记忆了，直接写撤诉申请",
+      "expected": {
+        "read_mode": "off",
+        "read_scope": [],
+        "allowed_inputs": ["current_request", "current_attachments", "mandatory_safety_gates"],
+        "forbidden_inputs": ["matter_memory", "other_chats"],
+        "external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "MEM-READ-FILE",
+      "text": "不要管其他记忆，只看和materials/TEST-ONLY-02-court-notice.md有关的记忆，然后分析",
+      "expected": {
+        "read_mode": "file_scoped",
+        "read_scope": ["materials/TEST-ONLY-02-court-notice.md"],
+        "maximum_relation_hops": 1,
+        "must_include": ["source", "direct_events", "direct_deadlines", "necessary_counterevidence"],
+        "must_exclude": ["unrelated_matter_memory", "whole_case_reanalysis"],
+        "external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "MEM-READ-RELEVANT",
+      "text": "熊熊宝宝又来了一批材料，处理一下",
+      "expected": {
+        "read_mode": "relevant",
+        "read_scope": ["new_batch", "current_case_view", "directly_related_cards", "counterevidence"],
+        "maximum_loaded_cards": 8,
+        "must_publish_context_manifest": true,
+        "must_exclude": ["unrelated_full_archive", "whole_chat_history"],
+        "external_actions_allowed": false
+      }
+    },
+    {
+      "case_id": "MEM-READ-REFLECT",
+      "text": "调用下记忆模块，看下有没关联或启发，下一步怎么做？",
+      "expected": {
+        "read_mode": "reflect",
+        "read_scope": ["current_case_view", "cross_batch_weak_signals", "unresolved_conflicts", "adverse_material", "dormant_seeds"],
+        "maximum_candidate_insights": 3,
+        "candidate_only": true,
+        "must_include_sources_and_counterevidence": true,
+        "external_actions_allowed": false
+      }
+    }
+  ],
+  "write_mode_cases": [
+    {
+      "case_id": "MEM-WRITE-NONE",
+      "text": "本轮可以读记忆，但不要写入记忆",
+      "expected": {
+        "write_mode": "none",
+        "canonical_state_mutations": 0,
+        "candidate_records_created": 0
+      }
+    },
+    {
+      "case_id": "MEM-WRITE-CANDIDATE",
+      "text": "把这个结论记成候选，先不要改变案件状态",
+      "expected": {
+        "write_mode": "candidate",
+        "canonical_fact_promotions": 0,
+        "lawyer_review_required": true,
+        "candidate_status": "candidate"
+      }
+    },
+    {
+      "case_id": "MEM-WRITE-COMMIT",
+      "text": "把这条法院要求正式记入案件",
+      "expected": {
+        "write_mode": "commit",
+        "exact_source_required": true,
+        "expected_base_state_version": 12,
+        "next_state_version": 13,
+        "append_audit_event": true
+      }
+    }
+  ],
+  "conversation_cases": [
+    {
+      "case_id": "CHAT-SAME-STATE-NO-PRIVATE-MEMORY",
+      "conversations": [
+        {"conversation_id": "CHAT-TEST-WITHDRAWAL", "task": "draft_withdrawal", "base_state_version": 12},
+        {"conversation_id": "CHAT-TEST-EVIDENCE", "task": "review_new_evidence", "base_state_version": 12}
+      ],
+      "expected": {
+        "canonical_state_count": 1,
+        "private_case_memory_per_chat": false,
+        "context_capsules_are_ephemeral": true
+      }
+    },
+    {
+      "case_id": "CHAT-STALE-COMMIT-CONFLICT",
+      "first_commit": {"conversation_id": "CHAT-TEST-WITHDRAWAL", "base_state_version": 12, "result_state_version": 13},
+      "stale_commit": {"conversation_id": "CHAT-TEST-EVIDENCE", "base_state_version": 12},
+      "expected": {
+        "stale_commit_allowed": false,
+        "error_code": "STALE_STATE_VERSION",
+        "must_not": ["overwrite_version_13", "silently_merge_conflicting_change"],
+        "retry_requires": ["reload_current_state", "rebuild_delta", "resubmit"]
+      }
+    }
+  ]
+}

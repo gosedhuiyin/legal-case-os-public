@@ -1,0 +1,469 @@
+{
+  "schema_version": "1.1.0",
+  "matter": {
+    "id": "M-TEST-SIMPLE-001",
+    "title": "TEST-ONLY 虚构普通买卖合同案",
+    "stage": "filing_candidate",
+    "environment": "test",
+    "party_role": "虚构卖方代理测试",
+    "court": "测试法院（虚构，待核验）",
+    "cause_of_action": "虚构买卖合同争议",
+    "objective": "验证简单案从阅卷到 G4 候选且不产生 G5 外部动作",
+    "created_at": "2026-08-23T00:00:00Z"
+  },
+  "intent": {
+    "id": "INTENT-TEST-SIMPLE-001",
+    "raw_text": "TEST-ONLY：很简单，直接生成文书，顺便生成手续并整理文件夹",
+    "action": "组卷",
+    "object": "提交包",
+    "reasoning_depth": "standard",
+    "display_length": "brief",
+    "audience": "internal_review",
+    "output_formats": ["markdown"],
+    "template_alias": "测试起诉状套件",
+    "read_scope": ["00-originals"],
+    "memory_mode": "relevant",
+    "read_memory_scope": ["00-originals"],
+    "write_memory_mode": "candidate",
+    "network_mode": "local_only",
+    "modify_scope": ["new_candidate_directory_only"],
+    "scope_lock": [],
+    "analysis_lens": "neutral",
+    "approval_response": "none",
+    "created_at": "2026-08-23T00:30:00Z"
+  },
+  "focus": {
+    "active_turn_id": "TEST-TURN-SIMPLE-001",
+    "current_matter_id": "M-TEST-SIMPLE-001",
+    "current_source_id": null,
+    "current_issue_id": "I-TEST-PAYMENT-001",
+    "current_artifact_id": "R-TEST-DRAFT-001",
+    "current_template_id": null,
+    "current_batch_id": null,
+    "current_event_id": null,
+    "current_workflow_instance_id": null,
+    "current_task_id": null,
+    "recent_candidates": [],
+    "pending_approval_ids": [],
+    "output_mode": "internal_review",
+    "range_lock": [],
+    "current_memory_mode": "relevant",
+    "read_memory_scope": ["00-originals"],
+    "state_version": 2,
+    "snapshot": null
+  },
+  "network_policy": {
+    "mode": "local_only",
+    "proprietary_services_allowed": false,
+    "api_credentials_allowed": false,
+    "last_degradation": null
+  },
+  "sources": [
+    {
+      "id": "S-TEST-SIMPLE-001",
+      "path": "00-originals/TEST-ONLY-01-买卖合同.md",
+      "sha256": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565",
+      "size_bytes": 545,
+      "version": 1,
+      "kind": "synthetic_contract_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T00:01:00Z"
+    },
+    {
+      "id": "S-TEST-SIMPLE-002",
+      "path": "00-originals/TEST-ONLY-02-交付验收单.md",
+      "sha256": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15",
+      "size_bytes": 357,
+      "version": 1,
+      "kind": "synthetic_delivery_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T00:02:00Z"
+    },
+    {
+      "id": "S-TEST-SIMPLE-003",
+      "path": "00-originals/TEST-ONLY-03-付款记录.md",
+      "sha256": "87e1db5a09890778d0f0b3f66d63b617fc88bf4b751e8f7a49a07fb1985b2c76",
+      "size_bytes": 317,
+      "version": 1,
+      "kind": "synthetic_payment_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T00:03:00Z"
+    },
+    {
+      "id": "S-TEST-SIMPLE-004",
+      "path": "00-originals/TEST-ONLY-04-催款通信.md",
+      "sha256": "dada1ed1cd6c5e4cef1a69a0ef446d9f3bd4af1c42ce10b0641bcbbb7b956f7a",
+      "size_bytes": 416,
+      "version": 1,
+      "kind": "synthetic_communication_markdown",
+      "original": true,
+      "read_only": true,
+      "page_count": null,
+      "ocr_status": "not_applicable",
+      "duplicate_of": null,
+      "confidentiality": "ordinary",
+      "ingested_at": "2026-08-23T00:04:00Z"
+    }
+  ],
+  "facts": [
+    {
+      "id": "F-TEST-CONTRACT-001",
+      "statement": "虚构合同记载价款为 10,000 元、交付后验收并在验收后十日付款。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-SIMPLE-001", "locator": "合同正文第6—8行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-DELIVERY-001",
+      "statement": "虚构验收单记载 100 套货物于 2025 年 3 月 5 日交付并通过外观验收。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-SIMPLE-002", "locator": "验收单第5—8行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-PAYMENT-001",
+      "statement": "虚构付款记录只记载支付 4,000 元；是否存在其他付款仍待核验。",
+      "status": "confirmed",
+      "source_locators": [
+        {"source_id": "S-TEST-SIMPLE-003", "locator": "付款记录第5—9行", "record_kind": "direct_record", "quote": null, "verified": true}
+      ]
+    },
+    {
+      "id": "F-TEST-BALANCE-001",
+      "statement": "将 10,000 元减去 4,000 元得到 6,000 元只是模型计算，不能冒充来源原文。",
+      "status": "inferred",
+      "source_locators": [
+        {"source_id": "S-TEST-SIMPLE-001", "locator": "合同价款字段", "record_kind": "model_inference", "quote": null, "verified": false},
+        {"source_id": "S-TEST-SIMPLE-003", "locator": "付款金额字段", "record_kind": "model_inference", "quote": null, "verified": false}
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "id": "I-TEST-PAYMENT-001",
+      "title": "虚构剩余价款请求是否有足够材料支持",
+      "importance": "high",
+      "analysis_mode": "standard",
+      "status": "approved"
+    }
+  ],
+  "theories": [
+    {
+      "id": "T-TEST-CLAIM-001",
+      "title": "虚构合同履行后请求支付剩余价款",
+      "kind": "claim",
+      "status": "approved"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E-TEST-SIMPLE-001",
+      "version": 1,
+      "source_refs": [
+        {"source_id": "S-TEST-SIMPLE-001", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}
+      ],
+      "description": "虚构买卖合同",
+      "proposition": "测试交易关系、价款、交付及付款约定",
+      "authenticity": "supported",
+      "legality": "supported",
+      "relevance": "high",
+      "probative_strength": "high",
+      "adverse_content": null,
+      "opens_new_issue": false,
+      "opponent_likely_use": "可能主张合同付款条件尚未满足，需与验收材料合并评估",
+      "duplication": null,
+      "timing": "TEST-ONLY 模拟一审起诉阶段",
+      "consequence_if_not_submitted": "交易基础和主要约定缺少直接材料",
+      "substitute": null,
+      "applicable_stage": "synthetic_first_instance_filing",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": null,
+      "ai_recommendation": "submit_now",
+      "lawyer_decision": "submit_now",
+      "decision_reason": "TEST-ONLY：模拟律师 G2 决定",
+      "current_submission": true,
+      "reserve": false,
+      "internal_reference": false,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "serve_all_parties",
+      "intended_recipient": "测试法院及程序要求的接收方",
+      "service_obligation_status": "verified_required",
+      "status": "approved"
+    },
+    {
+      "id": "E-TEST-SIMPLE-002",
+      "version": 1,
+      "source_refs": [
+        {"source_id": "S-TEST-SIMPLE-002", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}
+      ],
+      "description": "虚构交付验收单",
+      "proposition": "测试货物交付和数量外观验收",
+      "authenticity": "supported",
+      "legality": "supported",
+      "relevance": "high",
+      "probative_strength": "high",
+      "adverse_content": "只记载数量和外观验收，不当然排除其他异议",
+      "opens_new_issue": false,
+      "opponent_likely_use": "可能强调验收范围有限",
+      "duplication": null,
+      "timing": "TEST-ONLY 模拟一审起诉阶段",
+      "consequence_if_not_submitted": "交付和验收缺少直接材料",
+      "substitute": null,
+      "applicable_stage": "synthetic_first_instance_filing",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": null,
+      "ai_recommendation": "submit_now",
+      "lawyer_decision": "submit_now",
+      "decision_reason": "TEST-ONLY：模拟律师 G2 决定",
+      "current_submission": true,
+      "reserve": false,
+      "internal_reference": false,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "serve_all_parties",
+      "intended_recipient": "测试法院及程序要求的接收方",
+      "service_obligation_status": "verified_required",
+      "status": "approved"
+    },
+    {
+      "id": "E-TEST-SIMPLE-003",
+      "version": 1,
+      "source_refs": [
+        {"source_id": "S-TEST-SIMPLE-003", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}
+      ],
+      "description": "虚构付款记录",
+      "proposition": "测试部分付款事实",
+      "authenticity": "supported",
+      "legality": "supported",
+      "relevance": "high",
+      "probative_strength": "medium",
+      "adverse_content": "单份记录不能排除其他付款",
+      "opens_new_issue": true,
+      "opponent_likely_use": "可能主张另有付款或账目未完整",
+      "duplication": null,
+      "timing": "TEST-ONLY 当前阶段暂作储备",
+      "consequence_if_not_submitted": "当前候选包不能直接用该记录证明部分付款金额",
+      "substitute": "经律师核验的完整流水或对账材料",
+      "applicable_stage": "synthetic_reserve",
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": null,
+      "ai_recommendation": "submit_now",
+      "lawyer_decision": "reserve",
+      "decision_reason": "TEST-ONLY：故意保留以验证不全量提交",
+      "current_submission": false,
+      "reserve": true,
+      "internal_reference": false,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "undecided",
+      "intended_recipient": null,
+      "service_obligation_status": "requires_verification",
+      "status": "approved"
+    },
+    {
+      "id": "E-TEST-SIMPLE-004",
+      "version": 1,
+      "source_refs": [
+        {"source_id": "S-TEST-SIMPLE-004", "locator": "全文", "record_kind": "direct_record", "quote": null, "verified": true}
+      ],
+      "description": "虚构催款通信",
+      "proposition": "测试催款和对方回复内容",
+      "authenticity": "unknown",
+      "legality": "unknown",
+      "relevance": "medium",
+      "probative_strength": "medium",
+      "adverse_content": "未记载具体付款承诺日期及利息或违约金计算方式",
+      "opens_new_issue": true,
+      "opponent_likely_use": "可能据上下文否认对具体金额或期限作出确认",
+      "duplication": null,
+      "timing": "待核验完整性后决定",
+      "consequence_if_not_submitted": "不影响已批准两项证据的测试包，但减少对余额回复的材料支持",
+      "substitute": "完整通信导出件或对账确认",
+      "applicable_stage": null,
+      "procedural_authority_id": null,
+      "risk_assessment_artifact_id": null,
+      "ai_recommendation": "needs_review",
+      "lawyer_decision": "undecided",
+      "decision_reason": null,
+      "current_submission": false,
+      "reserve": false,
+      "internal_reference": false,
+      "adverse": false,
+      "confidential": false,
+      "opponent_known_status": "known",
+      "disclosure_intent": "undecided",
+      "intended_recipient": null,
+      "service_obligation_status": "requires_verification",
+      "status": "candidate"
+    }
+  ],
+  "authorities": [],
+  "decisions": [
+    {"id": "D-TEST-G1-001", "subject_id": "T-TEST-CLAIM-001", "status": "approved", "reason": "TEST-ONLY：模拟通过简单案策略门禁"},
+    {"id": "D-TEST-G2-001", "subject_id": "E-TEST-SIMPLE-001", "status": "approved", "reason": "TEST-ONLY：当前证据集合只含 E-TEST-SIMPLE-001 和 E-TEST-SIMPLE-002"}
+  ],
+  "approvals": [
+    {
+      "id": "P-TEST-G1-001",
+      "gate": "G1_strategy",
+      "object_id": "D-TEST-G1-001",
+      "object_version": 1,
+      "object_hash": "aca03c3c5cf6fa85a5ebec9b0625d7a4757027f31c9aa870cdf3d860f28d8f5f",
+      "stage": "analysis",
+      "decision": "approved",
+      "reason": "TEST-ONLY：模拟律师批准",
+      "actor": "synthetic_test_lawyer",
+      "decided_at": "2026-08-23T00:20:00Z",
+      "status": "active",
+      "invalidation_reason": null,
+      "scope_snapshot": [
+        {"object_id": "T-TEST-CLAIM-001", "version": 1, "hash": "2ff7958029034424df2a85400ae0c02efb04612e8080ec4e36cd21924733c05f"}
+      ],
+      "scope_hash": "1b427fb7f82ee8a131ee8cfe78045e9a425a24e8722c858783d45d42148983c5"
+    },
+    {
+      "id": "P-TEST-G2-001",
+      "gate": "G2_evidence",
+      "object_id": "D-TEST-G2-001",
+      "object_version": 1,
+      "object_hash": "47951770d4b1cfd4d8f9fa625f09cedff1a44d8af85ea2de387c058b28265aa9",
+      "stage": "drafting",
+      "decision": "approved",
+      "reason": "TEST-ONLY：模拟当前两项证据批准",
+      "actor": "synthetic_test_lawyer",
+      "decided_at": "2026-08-23T00:21:00Z",
+      "status": "active",
+      "invalidation_reason": null,
+      "scope_snapshot": [
+        {"object_id": "E-TEST-SIMPLE-001", "version": 1, "hash": "7b857af06cbdc22eb38a1771bbf8bc1ee4fb71c1957073a6cac1b42ae8269770"},
+        {"object_id": "S-TEST-SIMPLE-001", "version": 1, "hash": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565"},
+        {"object_id": "E-TEST-SIMPLE-002", "version": 1, "hash": "4c29dae218e03a8c7eab9193d7bf1b171ec3a0a54ccc413f1317765618ce732d"},
+        {"object_id": "S-TEST-SIMPLE-002", "version": 1, "hash": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15"}
+      ],
+      "scope_hash": "c05a3c2c555513794ac5e3cd3bfed8ec31e5f2a27154b219726095be1463da86"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "R-TEST-DRAFT-001",
+      "kind": "synthetic_complaint_markdown",
+      "audience": "court_candidate",
+      "version": 1,
+      "path": "40-review/TEST-ONLY-起诉状候选.md",
+      "sha256": "a365985906d3cefc2e271939e2c88e0002f95e77814eb75675da3793f2d331a5",
+      "status": "reviewed",
+      "review_status": "passed",
+      "input_snapshot": [
+        {"object_id": "S-TEST-SIMPLE-001", "version": 1, "hash": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565"},
+        {"object_id": "S-TEST-SIMPLE-002", "version": 1, "hash": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15"}
+      ],
+      "stale": false,
+      "stale_reason": null,
+      "created_at": "2026-08-23T00:24:00Z"
+    },
+    {
+      "id": "R-TEST-EVIDENCE-LIST-001",
+      "kind": "synthetic_evidence_list_markdown",
+      "audience": "court_candidate",
+      "version": 1,
+      "path": "40-review/TEST-ONLY-证据目录候选.md",
+      "sha256": "8eb69d6ffbcbd4f3e3092b814d27d833a9875b5ee61528a54275804243236348",
+      "status": "reviewed",
+      "review_status": "passed",
+      "input_snapshot": [
+        {"object_id": "E-TEST-SIMPLE-001", "version": 1, "hash": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565"},
+        {"object_id": "E-TEST-SIMPLE-002", "version": 1, "hash": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15"}
+      ],
+      "stale": false,
+      "stale_reason": null,
+      "created_at": "2026-08-23T00:25:00Z"
+    }
+  ],
+  "templates": [],
+  "processing_coverages": [
+    {"id": "COV-TEST-SIMPLE-001", "source_id": "S-TEST-SIMPLE-001", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": [], "status": "complete", "created_at": "2026-08-23T00:10:00Z"},
+    {"id": "COV-TEST-SIMPLE-002", "source_id": "S-TEST-SIMPLE-002", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": [], "status": "complete", "created_at": "2026-08-23T00:11:00Z"},
+    {"id": "COV-TEST-SIMPLE-003", "source_id": "S-TEST-SIMPLE-003", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": ["确认是否存在后续付款记录"], "status": "complete", "created_at": "2026-08-23T00:12:00Z"},
+    {"id": "COV-TEST-SIMPLE-004", "source_id": "S-TEST-SIMPLE-004", "total_units": 1, "unit_type": "file", "processed_ranges": ["全文"], "ocr_failures": [], "translation_failures": [], "manual_review_items": ["核对通信完整性"], "status": "complete", "created_at": "2026-08-23T00:13:00Z"}
+  ],
+  "sanitization_reports": [],
+  "package_manifests": [
+    {
+      "id": "B-TEST-PACKAGE-001",
+      "version": 1,
+      "manifest_hash": "685593d6a116b045f4b695dee9882e53d9d3fbf7bd7c8757b4cab14527a7e56a",
+      "items": [
+        {"object_id": "R-TEST-DRAFT-001", "object_type": "artifact", "version": 1, "hash": "a365985906d3cefc2e271939e2c88e0002f95e77814eb75675da3793f2d331a5", "path": "40-review/TEST-ONLY-起诉状候选.md", "order": 1, "bookmark": "TEST-ONLY 起诉状候选"},
+        {"object_id": "R-TEST-EVIDENCE-LIST-001", "object_type": "artifact", "version": 1, "hash": "8eb69d6ffbcbd4f3e3092b814d27d833a9875b5ee61528a54275804243236348", "path": "40-review/TEST-ONLY-证据目录候选.md", "order": 2, "bookmark": "TEST-ONLY 证据目录"},
+        {"object_id": "E-TEST-SIMPLE-001", "object_type": "evidence", "version": 1, "hash": "af2eff545adc2af49f3e31232a26293e4acb5cc5c1095230291b1b6794ad3565", "path": "00-originals/TEST-ONLY-01-买卖合同.md", "order": 3, "bookmark": "TEST-ONLY 证据1"},
+        {"object_id": "E-TEST-SIMPLE-002", "object_type": "evidence", "version": 1, "hash": "8bfcf931ac85193c8baf54a775a2b24714b0e5ffbe530030ea04d4b0a5928a15", "path": "00-originals/TEST-ONLY-02-交付验收单.md", "order": 4, "bookmark": "TEST-ONLY 证据2"}
+      ],
+      "status": "candidate",
+      "stale": false,
+      "blockers": ["等待 G4 精确包批准"],
+      "created_at": "2026-08-23T00:29:00Z"
+    }
+  ],
+  "external_actions": [],
+  "tasks": [
+    {"id": "K-TEST-G4-001", "title": "TEST-ONLY：律师审阅并决定是否批准精确候选包", "status": "pending"}
+  ],
+  "material_batches": [],
+  "case_events": [],
+  "triage_cards": [],
+  "deadline_records": [],
+  "impact_assessments": [],
+  "prospective_matter_seeds": [],
+  "workflow_instances": [],
+  "run_attempts": [],
+  "memory_state": {
+    "storage_scope": "matter_workspace",
+    "default_read_mode": "relevant",
+    "default_write_mode": "candidate",
+    "last_committed_event_seq": 0,
+    "last_batch_id": null,
+    "current_view_artifact_id": null,
+    "current_view_version": 0,
+    "current_view_as_of_event_seq": 0,
+    "current_view_input_hash": null,
+    "current_view_updated_at": null,
+    "last_reflection_event_seq": 0,
+    "pending_candidate_ids": [],
+    "last_commit_actor": null,
+    "last_commit_at": null,
+    "last_commit_approval_id": null
+  },
+  "status": {
+    "workflow": "candidate_ready",
+    "current_gate": "G4_final",
+    "blockers": ["等待 G4 精确包批准"],
+    "degradations": []
+  },
+  "audit": {
+    "path": "_case-state/audit-log.jsonl",
+    "last_sequence": 2,
+    "last_event_hash": "da8ce942eac4030c2876220b4dc3a9a6f2b160958475e6f9160047de6f3bfe15"
+  },
+  "last_updated": "2026-08-23T00:30:00Z"
+}

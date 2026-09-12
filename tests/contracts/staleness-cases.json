@@ -1,0 +1,58 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：验证同名来源哈希变化后的失效传播。",
+  "cases": [
+    {
+      "case_id": "STALE-SOURCE-HASH-001",
+      "event": {
+        "type": "source_hash_changed",
+        "source_id": "S-TEST-002",
+        "old_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "new_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "same_filename": true
+      },
+      "dependency_graph": {
+        "S-TEST-002": ["F-TEST-DELIVERY-001", "E-TEST-002"],
+        "F-TEST-DELIVERY-001": ["D-TEST-G1-001", "R-TEST-DRAFT-001"],
+        "E-TEST-002": ["D-TEST-G2-001", "R-TEST-EVIDENCE-LIST-001"],
+        "D-TEST-G2-001": ["P-TEST-G2-001", "B-TEST-PACKAGE-001"],
+        "R-TEST-DRAFT-001": ["P-TEST-G4-001", "B-TEST-PACKAGE-001"]
+      },
+      "expected": {
+        "remain_current": ["S-TEST-001"],
+        "invalidate": [
+          "F-TEST-DELIVERY-001",
+          "E-TEST-002",
+          "D-TEST-G1-001",
+          "D-TEST-G2-001",
+          "P-TEST-G2-001",
+          "R-TEST-DRAFT-001",
+          "R-TEST-EVIDENCE-LIST-001",
+          "P-TEST-G4-001",
+          "B-TEST-PACKAGE-001"
+        ],
+        "audit_event_required": true,
+        "rerun_from": "material_intake",
+        "old_approval_reusable": false,
+        "old_package_reusable": false
+      }
+    },
+    {
+      "case_id": "STALE-UNRELATED-SOURCE-001",
+      "event": {
+        "type": "source_hash_changed",
+        "source_id": "S-TEST-UNRELATED",
+        "old_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "new_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+      },
+      "dependency_graph": {
+        "S-TEST-UNRELATED": ["F-TEST-UNRELATED"]
+      },
+      "expected": {
+        "invalidate": ["F-TEST-UNRELATED"],
+        "must_not_invalidate": ["P-TEST-G2-001", "R-TEST-DRAFT-001", "B-TEST-PACKAGE-001"]
+      }
+    }
+  ]
+}
+

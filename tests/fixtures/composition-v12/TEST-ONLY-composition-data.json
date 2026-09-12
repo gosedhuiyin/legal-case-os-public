@@ -1,0 +1,288 @@
+{
+  "test_only": true,
+  "notice": "TEST-ONLY：全部模板、主体、案号、法源和命题均为虚构，仅用于离线回归。",
+  "templates": [
+    {
+      "id": "TPL-8073",
+      "name": "TEST-ONLY 8073质证意见",
+      "aliases": ["8073"],
+      "status": "active",
+      "layout_score": 10,
+      "structure_score": 7,
+      "priority": 10,
+      "approved_final": true,
+      "authorization": { "status": "verified", "basis": "TEST-ONLY用户授权终稿" },
+      "version": 1,
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "profile": {
+        "id": "PRO-8073", "version": 1,
+        "hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+        "status": "approved",
+        "fingerprint_manifest_hash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "fingerprint_count": 4,
+        "approval": { "status": "approved", "approval_id": "APR-PRO-8073", "approved_at": "2026-08-25T00:00:00Z" }
+      },
+      "visual_baseline": {
+        "id": "VIS-8073", "hash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "status": "passed"
+      }
+    },
+    {
+      "id": "TPL-8075",
+      "name": "TEST-ONLY 8075质证意见",
+      "aliases": ["8075"],
+      "status": "active",
+      "layout_score": 8,
+      "structure_score": 10,
+      "priority": 9,
+      "approved_final": true,
+      "authorization": { "status": "verified", "basis": "TEST-ONLY用户授权终稿" },
+      "version": 1,
+      "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "profile": {
+        "id": "PRO-8075", "version": 1,
+        "hash": "abababababababababababababababababababababababababababababababab",
+        "status": "approved",
+        "fingerprint_manifest_hash": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+        "fingerprint_count": 4,
+        "approval": { "status": "approved", "approval_id": "APR-PRO-8075", "approved_at": "2026-08-25T00:00:00Z" }
+      },
+      "visual_baseline": {
+        "id": "VIS-8075", "hash": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef", "status": "passed"
+      }
+    },
+    {
+      "id": "TPL-AUX-001",
+      "name": "TEST-ONLY真实性章节范例",
+      "aliases": [],
+      "status": "active",
+      "auxiliary_score": 9,
+      "section_targets": ["真实性"]
+    },
+    {
+      "id": "TPL-AUX-002",
+      "name": "TEST-ONLY关联性章节范例",
+      "aliases": [],
+      "status": "active",
+      "auxiliary_score": 8,
+      "section_targets": ["关联性"]
+    },
+    {
+      "id": "TPL-AUX-003",
+      "name": "TEST-ONLY证明目的章节范例",
+      "aliases": [],
+      "status": "active",
+      "auxiliary_score": 7,
+      "section_targets": ["证明目的"]
+    },
+    {
+      "id": "TPL-AUX-004",
+      "name": "TEST-ONLY低优先级章节范例",
+      "aliases": [],
+      "status": "active",
+      "auxiliary_score": 1,
+      "section_targets": ["结论"]
+    }
+  ],
+  "authorities": [
+    {
+      "id": "AUTH-SUPPORT-001",
+      "title": "TEST-ONLY支持判决",
+      "case_number": "（2025）渝0105民初8073号",
+      "source_level": "L1_verified_authority",
+      "verification_status": "test_only_verified",
+      "production_eligible": false,
+      "environment": "test",
+      "test_only": true,
+      "full_text_available": true,
+      "passage_hashes": {"TEST-ONLY裁判理由第12段": "1717171717171717171717171717171717171717171717171717171717171717"},
+      "adverse": false
+    },
+    {
+      "id": "AUTH-LAW-001",
+      "title": "TEST-ONLY民法规则",
+      "statute_citations": ["《中华人民共和国民法典》第五百零九条"],
+      "citation_aliases": ["民法典第509条"],
+      "source_level": "L2_original_or_official",
+      "verification_status": "test_only_verified",
+      "production_eligible": false,
+      "environment": "test",
+      "test_only": true,
+      "full_text_available": true,
+      "passage_hashes": {"TEST-ONLY第五百零九条正文": "1818181818181818181818181818181818181818181818181818181818181818"},
+      "adverse": false
+    },
+    {
+      "id": "AUTH-ADVERSE-001",
+      "title": "TEST-ONLY重大不利判决",
+      "case_number": "（2024）渝01民终9001号",
+      "source_level": "L1_verified_authority",
+      "verification_status": "test_only_verified",
+      "production_eligible": false,
+      "environment": "test",
+      "test_only": true,
+      "full_text_available": true,
+      "adverse": true,
+      "material": true
+    },
+    {
+      "id": "AUTH-LEAD-001",
+      "title": "TEST-ONLY未核验摘要",
+      "case_number": "（2023）渝0105民初1号",
+      "source_level": "L4_model_inference",
+      "verification_status": "unverified",
+      "production_eligible": false,
+      "environment": "test",
+      "test_only": true,
+      "full_text_available": false,
+      "adverse": false
+    }
+  ],
+  "claim_bindings": [
+    {
+      "id": "CLM-001",
+      "proposition": "TEST-ONLY被告应依约履行义务。",
+      "claim_type": "mixed",
+      "source_ids": ["SRC-001"],
+      "source_locators": [
+        {
+          "source_id": "SRC-001",
+          "locator": "TEST-ONLY第2页第3段",
+          "record_kind": "direct_record",
+          "verified": true,
+          "record_sha256": "1616161616161616161616161616161616161616161616161616161616161616"
+        }
+      ],
+      "authority_ids": ["AUTH-SUPPORT-001", "AUTH-LAW-001"],
+      "authority_locators": [
+        {
+          "authority_id": "AUTH-SUPPORT-001",
+          "locator": "TEST-ONLY裁判理由第12段",
+          "citation": "（2025）渝0105民初8073号",
+          "verified": true,
+          "holding_sha256": "1717171717171717171717171717171717171717171717171717171717171717"
+        },
+        {
+          "authority_id": "AUTH-LAW-001",
+          "locator": "TEST-ONLY第五百零九条正文",
+          "citation": "《中华人民共和国民法典》第五百零九条",
+          "verified": true,
+          "holding_sha256": "1818181818181818181818181818181818181818181818181818181818181818"
+        }
+      ],
+      "court_candidate": true,
+      "verification_status": "verified"
+    }
+  ],
+  "dependencies": [
+    {
+      "object_id": "TPL-8073",
+      "object_type": "template",
+      "version": 1,
+      "hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "required": true
+    },
+    {
+      "object_id": "AUTH-LAW-001",
+      "object_type": "authority",
+      "version": 2,
+      "hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "required": true
+    },
+    {
+      "object_id": "TPL-8075",
+      "object_type": "template",
+      "version": 1,
+      "hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "required": true
+    },
+    {
+      "object_id": "SRC-001",
+      "object_type": "source",
+      "version": 1,
+      "hash": "1212121212121212121212121212121212121212121212121212121212121212",
+      "required": true
+    },
+    {
+      "object_id": "I-TEST-DANGER-001",
+      "object_type": "issue",
+      "version": 1,
+      "hash": "1313131313131313131313131313131313131313131313131313131313131313",
+      "required": true
+    },
+    {
+      "object_id": "ART-TEST-DEEP-001",
+      "object_type": "artifact",
+      "version": 1,
+      "hash": "5555555555555555555555555555555555555555555555555555555555555555",
+      "required": true
+    },
+    {
+      "object_id": "APR-G1-001",
+      "object_type": "approval",
+      "version": 1,
+      "hash": "1414141414141414141414141414141414141414141414141414141414141414",
+      "required": true
+    },
+    {
+      "object_id": "APR-G2-001",
+      "object_type": "approval",
+      "version": 1,
+      "hash": "1515151515151515151515151515151515151515151515151515151515151515",
+      "required": true
+    }
+  ],
+  "adverse_treatments": [
+    {
+      "authority_id": "AUTH-ADVERSE-001",
+      "disposition": "distinguish",
+      "analysis": "TEST-ONLY：事实基础不同，正式稿仍需披露并说明区分路径。",
+      "status": "resolved"
+    }
+  ],
+  "risk_conflicts": [
+    {
+      "id": "RC-001",
+      "affects": "authority",
+      "severity": "material",
+      "status": "resolved",
+      "description": "TEST-ONLY主辅范例引用路径不同。",
+      "resolution": "以当前核验法源目录为准。"
+    }
+  ],
+  "composition_context": {
+    "test_mode": true,
+    "document_goal": "TEST-ONLY形成可供法院审阅的质证意见候选稿。",
+    "relief_or_position": "TEST-ONLY对真实性、关联性及证明目的分别发表意见。",
+    "procedural_requirements": ["TEST-ONLY在指定举证期限内形成候选稿", "TEST-ONLY不得执行提交"],
+    "gate_snapshots": {
+      "G1_strategy": {
+        "approval_id": "APR-G1-001", "object_id": "DEC-G1-001", "version": 1,
+        "object_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+        "scope_hash": "2222222222222222222222222222222222222222222222222222222222222222",
+        "decision": "approved", "status": "active", "approved_source_ids": []
+      },
+      "G2_evidence": {
+        "approval_id": "APR-G2-001", "object_id": "DEC-G2-001", "version": 1,
+        "object_hash": "3333333333333333333333333333333333333333333333333333333333333333",
+        "scope_hash": "4444444444444444444444444444444444444444444444444444444444444444",
+        "decision": "approved", "status": "active", "approved_source_ids": ["SRC-001"]
+      }
+    },
+    "requires_deep_analysis": true,
+    "dangerous_issues": [
+      {
+        "issue_id": "I-TEST-DANGER-001", "title": "TEST-ONLY证据真实性冲突", "risk_level": "high",
+        "analysis_artifact_id": "ART-TEST-DEEP-001", "analysis_version": 1,
+        "analysis_hash": "5555555555555555555555555555555555555555555555555555555555555555",
+        "status": "completed", "adverse_path_covered": true
+      }
+    ],
+    "section_bindings": [
+      {
+        "section_id": "SEC-真实性", "purpose": "TEST-ONLY审查证据真实性",
+        "template_id": "TPL-8075", "claim_ids": ["CLM-001"],
+        "authority_ids": ["AUTH-SUPPORT-001", "AUTH-LAW-001"]
+      }
+    ]
+  }
+}

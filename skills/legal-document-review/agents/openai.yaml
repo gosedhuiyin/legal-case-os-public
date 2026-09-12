@@ -1,0 +1,6 @@
+interface:
+  display_name: "法律文书独立审阅"
+  short_description: "独立核对文书的法源、证据、逻辑、风险及清洁前后残留"
+  default_prompt: "Use $legal-document-review to independently review this exact artifact and return a one-page control sheet plus the five highest-value passages."
+policy:
+  allow_implicit_invocation: true
