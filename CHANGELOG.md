@@ -14,7 +14,7 @@
 - 新增公共版 `README.md` 与 `docs/INSTALL.md`，重写插件元数据与首页文案，使其面向第一次接触项目的人；安装口令“调用法律套件”与总控技能入口的映射在文档中写明。
 - 修正公开版入口与相对链接：技能总清单、架构图（重新生成 SVG）、文档索引、测试说明与验收命令与实际发行内容一致。
 - 公开版 `.gitignore` 明确忽略个人工作目录（`library/模板库/00-待登记/`、`_profiles/`、`_registry/*.lock`）与本地测试输出；不依赖任何本机排除规则。
-- 修正两个环境兼容问题：`tools/build_template_boundary_suite.py` 在非 UTF-8 控制台打印中文会崩溃（加 UTF-8 输出保护）；固定渲染夹具 `tests/artifacts/render-cleaning-source/render.pdf` 的 TEST-ONLY 标语原文“不得提交”会被生产预检词表如实拦截，改用不冲突的措辞重新渲染该夹具。两者都不改变任何生产代码、lint 词表或检查逻辑；夹具 DOCX 未改动。
+- 修正三个环境兼容问题：`.gitattributes` 要求整个仓库按字节精确检出（`* -text`），否则 Windows 上 CRLF 检出会使模板与夹具哈希门禁误报；`tools/build_template_boundary_suite.py` 在非 UTF-8 控制台打印中文会崩溃（加 UTF-8 输出保护）；固定渲染夹具 `tests/artifacts/render-cleaning-source/render.pdf` 的 TEST-ONLY 标语原文“不得提交”会被生产预检词表如实拦截，改用不冲突的措辞重新渲染该夹具。两者都不改变任何生产代码、lint 词表或检查逻辑；夹具 DOCX 未改动。
 - 版本号统一为 1.2.2（插件元数据、文档、tag）。
 - 实际包含的公开技能数量为 14 个（内部版为 15 个；差异即上述本地专属技能）。
 
