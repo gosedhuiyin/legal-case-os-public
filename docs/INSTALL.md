@@ -2,6 +2,8 @@
 
 本页供两类读者：准备使用本包的人，以及替用户执行安装的 AI。安装完成后回到 [README](../README.md) 开始使用。
 
+只安装本套件按本页执行；要一次安装并连接三个项目（本套件、[Agent Workstyle](https://github.com/gosedhuiyin/agent-workstyle)、[Law Library MCP](https://github.com/gosedhuiyin/law-library-mcp)）时，把 [组合安装方法](../INSTALL-COMBINED.md) 交给你的 AI 执行，并按其中的分层核验逐项确认。
+
 ## 1. 需要什么环境
 
 | 需求 | 说明 |
@@ -64,7 +66,7 @@ python scripts/smoke_test.py
 
 **更新（推荐：新目录并行，不覆盖旧目录）**
 
-1. 下载新版本 ZIP，解压到**新的程序目录**（例如把 `legal-case-os-1.2.5/` 解压在旧目录旁边）；原程序目录此时原样保留。
+1. 下载新版本 ZIP，解压到**新的程序目录**（例如把 `legal-case-os-1.2.6/` 解压在旧目录旁边）；原程序目录此时原样保留。
 2. 在 AI 软件中把技能加载从旧目录改指向新目录。
 3. 需要使用个人模板登记表的命令继续按各自 `--help` 指向原登记表（通常用 `--catalog`，`validate` 用 `--personal-catalog`）；案件工作区路径不变。资料目录和案件工作区不做任何改动。
 4. 用一两个虚构任务确认新版本可用后，旧程序目录才可以归档或删除；删除前确认其中没有你手动放入的文件（按本约定，你的资料本来就不在里面）。

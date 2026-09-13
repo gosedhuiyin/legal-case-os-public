@@ -2,6 +2,29 @@
 
 本文件记录公开发行的版本。1.2.1 及更早的版本为内部开发版本，未公开发布。
 
+## 1.2.6（2026-09-13）
+
+新增四组本地文书工具、学习应用核对，以及三组件组合安装入口。均为本机离线操作，不调用模型、不执行外部动作；程序检查不等于语义核验，版式仍须逐页人工复核。
+
+- **原 DOCX 指定位置局部修改**（新命令 `docx-inspect`、`docx-patch`，新模块 `scripts/legal_case_os_lib/docx_edit.py`）：先检出正文段落和顶层表格单元格的精确坐标，再按 `source_sha256` 绑定原件做字节级局部替换；目标外内容和原件保留，独立输出修改说明。仅支持普通统一格式文字；含字段、修订、超链接、合并单元格、签名 DOCX 等复杂目标明确拒绝。
+- **按明确物理页段加页码并回填原清单**（新命令 `evidence-pages`，新模块 `scripts/legal_case_os_lib/evidence_pages.py`）：核对原 PDF/清单哈希后，按显式页段生成带页脚页码和书签的派生 PDF，只回填原证据清单指定格子，共用同一 `page_map`；缺失/越界/重复页段、加密或含图层显隐的 PDF 等复杂输入明确拒绝。原 PDF 与清单只读。
+- **成果版本登记与恢复**（新命令 `delivery-current`、`delivery-publish`、`delivery-restore`，新模块 `scripts/legal_case_os_lib/delivery.py`）：对任务目录的 `manifest.json` 核验实际文件哈希后登记原字节版本；`current.json` 唯一当前指针，`--expected-current` 传 `revision` 令牌防并发覆盖，恢复只切换指针不重渲染。登记不表示正式定稿或提交批准。
+- **新建稿标准 Markdown 表格生成真实 Word 表格**（`templates.py`）：支持列对齐、空单元格、转义竖线、重复表头和长格跨页；列数不符报具体行号，超过八列要求改用明确版式路径。只影响新建稿，不扩大 `docx-patch` 修改范围。
+- **学习条目应用核对**（`learning.py`、新命令 `learning-check`，`task-render` 支持 `learning_applications`）：学习条目可补 `application_guide`（步骤/正反例/差异）；应用 JSON 按"来源→条件→输出位置"核对，事实前提须绑定本次材料，未满足/未知条件保留为待核。脚本核验结构与字面一致，不判定语义正确。
+- **三组件组合安装入口**（新增根目录 `INSTALL-COMBINED.md` 与 `docs/combined-install-receipt.example.json`）：把本套件、Agent Workstyle、Law Library MCP 的组合安装步骤、分层核验（代码到位/规则加载/技能发现/CLI 可运行/MCP 真连接/合成任务）和记录方法集中成一个入口；三个上游仓库保持独立，README 与 `docs/INSTALL.md` 增加相对链接。
+- **文档与政策同步**（`docs/MATERIAL-TASKS.md`、`docs/USER-GUIDE.md`、`shared/policies/execution-recipes.md`、`shared/policies/material-access-and-learning.md`）：补充上述工具的自然语言说法、计划示例和边界；正文与内部审阅记录保持分开，"仅用户主动调用法律套件"的启用约束不变。
+
+### 本次发行的验证记录
+
+全部在本仓库工作树独立完成，Windows + Python 3.11.9（python-docx、pypdf、PyMuPDF、reportlab 用于相应测试与渲染核对），全部夹具为 TEST-ONLY 合成数据：
+
+- 单元测试：`python -B -m unittest discover -s tests -p "test_*.py"` —— **215 通过 / 0 失败 / 1 跳过**（跳过项为本机无法创建符号链接的环境限制测试）。含新增 `tests/test_docx_edit.py`、`test_evidence_pages.py`、`test_delivery.py`、`test_workflow_micro.py`、`test_markdown_docx_tables.py`、`test_final_polish.py` 及更新的 `test_learning.py`。
+- 离线验收：`python tests/run_acceptance.py` —— **36 PASS / 0 FAIL / 0 SKIP**。
+- 冒烟检查：`python scripts/smoke_test.py` —— **8 / 8 通过**，`external_actions_executed = 0`。
+- CLI 帮助核对：`docx-inspect`、`docx-patch`、`evidence-pages`、`delivery-current`、`delivery-publish`、`delivery-restore`、`learning-check` 均已注册且帮助可见。
+- 合成样例视觉核对：60 行 Markdown 表格生成真实 Word 表格，经 LibreOffice 渲染逐页查看，表头在第 2、3 页重复、收尾段落衔接正常；合成 3 页 PDF 取物理第 2–3 页生成 2 页带页脚页码（"1 / 2"）的派生 PDF，原清单指定格子精确回填"1-2"，其余格子未动。
+- 已知限制：列宽为按内容估计，复杂版式仍须逐页复核；`evidence-pages` 页脚区为固定 28pt；自动安装链面向的宿主组合见 `INSTALL-COMBINED.md`，其他宿主需按其文档核对。组合安装方法本次未在其他宿主实测。
+
 ## 1.2.5（2026-09-12）
 
 补充模板命令的参数说明：只有支持外部登记表参数的命令才添加 `--catalog`；`validate` 使用 `--personal-catalog`，其他命令以各自 `--help` 为准，避免把同一参数套给全部模板命令。包含 1.2.4 的路径说明修正，本次统一发布下载包。代码未变。

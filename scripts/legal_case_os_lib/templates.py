@@ -606,10 +606,195 @@ def _paragraph_xml(text: str, style: str | None = None, bold: bool = False, alig
     return f"<w:p>{ppr}{''.join(runs)}</w:p>"
 
 
+def _markdown_table_cells(line: str) -> tuple[list[str], bool]:
+    """Split explicit pipe rows, retaining empty cells and escaped literal pipes."""
+    text = line.strip()
+    cells: list[str] = []
+    current: list[str] = []
+    delimiters: list[int] = []
+    index = 0
+    while index < len(text):
+        char = text[index]
+        if char == "\\" and index + 1 < len(text) and text[index + 1] in {"\\", "|"}:
+            current.append(text[index + 1])
+            index += 2
+            continue
+        if char == "|":
+            cells.append("".join(current).strip())
+            current = []
+            delimiters.append(index)
+        else:
+            current.append(char)
+        index += 1
+    cells.append("".join(current).strip())
+    if delimiters and delimiters[-1] == len(text) - 1:
+        cells.pop()
+    if delimiters and delimiters[0] == 0:
+        cells.pop(0)
+    return cells, bool(delimiters)
+
+
+def _markdown_cell_parts(text: str) -> list[tuple[str, bool]]:
+    """Keep code spans literal; recognize explicit breaks only outside them."""
+    parts: list[tuple[str, bool]] = []
+    position = 0
+    for code in re.finditer(r"(?<!`)(`+)(?!`)(.*?)(?<!`)\1(?!`)", text):
+        parts.extend((part, False) for part in re.split(r"(<br\s*/?>|\t)", text[position:code.start()], flags=re.IGNORECASE))
+        parts.append((code.group(0), True))
+        position = code.end()
+    parts.extend((part, False) for part in re.split(r"(<br\s*/?>|\t)", text[position:], flags=re.IGNORECASE))
+    return parts
+
+
+def _markdown_cell_lines(text: str) -> list[str]:
+    lines = [""]
+    for part, literal in _markdown_cell_parts(text):
+        if not literal and re.fullmatch(r"<br\s*/?>", part, flags=re.IGNORECASE):
+            lines.append("")
+        else:
+            lines[-1] += part
+    return lines
+
+
+def _markdown_starts_block(line: str) -> bool:
+    return bool(re.match(r"^ {0,3}(?:#{1,6}(?:[ \t]|$)|>|(?:[-+*]|\d+[.)、])[ \t]+|`{3,}|~{3,})", line))
+
+
+def _markdown_is_indented(line: str) -> bool:
+    prefix = line[:len(line) - len(line.lstrip(" \t"))]
+    return len(prefix.expandtabs(4)) >= 4
+
+
+def _markdown_table_widths(rows: list[list[str]]) -> list[int]:
+    # A4 minus the existing one-inch side margins. Short labels stay compact;
+    # long narrative cells receive more room without changing the page setup.
+    available = 11906 - 2 * 1440
+    minimum = 720
+    count = len(rows[0])
+    weights = []
+    for column in range(count):
+        widest = max(
+            sum(2 if unicodedata.east_asian_width(char) in {"W", "F"} else 1 for char in part)
+            for row in rows
+            for part in _markdown_cell_lines(row[column])
+        )
+        weights.append(max(4, min(48, widest)))
+    remaining = available - minimum * count
+    widths = [minimum + int(remaining * weight / sum(weights)) for weight in weights]
+    widths[-1] += available - sum(widths)
+    return widths
+
+
+def _markdown_table_xml(rows: list[list[str]], alignments: list[str]) -> str:
+    widths = _markdown_table_widths(rows)
+    borders = "".join(
+        f'<w:{edge} w:val="single" w:sz="4" w:color="D9D9D9"/>'
+        for edge in ("top", "left", "bottom", "right", "insideH", "insideV")
+    )
+    properties = (
+        '<w:tblPr><w:tblW w:w="9026" w:type="dxa"/><w:jc w:val="left"/>'
+        f'<w:tblBorders>{borders}</w:tblBorders><w:tblLayout w:type="fixed"/>'
+        '<w:tblCellMar><w:top w:w="100" w:type="dxa"/>'
+        '<w:left w:w="120" w:type="dxa"/><w:bottom w:w="100" w:type="dxa"/>'
+        '<w:right w:w="120" w:type="dxa"/></w:tblCellMar></w:tblPr>'
+    )
+    grid = "<w:tblGrid>" + "".join(f'<w:gridCol w:w="{width}"/>' for width in widths) + "</w:tblGrid>"
+    rendered_rows = []
+    for row_index, row in enumerate(rows):
+        header = row_index == 0
+        # Keep ordinary short records together. Very long records may span
+        # pages; the estimate only controls pagination, never truncates text.
+        estimated_lines = []
+        for column, text in enumerate(row):
+            capacity = max(1, (widths[column] - 240) // 120)
+            estimated_lines.append(sum(
+                max(1, (sum(2 if unicodedata.east_asian_width(char) in {"W", "F"} else 1 for char in part) + capacity - 1) // capacity)
+                for part in _markdown_cell_lines(text)
+            ))
+        row_properties = (
+            "<w:trPr><w:tblHeader/><w:cantSplit/></w:trPr>" if header
+            else "<w:trPr><w:cantSplit/></w:trPr>" if max(estimated_lines) <= 4
+            else ""
+        )
+        rendered_cells = []
+        for column, text in enumerate(row):
+            shading = '<w:shd w:val="clear" w:color="auto" w:fill="EEEEEE"/>' if header else ""
+            cell_properties = (
+                f'<w:tcPr><w:tcW w:w="{widths[column]}" w:type="dxa"/>{shading}'
+                '<w:vAlign w:val="center"/></w:tcPr>'
+            )
+            alignment = alignments[column]
+            paragraph_properties = (
+                '<w:pPr><w:spacing w:before="0" w:after="0" w:line="300" w:lineRule="auto"/>'
+                f'<w:jc w:val="{alignment}"/><w:widowControl/></w:pPr>'
+            )
+            run_properties = '<w:rPr><w:b/><w:bCs/></w:rPr>' if header else ""
+            runs = []
+            for chunk, literal in _markdown_cell_parts(text):
+                if not literal and re.fullmatch(r"<br\s*/?>", chunk, flags=re.IGNORECASE):
+                    runs.append("<w:r><w:br/></w:r>")
+                elif not literal and chunk == "\t":
+                    runs.append("<w:r><w:tab/></w:r>")
+                else:
+                    runs.append(f'<w:r>{run_properties}<w:t xml:space="preserve">{escape(chunk)}</w:t></w:r>')
+            rendered_cells.append(f'<w:tc>{cell_properties}<w:p>{paragraph_properties}{"".join(runs)}</w:p></w:tc>')
+        # No row has a fixed height: long cells wrap and may continue onto the
+        # next page with a repeated header.
+        rendered_rows.append(f'<w:tr>{row_properties}{"".join(rendered_cells)}</w:tr>')
+    return f'<w:tbl>{properties}{grid}{"".join(rendered_rows)}</w:tbl>'
+
+
 def _markdown_to_word_body(markdown: str) -> str:
     paragraphs: list[str] = []
-    for raw_line in markdown.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
-        line = raw_line.rstrip()
+    lines = markdown.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    index = 0
+    fence: str | None = None
+    while index < len(lines):
+        line = lines[index].rstrip()
+        fence_match = re.match(r"^ {0,3}(`{3,}|~{3,})", line)
+        if fence_match or fence:
+            if fence_match:
+                marker = fence_match.group(1)
+                if fence is None:
+                    fence = marker
+                elif marker[0] == fence[0] and len(marker) >= len(fence) and not line[fence_match.end():].strip():
+                    fence = None
+            paragraphs.append(_paragraph_xml(line))
+            index += 1
+            continue
+        if (
+            index + 1 < len(lines)
+            and not _markdown_is_indented(line)
+            and not _markdown_is_indented(lines[index + 1])
+            and not _markdown_starts_block(line)
+        ):
+            header, header_has_pipe = _markdown_table_cells(line)
+            separator, separator_has_pipe = _markdown_table_cells(lines[index + 1])
+            candidate = (
+                header_has_pipe and separator_has_pipe and separator
+                and any("-" in cell for cell in separator)
+                and all(set(cell) <= set("-: \t") for cell in separator)
+            )
+            if candidate:
+                if not all(re.fullmatch(r":?-{3,}:?", cell) for cell in separator):
+                    raise LegalCaseError("MARKDOWN_TABLE_INVALID_DELIMITER", "表格分隔行必须由至少三个连字符及可选对齐冒号组成。", {"line": index + 2})
+                if len(header) != len(separator) or not header:
+                    raise LegalCaseError("MARKDOWN_TABLE_COLUMN_MISMATCH", "表格表头与分隔行列数不同；未生成丢列文档。", {"line": index + 2, "expected": len(header), "actual": len(separator)})
+                if len(header) > 8:
+                    raise LegalCaseError("MARKDOWN_TABLE_TOO_WIDE", "此管线最多支持八列；请明确拆表或使用指定版式的 Word 模板。", {"line": index + 1, "columns": len(header)})
+                alignments = ["center" if cell.startswith(":") and cell.endswith(":") else "right" if cell.endswith(":") else "left" for cell in separator]
+                rows = [header]
+                index += 2
+                while index < len(lines):
+                    cells, has_pipe = _markdown_table_cells(lines[index])
+                    if not has_pipe or _markdown_is_indented(lines[index]) or _markdown_starts_block(lines[index]):
+                        break
+                    if len(cells) != len(header):
+                        raise LegalCaseError("MARKDOWN_TABLE_COLUMN_MISMATCH", "表格行列数与表头不同；请转义单元格内的竖线或补齐空单元格。", {"line": index + 1, "expected": len(header), "actual": len(cells)})
+                    rows.append(cells)
+                    index += 1
+                paragraphs.append(_markdown_table_xml(rows, alignments))
+                continue
         if line.startswith("# "):
             paragraphs.append(_paragraph_xml(line[2:].strip(), style="Title", bold=True, align="center"))
         elif line.startswith("## "):
@@ -620,13 +805,9 @@ def _markdown_to_word_body(markdown: str) -> str:
             paragraphs.append(_paragraph_xml("• " + line[2:].strip()))
         elif re.match(r"^\d+[.、]\s*", line):
             paragraphs.append(_paragraph_xml(line))
-        elif line.startswith("|"):
-            # Keep tables readable without claiming a full Markdown table engine.
-            if set(line.replace("|", "").replace("-", "").replace(":", "").strip()) == set():
-                continue
-            paragraphs.append(_paragraph_xml("\t".join(cell.strip() for cell in line.strip("|").split("|"))))
         else:
             paragraphs.append(_paragraph_xml(line))
+        index += 1
     return "".join(paragraphs)
 
 

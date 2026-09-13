@@ -92,7 +92,10 @@ from legal_case_os_lib.language import (
 )
 from legal_case_os_lib.materials import ingest_material, import_original_parts, read_material
 from legal_case_os_lib.learning import build_learning_candidate, approve_learning, load_learning
-from legal_case_os_lib.task_output import render_task_draft
+from legal_case_os_lib.task_output import render_task_draft, render_docx_patch
+from legal_case_os_lib.docx_edit import inspect_docx_targets
+from legal_case_os_lib.evidence_pages import build_evidence_pages
+from legal_case_os_lib.delivery import publish_delivery, restore_delivery, get_current_delivery
 from legal_case_os_lib.source_links import resolve_source_links
 
 
@@ -2279,6 +2282,8 @@ def route_text(
         action, object_name, skill, zh_action, zh_object = "modify", "evidence", "legal-evidence-gate", "修改", "证据"
     elif "证据" in raw and any(term in raw for term in ("简版", "详细版", "简详", "两个版本", "两版")):
         action, object_name, skill, zh_action, zh_object = "modify", "evidence", "legal-evidence-gate", "修改", "证据"
+    elif "页码" in raw and any(term in raw for term in ("回填", "填进", "填入", "补页码", "加页码")):
+        action, object_name, skill, zh_action, zh_object = "modify", "document", "legal-document-drafting", "修改", "文书"
     elif any(term in raw for term in ("压缩到", "缩短到", "精简到", "压缩文书")):
         action, object_name, skill, zh_action, zh_object = "modify", "document", "legal-draft-compressor", "修改", "文书"
     elif any(term in raw for term in ("只修改", "仅修改", "局部修改", "改一下第", "只改", "仅改")):
@@ -2465,6 +2470,17 @@ def route_text(
             "自然语言控制对象之间存在不安全或矛盾的执行约束。",
             {"errors": semantic_errors[:20]},
         )
+    page_fill = "页码" in raw and any(term in raw for term in ("回填", "填进", "填入", "补页码", "加页码"))
+    local_edit = any(term in raw for term in ("只修改", "仅修改", "局部修改", "改一下第", "只改", "仅改"))
+    if action == "modify" and object_name == "document" and (page_fill or local_edit):
+        # A bounded tool hint only: the caller must inspect the real file and
+        # resolve its exact coordinates; natural language does not execute edits.
+        result["route"]["local_file_operation"] = {
+            "inspect_command": "docx-inspect", "edit_command": "evidence-pages" if page_fill else "docx-patch",
+            "requires_exact_source_hash": True, "requires_exact_targets": True,
+            "preserve_outside_scope": True, "does_not_grant_filing_approval": True,
+            "fallback_to_regeneration": False, "status": "suggested_not_executed",
+        }
     return result
 
 
@@ -2519,6 +2535,32 @@ def command_task_render(args: argparse.Namespace) -> dict[str, Any]:
     return render_task_draft(_task_records(args), load_json(Path(args.proposal).resolve()), Path(args.output_dir))
 
 
+def command_docx_inspect(args: argparse.Namespace) -> dict[str, Any]:
+    return {"ok": True, **inspect_docx_targets(Path(args.file))}
+
+
+def command_docx_patch(args: argparse.Namespace) -> dict[str, Any]:
+    return render_docx_patch(Path(args.file), load_json(Path(args.plan).resolve()), Path(args.output_dir))
+
+
+def command_evidence_pages(args: argparse.Namespace) -> dict[str, Any]:
+    return build_evidence_pages(load_json(Path(args.plan).resolve()), Path(args.output_dir))
+
+
+def command_delivery_current(args: argparse.Namespace) -> dict[str, Any]:
+    return get_current_delivery(Path(args.store_dir))
+
+
+def command_delivery_publish(args: argparse.Namespace) -> dict[str, Any]:
+    expected = None if args.expected_current == "none" else args.expected_current
+    return publish_delivery(Path(args.task_dir), Path(args.store_dir), expected_current=expected)
+
+
+def command_delivery_restore(args: argparse.Namespace) -> dict[str, Any]:
+    expected = None if args.expected_current == "none" else args.expected_current
+    return restore_delivery(Path(args.store_dir), args.version_id, expected_current=expected)
+
+
 def command_learning_build(args: argparse.Namespace) -> dict[str, Any]:
     return build_learning_candidate(_task_records(args), load_json(Path(args.proposal).resolve()), Path(args.output))
 
@@ -2529,6 +2571,21 @@ def command_learning_save(args: argparse.Namespace) -> dict[str, Any]:
 
 def command_learning_load(args: argparse.Namespace) -> dict[str, Any]:
     return load_learning(Path(args.path))
+
+
+def command_learning_check(args: argparse.Namespace) -> dict[str, Any]:
+    from legal_case_os_lib.learning import check_learning_application, _new_json
+    draft_path = Path(args.draft_text).resolve()
+    draft_hash = sha256_file(draft_path)
+    draft_text = draft_path.read_text(encoding="utf-8-sig")
+    report = check_learning_application(Path(args.learning), load_json(Path(args.application)),
+                                       draft_text, _task_records(args))
+    if sha256_file(draft_path) != draft_hash:
+        raise LegalCaseError("LEARNING_OUTPUT_CHANGED", "核对期间本稿发生变化，未保存应用报告。")
+    report.update(draft_text_path=str(draft_path), draft_text_sha256=draft_hash)
+    output = Path(args.output).resolve()
+    _new_json(output, report)
+    return {**report, "report_path": str(output)}
 
 
 def _hash_equal(left: str | None, right: str | None) -> bool:
@@ -3952,6 +4009,37 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version="legal-case-os 1.2.0")
     sub = parser.add_subparsers(dest="command", required=True)
 
+    item = sub.add_parser("docx-inspect", help="inspect exact main-body paragraph and table-cell targets without editing")
+    item.add_argument("--file", required=True)
+    item.add_argument("--json", action="store_true")
+    item.set_defaults(handler=command_docx_inspect)
+
+    item = sub.add_parser("docx-patch", help="apply a source-bound local edit and retain task constraints in a new derivative")
+    item.add_argument("--file", required=True)
+    item.add_argument("--plan", required=True)
+    item.add_argument("--output-dir", required=True)
+    item.add_argument("--json", action="store_true")
+    item.set_defaults(handler=command_docx_patch)
+
+    item = sub.add_parser("evidence-pages", help="number explicit PDF page ranges and fill only their original catalog cells")
+    item.add_argument("--plan", required=True)
+    item.add_argument("--output-dir", required=True)
+    item.add_argument("--json", action="store_true")
+    item.set_defaults(handler=command_evidence_pages)
+
+    item = sub.add_parser("delivery-current", help="read the current immutable local deliverable version")
+    item.add_argument("--store-dir", required=True)
+    item.add_argument("--json", action="store_true")
+    item.set_defaults(handler=command_delivery_current)
+
+    for name, handler in (("delivery-publish", command_delivery_publish), ("delivery-restore", command_delivery_restore)):
+        item = sub.add_parser(name, help="register or restore exact local output bytes without granting formal approval")
+        item.add_argument("--store-dir", required=True)
+        item.add_argument("--task-dir" if name == "delivery-publish" else "--version-id", required=True)
+        item.add_argument("--expected-current", required=True, help="current revision token from delivery-current; none for a new store")
+        item.add_argument("--json", action="store_true")
+        item.set_defaults(handler=handler)
+
     item = sub.add_parser("source-links", help="link an exact original hash to current approved profile versions")
     item.add_argument("--sha256", required=True)
     item.add_argument("--source-map", required=True)
@@ -3999,6 +4087,15 @@ def build_parser() -> argparse.ArgumentParser:
     item.add_argument("--path", required=True)
     item.add_argument("--json", action="store_true")
     item.set_defaults(handler=command_learning_load)
+
+    item = sub.add_parser("learning-check", help="check a task-local learning application against its actual draft text")
+    item.add_argument("--learning", required=True)
+    item.add_argument("--application", required=True)
+    item.add_argument("--draft-text", required=True)
+    item.add_argument("--material-record", action="append", default=[])
+    item.add_argument("--output", required=True)
+    item.add_argument("--json", action="store_true")
+    item.set_defaults(handler=command_learning_check)
 
     item = sub.add_parser("init", help="initialize a non-overwriting matter workspace")
     item.add_argument("--workspace", required=True)

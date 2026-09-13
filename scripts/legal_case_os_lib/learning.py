@@ -95,7 +95,7 @@ def _timestamp(value: Any, label: str) -> datetime:
     return result
 
 
-def _learning(proposal: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
+def _learning(proposal: dict[str, Any], *, max_quote_chars: int | None = MAX_QUOTE_CHARS) -> dict[str, list[dict[str, Any]]]:
     if not isinstance(proposal, dict):
         _fail("LEARNING_INVALID", "学习提案必须是对象。")
     result: dict[str, list[dict[str, Any]]] = {}
@@ -116,6 +116,16 @@ def _learning(proposal: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
             for field in ("applies_when", "not_applicable_when"):
                 _strings(entry.get(field), field)
                 normalized[field] = copy.deepcopy(entry[field])
+            if "application_guide" in entry:
+                guide = entry["application_guide"]
+                if not isinstance(guide, dict) or set(guide) != {"steps", "good_example", "bad_example", "difference"}:
+                    _fail("LEARNING_GUIDE_INVALID", "application_guide 须包含 steps、good_example、bad_example、difference。")
+                _strings(guide["steps"], "具体应用步骤")
+                for field in ("good_example", "bad_example", "difference"):
+                    _text(guide[field], field)
+                if guide["good_example"].strip() == guide["bad_example"].strip():
+                    _fail("LEARNING_GUIDE_INVALID", "正反示例不能相同；须写明具体差异。")
+                normalized["application_guide"] = copy.deepcopy(guide)
             bindings = entry.get("source_bindings")
             if not isinstance(bindings, list) or not bindings:
                 _fail("LEARNING_SOURCE_REQUIRED", "每条学习内容必须有具体来源绑定。")
@@ -129,7 +139,7 @@ def _learning(proposal: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
                 if (type(start) is not int or type(end) is not int or start < 0 or end <= start
                         or end - start != len(quote)):
                     _fail("LEARNING_INVALID_LOCATOR", "来源字符位置必须为零基、左闭右开，且与原文长度一致。")
-                if len(quote) > MAX_QUOTE_CHARS:
+                if max_quote_chars is not None and len(quote) > max_quote_chars:
                     _fail("LEARNING_EXCERPT_TOO_LONG", "长期可复用学习只接受每条至多 300 字符的必要来源片段，不复制整段案件记录。")
                 normalized["source_bindings"].append({"id": source_id, "start": start, "end": end, "quote": quote})
             if category == "viewpoints":
@@ -207,11 +217,13 @@ def build_learning_candidate(materials: list[dict[str, Any]], proposal: dict[str
         "scope": "current_task", "status": "candidate", "learning": learning,
         "material_refs": [_material_ref(record) for record in materials if record["id"] in used_ids],
         "validation": {"source_bindings_verified": True, "semantic_truth_verified_by_script": False,
-                       "model_training_performed": False, "case_facts_promoted": False},
+                       "model_training_performed": False, "case_facts_promoted": False,
+                       "application_to_current_task_checked": False, "legal_currency_verified_by_script": False},
     }
     _new_json(output, candidate)
     return {"ok": True, "candidate_path": str(output), "candidate_sha256": _hash(output.read_bytes()),
-            "candidate": candidate, "applicable_now": True, "persisted_to_library": False}
+            "candidate": candidate, "applicable_now": True, "persisted_to_library": False,
+            "requires_task_applicability_check": True, "application_readiness": _application_readiness(learning)}
 
 
 def _validate_candidate(candidate: dict[str, Any]) -> None:
@@ -414,5 +426,166 @@ def load_learning(path: Path) -> dict[str, Any]:
                           "live_database_checked": False})
     return {"ok": True, "learning": candidate["learning"], "id": candidate["id"], "version": asset["version"],
             "source_excerpts": copied_excerpts, "source_freshness": freshness,
-            "warnings": ["来源副本验证不等于当前数据库或现行法效力核验；每次使用须复核适用条件。"],
-            "model_training_performed": False, "case_facts_promoted": False}
+            "warnings": ["来源副本验证不等于当前数据库或现行法效力核验；每次使用须复核适用条件。",
+                         "批准保存只允许复用该学习记录，不证明观点正确，也不代表已在当前输出中应用。"],
+            "model_training_performed": False, "case_facts_promoted": False,
+            "requires_task_applicability_check": True,
+            "application_readiness": _application_readiness(candidate["learning"])}
+
+
+def _application_readiness(learning: dict[str, Any]) -> list[dict[str, Any]]:
+    purposes = {"style_rules": "presentation_only", "reasoning_patterns": "reasoning_method",
+                "viewpoints": "conditional_position"}
+    return [{"entry_id": entry["id"], "category": category, "purpose": purposes[category],
+             "guide_status": "provided_not_semantically_verified" if "application_guide" in entry else "guide_missing",
+             "current_application_checked": False}
+            for category in CATEGORIES for entry in learning[category]]
+
+
+def _application_quote(binding: Any, text: str) -> dict[str, Any]:
+    if not isinstance(binding, dict):
+        _fail("LEARNING_APPLICATION_QUOTE", "当前输出须有 start、end、quote 的精确引文。")
+    start, end, quote = binding.get("start"), binding.get("end"), binding.get("quote")
+    if (type(start) is not int or type(end) is not int or not isinstance(quote, str) or not quote.strip()
+            or not 0 <= start < end <= len(text) or text[start:end] != quote):
+        _fail("LEARNING_APPLICATION_QUOTE", "当前输出引文与零基、左闭右开的字符位置不一致。")
+    return {"start": start, "end": end, "quote": quote}
+
+
+def check_learning_application(learning_path: Path, application: dict[str, Any], output_text: str,
+                               materials: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    """Check a task-local application trace, never semantic truth or model learning.
+
+    Each selected entry needs an exact output quotation and a check for every
+    recorded condition. Condition statuses are declarations, not script findings.
+    Unknown/unmet conditions remain visible without blocking an unrelated draft.
+    """
+    learning_path = Path(learning_path).resolve()
+    try:
+        source_bytes = learning_path.read_bytes()
+        source = json.loads(source_bytes.decode("utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise LegalCaseError("LEARNING_READ_FAILED", "无法读取本次应用所用的学习记录。") from exc
+    if not isinstance(source, dict):
+        _fail("LEARNING_INVALID", "学习记录必须为 JSON 对象。")
+    source_hash = _hash(source_bytes)
+    if source.get("kind") == "learning_candidate":
+        _validate_candidate(source)
+        _verify_current_candidate_sources(source)
+        learning = source["learning"]
+    else:
+        learning = load_learning(learning_path)["learning"]
+    _text(output_text, "实际输出正文")
+    entries = application.get("entries") if isinstance(application, dict) else None
+    if not isinstance(entries, list) or not entries:
+        _fail("LEARNING_APPLICATION_REQUIRED", "应用记录须包含非空 entries 数组。")
+    materials = [] if materials is None else materials
+    if (not isinstance(materials, list) or any(not isinstance(record, dict) or not isinstance(record.get("id"), str)
+                                             for record in materials)):
+        _fail("LEARNING_SOURCE_INVALID", "本次材料须为带 id 的材料记录数组。")
+    records = {record["id"]: record for record in materials}
+    if len(records) != len(materials):
+        _fail("LEARNING_DUPLICATE_SOURCE", "本次材料集合包含重复 id。")
+    available = {entry["id"]: (category, entry) for category in CATEGORIES for entry in learning[category]}
+    readiness = {row["entry_id"]: row for row in _application_readiness(learning)}
+    seen, results = set(), []
+    for use in entries:
+        if (not isinstance(use, dict) or not isinstance(use.get("entry_id"), str)
+                or use["entry_id"] not in available):
+            _fail("LEARNING_APPLICATION_ENTRY", "应用记录须选择当前候选/版本中存在的 entry_id。")
+        entry_id = use["entry_id"]
+        if entry_id in seen:
+            _fail("LEARNING_DUPLICATE_ID", "同一学习条目只保留一份本次应用核对。")
+        seen.add(entry_id)
+        category, entry = available[entry_id]
+        if use.get("category") != category:
+            _fail("LEARNING_APPLICATION_CATEGORY", "风格、论证方法和条件性观点不能互相冒用。")
+        index = use.get("source_binding_index")
+        if type(index) is not int or not 1 <= index <= len(entry["source_bindings"]):
+            _fail("LEARNING_APPLICATION_SOURCE", "source_binding_index 须为该条目实际来源绑定的一基序号。")
+        output_binding = _application_quote(use.get("output_binding"), output_text)
+        adaptation = _text(use.get("adaptation"), "本次如何调整并应用该条目")
+        fields = ["applies_when", "not_applicable_when"]
+        if category == "viewpoints":
+            fields += ["rule_premises", "fact_premises", "counterarguments_or_limits"]
+        required = {(field, number): condition for field in fields
+                    for number, condition in enumerate(entry[field], 1)}
+        checks = use.get("condition_checks")
+        if not isinstance(checks, list):
+            _fail("LEARNING_APPLICATION_CONDITIONS", "须逐项核对适用条件；不能用一句“已参考”代替。")
+        checked, conditions, unmet = set(), [], []
+        for condition in checks:
+            if not isinstance(condition, dict):
+                _fail("LEARNING_APPLICATION_CONDITIONS", "条件核对须为对象。")
+            field, number = condition.get("field"), condition.get("index")
+            if not isinstance(field, str) or type(number) is not int:
+                _fail("LEARNING_APPLICATION_CONDITIONS", "条件须用 field 和一基 index 明确对应。")
+            key = (field, number)
+            if key not in required or key in checked:
+                _fail("LEARNING_APPLICATION_CONDITIONS", "条件对应不存在或重复，不能遗漏或替换原条件。")
+            checked.add(key)
+            if field == "not_applicable_when":
+                allowed, desired = {"present", "absent", "unknown"}, "absent"
+            elif field == "counterarguments_or_limits":
+                allowed, desired = {"addressed", "not_addressed", "unknown"}, "addressed"
+            else:
+                allowed, desired = {"met", "not_met", "unknown"}, "met"
+            status = condition.get("status")
+            if not isinstance(status, str) or status not in allowed:
+                _fail("LEARNING_APPLICATION_CONDITIONS", f"{field} 的 status 只能为 {', '.join(sorted(allowed))}。")
+            basis = _text(condition.get("basis"), "当前条件的具体依据或缺口")
+            bindings = condition.get("source_bindings", [])
+            if not isinstance(bindings, list):
+                _fail("LEARNING_INVALID_BINDING", "本次条件的 source_bindings 须为数组。")
+            if bindings:
+                # Reuse exact source validation, but do not persist these current facts.
+                selected = {"id": "APPLICATION-CHECK", "text": "Task-local condition evidence",
+                            "applies_when": ["Current application"], "not_applicable_when": ["Another matter"],
+                            "source_bindings": bindings}
+                normalized = _learning({"reasoning_patterns": [selected]}, max_quote_chars=None)
+                _verify_with_materials(normalized, materials)
+                bindings = normalized["reasoning_patterns"][0]["source_bindings"]
+            if field == "fact_premises" and status == "met":
+                if not bindings:
+                    _fail("LEARNING_CURRENT_FACT_SOURCE", "声称本案事实前提满足时，须绑定本次案件材料；缺材料请标 unknown。")
+                if any(records[binding["id"]].get("role") not in {"current_case", "evidence", "user_statement"}
+                       for binding in bindings):
+                    _fail("LEARNING_CURRENT_FACT_SOURCE", "模板、旧案例和作者观点不能充当本案事实来源。")
+            row = {"field": field, "index": number, "condition": required[key],
+                   "declared_status": status, "basis": basis, "source_bindings": bindings}
+            if field == "counterarguments_or_limits" and status == "addressed":
+                row["output_binding"] = _application_quote(condition.get("output_binding"), output_text)
+            conditions.append(row)
+            if status != desired:
+                unmet.append(copy.deepcopy(row))
+        if checked != set(required):
+            _fail("LEARNING_APPLICATION_CONDITIONS", "应用核对遗漏学习条目中的条件；未知项应逐项标 unknown。")
+        limits = []
+        if readiness[entry_id]["guide_status"] == "guide_missing":
+            limits.append("guide_missing：旧条目未提供具体步骤和正反示例，不能称为应用指南已核对。")
+        if category == "viewpoints":
+            limits.append("观点的来源核验状态为 " + entry["verification_status"] + "；不证明当前法律效力或本案事实。")
+        result = {"entry_id": entry_id, "category": category, "purpose": readiness[entry_id]["purpose"],
+                  "guide_status": readiness[entry_id]["guide_status"],
+                  "source_binding": copy.deepcopy(entry["source_bindings"][index - 1]),
+                  "output_binding": output_binding, "adaptation": adaptation,
+                  "condition_checks": conditions, "unmet_conditions": unmet, "limitations": limits,
+                  "application_status": "needs_review" if unmet or limits else "declared_conditions_matched",
+                  "semantic_review_required": True}
+        if category == "viewpoints":
+            result["source_position"] = {field: copy.deepcopy(entry[field]) for field in
+                                         ("speaker", "speaker_role", "original_view", "verification_status",
+                                          "verified_at", "verification_basis") if field in entry}
+        results.append(result)
+    if _hash(learning_path.read_bytes()) != source_hash:
+        _fail("LEARNING_SOURCE_STALE", "核对期间学习文件发生变化，请对当前版本重新核对。")
+    return {"ok": True, "kind": "learning_application_check", "scope": "current_task",
+            "learning_path": str(learning_path), "learning_source_sha256": source_hash,
+            "output_text_sha256": _hash(output_text.encode("utf-8")), "entries": results,
+            "checks": {"application_structure": "passed", "source_and_output_quotes": "passed",
+                       "semantic_truth_verified_by_script": False, "legal_currency_verified_by_script": False,
+                       "case_facts_verified_by_script": False, "model_training_performed": False,
+                       "semantic_review": "required", "filing_approved": False},
+            "persisted_to_library": False,
+            "limitations": ["本报告仅核对条目、来源引文、输出位置和条件记录；不证明已经学会或实际论证正确。",
+                            "风格只控制表达，方法提供推理步骤，观点保留来源立场和适用前提；三者都不能直接成为本案事实。"]}
