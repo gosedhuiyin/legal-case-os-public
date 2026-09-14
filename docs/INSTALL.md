@@ -2,7 +2,7 @@
 
 本页供两类读者：准备使用本包的人，以及替用户执行安装的 AI。安装完成后回到 [README](../README.md) 开始使用。
 
-只安装本套件按本页执行；要一次安装并连接三个项目（本套件、[Agent Workstyle](https://github.com/gosedhuiyin/agent-workstyle)、[Law Library MCP](https://github.com/gosedhuiyin/law-library-mcp)）时，把 [组合安装方法](../INSTALL-COMBINED.md) 交给你的 AI 执行，并按其中的分层核验逐项确认。
+只安装本套件按本页执行；要组合安装本套件、[Agent Workstyle](https://github.com/gosedhuiyin/agent-workstyle)和[Law Library MCP](https://github.com/gosedhuiyin/law-library-mcp)，按 [组合安装方法](../INSTALL-COMBINED.md) 在安装时登记三个独立入口。preset与skill的默认加载行为不同，先按用户选择确定，不要求必须经过三合一总入口才能单独使用。
 
 ## 1. 需要什么环境
 

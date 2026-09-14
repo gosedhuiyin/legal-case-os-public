@@ -20,13 +20,13 @@
 
 安装方法见 [docs/INSTALL.md](./docs/INSTALL.md)。简言之：把本仓库下载或克隆到本地，让你的 AI 软件读取 `skills/` 目录，并确保本机有 Python 3.10+。
 
-想同时安装并连接三个项目（本套件、Agent Workstyle、Law Library MCP）时，把 [INSTALL-COMBINED.md](./INSTALL-COMBINED.md) 交给你的 AI，让它按组合方法在当前环境中执行和分层核验；三个项目仍然独立维护。
+想同时安装并连接三个项目时，把 [INSTALL-COMBINED.md](./INSTALL-COMBINED.md) 交给 AI。安装时就登记工作风格、法律 SOP、资料库三个可分别调用的入口；工作风格基于 **Fable 与 Astra** 的表达和做事方式独立整理。DSH等预设从开场使用风格，法律流程与检索按任务调用；技能形态允许从第一句只用其中任一个。
 
 安装后，对 AI 说：
 
 > 调用法律套件，帮我处理这次任务：……
 
-“调用法律套件”这个口令对应本包的总控技能入口 `skills/legal-case-orchestrator/SKILL.md`。安装咨询或普通法律问题不会自动启用本套件。
+独立技能安装中，“调用法律套件”对应 `skills/legal-case-orchestrator/SKILL.md`，安装咨询或普通法律问题不会自动启用本套件。若用户主动选择法律预设，具体法律问题可按组合说明走按需只读路径；明确制作指令才生成文件，该规则仅作用于选中的预设。
 
 ## 资料和模板由谁提供
 
@@ -53,7 +53,7 @@
 
 | 项目 | 能帮你做什么 |
 | --- | --- |
-| [Agent Workstyle](https://github.com/gosedhuiyin/agent-workstyle) | 指导 AI 推进任务、核对依据，并配合已有技能和工具。 |
+| [Agent Workstyle](https://github.com/gosedhuiyin/agent-workstyle) | 基于 Fable 与 Astra 风格，指导 AI 清晰沟通、核对依据并完成任务；可独立启用。 |
 | [Legal Case OS](https://github.com/gosedhuiyin/legal-case-os-public) | 提供法律办案步骤、案件记录和文书工具。 |
 | [Law Library MCP](https://github.com/gosedhuiyin/law-library-mcp) | 管理、检索和阅读自己导入的资料，并通过 MCP 给 AI 使用。 |
 

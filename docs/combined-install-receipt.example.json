@@ -1,14 +1,87 @@
 {
   "schema": "example-only-not-host-configuration",
-  "host": {"name": null, "version": null, "engine": null, "scope": "user", "environment": null},
+  "host": {
+    "name": null,
+    "version": null,
+    "engine": null,
+    "scope": "user",
+    "environment": null
+  },
   "components": {
-    "legal_case_os": {"repository": "https://github.com/gosedhuiyin/legal-case-os-public", "commit": null, "root": null, "python": null, "entry": null, "files": "not_checked", "loading": "not_checked", "cli": "not_checked"},
-    "agent_workstyle": {"repository": "https://github.com/gosedhuiyin/agent-workstyle", "commit": null, "root": null, "core_destination": null, "skill_destination": null, "coverage": "not_checked", "loading": "not_checked"},
-    "law_library_mcp": {"repository": "https://github.com/gosedhuiyin/law-library-mcp", "commit": null, "program_root": null, "data_root": null, "server_name": null, "configuration_source": null, "connection": "not_checked", "collection_state": "not_checked"}
+    "legal_case_os": {
+      "repository": "https://github.com/gosedhuiyin/legal-case-os-public",
+      "commit": null,
+      "root": null,
+      "python": null,
+      "entry": null,
+      "files": "not_checked",
+      "loading": "not_checked",
+      "cli": "not_checked"
+    },
+    "agent_workstyle": {
+      "repository": "https://github.com/gosedhuiyin/agent-workstyle",
+      "commit": null,
+      "root": null,
+      "core_destination": null,
+      "skill_destination": null,
+      "coverage": "not_checked",
+      "loading": "not_checked",
+      "core_activation": null
+    },
+    "law_library_mcp": {
+      "repository": "https://github.com/gosedhuiyin/law-library-mcp",
+      "commit": null,
+      "program_root": null,
+      "data_root": null,
+      "server_name": null,
+      "configuration_source": null,
+      "connection": "not_checked",
+      "collection_state": "not_checked",
+      "tool_mapping": {}
+    }
   },
   "changes": [],
-  "checks": {"existing_rules_preserved": "not_checked", "existing_mcp_preserved": "not_checked", "synthetic_workflow": "not_checked", "visual_review": "not_checked"},
+  "checks": {
+    "existing_rules_preserved": "not_checked",
+    "existing_mcp_preserved": "not_checked",
+    "synthetic_workflow": "not_checked",
+    "visual_review": "not_checked",
+    "preset_first_reply_core_once": "not_checked",
+    "independent_style": "not_checked",
+    "independent_sop": "not_checked",
+    "independent_library": "not_checked",
+    "generic_rewrite_no_legal_route": "not_checked",
+    "repeat_install_no_duplicates": "not_checked"
+  },
   "rollback_record": null,
   "remaining_steps": [],
-  "secret_values_included": false
+  "secret_values_included": false,
+  "installation_profile": null,
+  "guide_revision": null,
+  "entrypoints": {
+    "fable-style": {
+      "native_name": null,
+      "source": null,
+      "discovery": "not_checked",
+      "dependencies": [],
+      "aliases": [],
+      "scope": null
+    },
+    "legal-sop": {
+      "native_name": null,
+      "source": null,
+      "discovery": "not_checked",
+      "dependencies": [],
+      "aliases": [],
+      "scope": null
+    },
+    "law-library": {
+      "native_name": null,
+      "source": null,
+      "discovery": "not_checked",
+      "dependencies": [],
+      "aliases": [],
+      "scope": null
+    }
+  }
 }
